@@ -1,4 +1,4 @@
-import {Box, Grid, Img, Text} from "@chakra-ui/react";
+import { Box, Grid, Img, Text } from "@chakra-ui/react";
 import * as React from "react";
 
 const Footer: React.FunctionComponent = () => {
@@ -10,7 +10,7 @@ const Footer: React.FunctionComponent = () => {
         borderBottom="1px solid rgba(225, 227, 232, 0.6)"
       >
         <Box>
-          <Img src="/assets/images/logo.png" w="28px" mr="10.5px"/>
+          <Img src="/assets/images/logo.png" w="28px" mr="10.5px" />
           <Text maxW="176px" mt="38px">
             559 Ikorodu Rd, Ikosi Ketu 105102, Lagos, Nigeria.
           </Text>
@@ -22,10 +22,6 @@ const Footer: React.FunctionComponent = () => {
             Resources
           </Text>
           <Grid templateColumns="repeat(2, minmax(0, 1fr))" mt="30px">
-            <Text>
-              kldksn
-              <span>ds</span>
-            </Text>
             <Box>
               <Text opacity="0.6" fontSize="14px" mb="26px">
                 Audio Messages
@@ -45,13 +41,13 @@ const Footer: React.FunctionComponent = () => {
             </Box>
             <Box>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Singlz' Summit
+                Singlz&apos; Summit
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
                 Testimonies
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Couples' Garden
+                Couples&apos; Garden
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
                 House Fellowships
