@@ -1,8 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 
-const SigninBg: React.FC = () => (
+interface ISigninBgProps {
+  course?: boolean
+}
+
+const SigninBg: React.FC<ISigninBgProps> = ({course}) => (
   <>
-    <Box pos="absolute" left="0" bottom="0">
+    <Box pos="absolute" left="0" top={course ? "50px" : ""} bottom={course ? "" : "0"}>
       <svg
         width="616"
         height="667"
@@ -17,7 +21,7 @@ const SigninBg: React.FC = () => (
         />
       </svg>
     </Box>
-    <Box pos="absolute" right="0" bottom="0">
+    <Box pos="absolute" right="0" top={course ? "50px" : ""} bottom={course ? "" : "0"}>
       <svg
         width="465"
         height="603"

@@ -5,7 +5,11 @@ const colors = {
     orange: '#EE9938',
     gold: '#A36620',
     blue: '#F5F7FF',
-    gray: '#767474'
+    lightBlue: "#F7F9FB",
+    deepBlue: "#0B0966",
+    gray: '#767474',
+    pink: "#FFF9FD",
+    black100: "#050911"
   },
 };
 
