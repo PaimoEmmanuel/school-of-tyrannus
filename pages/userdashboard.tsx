@@ -1,13 +1,17 @@
 import { NextPage } from "next";
+import UserDashboardBanner from "../components/molecules/user-dashboard-banner";
 import Footer from "../components/organisms/footer";
 import NavigationBar from "../components/organisms/navigation-bar";
 
-const userDashboard: NextPage = () => {
+const UserDashboard: NextPage = () => {
     return (
-        <>
-            <NavigationBar />
-            <Footer />
-        </>
+        <div className="">
+            <div>
+                <NavigationBar />
+                <UserDashboardBanner />
+                <Footer />
+            </div>
+        </div>
     );
 }
-export default userDashboard;
+export default UserDashboard;
