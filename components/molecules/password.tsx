@@ -33,7 +33,7 @@ const PasswordInput: React.FunctionComponent<IPasswordInputProps> = ({
       <Input
         value={props.value}
         onChange={props.onChange}
-        label={"Confirm Password"}
+        label={label}
         placeholder="Confirm password"
         {...props}
         pr="48px"

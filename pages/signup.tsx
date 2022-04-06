@@ -7,12 +7,31 @@ import SigninBg from "../components/molecules/signin-bg";
 import { useState } from "react";
 import Link from "next/link";
 import PasswordInput from "../components/molecules/password";
+import { signUp } from "../services/auth";
 
 const Signup: NextPage = () => {
-  const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const handleSignIn = () => {
+    signUp({
+      firstName,
+      lastName,
+      phoneNumber,
+      emailAddress: emailAddress,
+      password,
+      gender: "male",
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
   return (
     <>
       <Head>
@@ -29,7 +48,6 @@ const Signup: NextPage = () => {
         >
           <Box
             // pending removal
-            transform="scale(1.3)"
             as="form"
             boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13);"
             p="70px 100px"
@@ -41,24 +59,44 @@ const Signup: NextPage = () => {
               Sign up
             </Text>
             <Input
-              value={fullname}
+              value={firstName}
               onChange={(e) => {
-                setFullname(e.target.value);
+                setFirstName(e.target.value);
               }}
-              label={"Full Name"}
-              placeholder="Enter Full Name"
+              label={"First Name"}
+              placeholder="Enter First Name"
               type="text"
-              name="full-name"
+              name="first-name"
             />
             <Input
-              value={email}
+              value={lastName}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setLastName(e.target.value);
+              }}
+              label={"Last Name"}
+              placeholder="Enter Last Name"
+              type="text"
+              name="last-name"
+            />
+            <Input
+              value={emailAddress}
+              onChange={(e) => {
+                setEmailAddress(e.target.value);
               }}
               label={"Email Address"}
               placeholder="Enter email"
               type="email"
               name="email"
+            />
+            <Input
+              value={phoneNumber}
+              onChange={(e) => {
+                setPhoneNumber(e.target.value);
+              }}
+              label={"Phone Number"}
+              placeholder="Enter phone number"
+              type="text"
+              name="phone-number"
             />
             <PasswordInput
               value={password}
@@ -95,6 +133,7 @@ const Signup: NextPage = () => {
               }}
               onClick={(e) => {
                 e.preventDefault();
+                handleSignIn();
               }}
             >
               Sign up

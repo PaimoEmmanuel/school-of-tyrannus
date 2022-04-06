@@ -26,7 +26,6 @@ const Signin: NextPage = () => {
         >
           <Box
             // pending removal
-            transform="scale(1.3)"
             as="form"
             boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13);"
             p="70px 100px"

@@ -34,21 +34,21 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
         <NavSearch />
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
-        <Link href="" passHref>
+        <Link href="/about" passHref>
           <ChakraLink mr="45px">About Tyrannus</ChakraLink>
         </Link>
-        <Link href="" passHref>
+        <Link href="/courses" passHref>
           <ChakraLink mr="45px">Courses</ChakraLink>
         </Link>
-        <Link href="" passHref>
+        <Link href="/explore" passHref>
           <ChakraLink mr="45px">Explore</ChakraLink>
         </Link>
         {false ? (
           <>
-            <Link href="" passHref>
+            <Link href="/signin" passHref>
               <ChakraLink mr="45px">Sign in</ChakraLink>
             </Link>
-            <Link href="" passHref>
+            <Link href="/signup" passHref>
               <ChakraLink
                 h="42px"
                 w="128px"
