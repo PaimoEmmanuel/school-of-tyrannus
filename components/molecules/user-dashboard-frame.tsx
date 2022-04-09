@@ -1,4 +1,5 @@
-import { Box, Link as ChakraLink, Link, Text } from "@chakra-ui/react";
+import { Box, Link as ChakraLink, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import UserDashboardVideoPreview from "./user-dashboard-video-preview";
 
 export interface IUserDashboardFrameProps { };
@@ -16,7 +17,7 @@ const UserDashboardFrame: React.FC<IUserDashboardFrameProps> = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 A, massa pulvinar lacus posuere pretium ac, turpis molestie.
             </Text>
-            <Link href="/courses">
+            <Link href="/courses" passHref>
                 <ChakraLink
                     h="50px"
                     w="166px"

@@ -1,7 +1,5 @@
-import { Box, Img, Link as ChakraLink, Text } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box } from "@chakra-ui/react";
 import UserDashboardFrame from "./user-dashboard-frame";
-import UserDashboardVideoPreview from "./user-dashboard-video-preview";
 
 export interface IUserDashboardBannerProps { };
 
