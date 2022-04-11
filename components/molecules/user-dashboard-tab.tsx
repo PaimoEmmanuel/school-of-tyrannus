@@ -3,10 +3,10 @@ import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 
 const UserDashboardTab: React.FC = ({ }) => {
     return (
-        <Tabs mt="100px" mb="30px">
-            <TabList mx="370px" height="50px"
-                maxW="900px">
+        <Tabs mt="100px" mb="56px" mx="175px" maxW="10000px">
+            <TabList height="50px">
                 <Tab
+                    mr="10"
                     _selected={{
                         borderBottom: "3px solid #0B0966",
                         color: "text.deepBlue",
@@ -18,6 +18,7 @@ const UserDashboardTab: React.FC = ({ }) => {
                 </Tab>
 
                 <Tab
+                    mr="10"
                     _selected={{
                         borderBottom: "3px solid #0B0966",
                         color: "text.deepBlue",
@@ -29,6 +30,7 @@ const UserDashboardTab: React.FC = ({ }) => {
                 </Tab>
 
                 <Tab
+                    mr="10"
                     _selected={{
                         borderBottom: "3px solid #0B0966",
                         color: "text.deepBlue",
@@ -40,6 +42,7 @@ const UserDashboardTab: React.FC = ({ }) => {
                 </Tab>
 
                 <Tab
+                    mr="10"
                     _selected={{
                         borderBottom: "3px solid #0B0966",
                         color: "text.deepBlue",

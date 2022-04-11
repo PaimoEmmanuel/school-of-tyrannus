@@ -6,9 +6,13 @@ interface IUserDashboardContentProps { };
 
 const UserDashboardContent: React.FunctionComponent<IUserDashboardContentProps> = () => {
     return (
-        <Box>
+        <div>
+            <Box>
+
+            </Box>
             <UserDashboardTab />
-        </Box>
+        </div>
+
     )
 }
 
