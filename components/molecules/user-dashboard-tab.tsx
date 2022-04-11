@@ -1,10 +1,11 @@
-import { Tab, TabList, Tabs } from "@chakra-ui/react";
+import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 
 
 const UserDashboardTab: React.FC = ({ }) => {
     return (
-        <Tabs>
-            <TabList mx="175px">
+        <Tabs mt="100px" mb="30px">
+            <TabList mx="370px" height="50px"
+                maxW="900px">
                 <Tab
                     _selected={{
                         borderBottom: "3px solid #0B0966",
@@ -61,6 +62,7 @@ const UserDashboardTab: React.FC = ({ }) => {
                 </Tab>
             </TabList>
         </Tabs>
+
     );
 
 }
