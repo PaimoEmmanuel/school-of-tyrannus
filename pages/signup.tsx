@@ -1,45 +1,33 @@
-import type { NextPage } from "next";
+import type {NextPage} from "next";
 import Head from "next/head";
 import NavigationBar from "../components/organisms/navigation-bar";
-import { Box, Button, Flex, Text, Link as ChakraLink } from "@chakra-ui/react";
+import {Box, Button, Flex, Link as ChakraLink, Spinner, Text,} from "@chakra-ui/react";
 import Input from "../components/molecules/input";
 import SigninBg from "../components/molecules/signin-bg";
-import { useState } from "react";
 import Link from "next/link";
 import PasswordInput from "../components/molecules/password";
-import { signUp } from "../services/auth";
+import {useSignUp} from "../hooks";
 
 const Signup: NextPage = () => {
-  const [emailAddress, setEmailAddress] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const handleSignIn = () => {
-    signUp({
-      firstName,
-      lastName,
-      phoneNumber,
-      emailAddress: emailAddress,
-      password,
-      gender: "male",
-    })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  };
+  const {
+    setEmailAddress,
+    setFirstName,
+    setLastName,
+    setPhoneNumber,
+    setPassword,
+    setConfirmPassword,
+    handleSignUp,
+    isSigningUp,
+    error,
+  } = useSignUp();
   return (
     <>
       <Head>
         <title>Sign up - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
-        <NavigationBar />
-        <SigninBg />
+        <NavigationBar/>
+        <SigninBg/>
         <Flex
           justifyContent="center"
           alignItems="center"
@@ -59,7 +47,6 @@ const Signup: NextPage = () => {
               Sign up
             </Text>
             <Input
-              value={firstName}
               onChange={(e) => {
                 setFirstName(e.target.value);
               }}
@@ -69,7 +56,6 @@ const Signup: NextPage = () => {
               name="first-name"
             />
             <Input
-              value={lastName}
               onChange={(e) => {
                 setLastName(e.target.value);
               }}
@@ -79,7 +65,6 @@ const Signup: NextPage = () => {
               name="last-name"
             />
             <Input
-              value={emailAddress}
               onChange={(e) => {
                 setEmailAddress(e.target.value);
               }}
@@ -89,7 +74,6 @@ const Signup: NextPage = () => {
               name="email"
             />
             <Input
-              value={phoneNumber}
               onChange={(e) => {
                 setPhoneNumber(e.target.value);
               }}
@@ -99,7 +83,6 @@ const Signup: NextPage = () => {
               name="phone-number"
             />
             <PasswordInput
-              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -108,7 +91,6 @@ const Signup: NextPage = () => {
               type="password"
             />
             <PasswordInput
-              value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
               }}
@@ -116,8 +98,15 @@ const Signup: NextPage = () => {
               placeholder="Confirm password"
               type="password"
             />
+            {error && (
+              <Text fontSize="14px" mb="20px" color="red">
+                {error}
+              </Text>
+            )}
             <Button
               type="submit"
+              display="flex"
+              gap="16px"
               w="300px"
               h="50px"
               bgColor="text.orange"
@@ -133,10 +122,11 @@ const Signup: NextPage = () => {
               }}
               onClick={(e) => {
                 e.preventDefault();
-                handleSignIn();
+                handleSignUp();
               }}
             >
-              Sign up
+              {isSigningUp ? "Please wait" : "Sign up"}
+              {isSigningUp && <Spinner/>}
             </Button>
             <Text fontSize="12px" color="text.gray">
               Already have an account?{" "}

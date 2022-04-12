@@ -16,7 +16,7 @@ const Home: NextPage = () => {
       <div>
         <NavigationBar />
         <HomeBanner />
-        {[1, 2, 3].map((item, index) => (
+        {[1].map((item, index) => (
           <HomeCourseTemplate
             key={index + "oo"}
             index={index}

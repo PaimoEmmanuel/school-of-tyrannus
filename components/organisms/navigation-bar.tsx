@@ -1,25 +1,16 @@
-import {
-  Flex,
-  Link as ChakraLink,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  // ChevronDownIcon,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from "@chakra-ui/react";
+import {Button, Flex, Link as ChakraLink, Menu, MenuButton, MenuItem, MenuList,} from "@chakra-ui/react";
 import Link from "next/link";
-import * as React from "react";
+import {useContext} from "react";
 import LogoText from "../molecules/logo-text";
 import NavSearch from "../molecules/nav-search";
+import {UserContext} from "../../context/user-context";
 
-interface INavigationBarProps {}
+interface INavigationBarProps {
+}
 
 const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
+
+  const {user} = useContext(UserContext)
   return (
     <Flex
       as="nav"
@@ -30,8 +21,8 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
       zIndex="1"
     >
       <Flex minW="50%" justifyContent="space-between">
-        <LogoText />
-        <NavSearch />
+        <LogoText/>
+        <NavSearch/>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <Link href="/about" passHref>
@@ -43,7 +34,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
         <Link href="/explore" passHref>
           <ChakraLink mr="45px">Explore</ChakraLink>
         </Link>
-        {false ? (
+        {!user.isLoggedIn ? (
           <>
             <Link href="/signin" passHref>
               <ChakraLink mr="45px">Sign in</ChakraLink>
@@ -87,7 +78,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
                 </svg>
               }
             >
-              Joshua Adegbite
+              {String(user.details.Username)}
             </MenuButton>
             <MenuList>
               <MenuItem>Sign Out</MenuItem>

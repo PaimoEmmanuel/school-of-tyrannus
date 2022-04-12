@@ -7,7 +7,7 @@ export const signUp = (reqBody: ISignUpRequest) => {
 };
 
 export const signIn = (reqBody: ILoginRequest) => {
-    return request.post(`/Auth/Login'`, reqBody);
+    return request.post(`/Auth/Login`, reqBody);
 };
 
 export const signOut = () => {
