@@ -73,7 +73,7 @@ const useSignUp = () => {
         .catch((err) => {
           setIsSigningUp(false)
           console.log(err)
-          if (err?.response?.status === 400) {
+          if (err.response?.status === 400) {
             setError(err.response.data);
           } else console.log(err);
         });

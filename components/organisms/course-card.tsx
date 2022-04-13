@@ -1,17 +1,19 @@
-import { Box, Img, Text, Link as ChakraLink } from "@chakra-ui/react";
+import { Box, Img, Link as ChakraLink, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import * as React from "react";
 
 interface ICourseCardProps {
   title: string;
-  lessons: number;
-  videos: number;
+  lessonsCount: number;
+  contentsCount: number;
+  id: number;
 }
 
 const CourseCard: React.FunctionComponent<ICourseCardProps> = ({
   title,
-  lessons,
-  videos,
+  lessonsCount,
+  contentsCount,
+  id,
 }) => {
   return (
     <Box
@@ -29,7 +31,7 @@ const CourseCard: React.FunctionComponent<ICourseCardProps> = ({
       />
       <Box p="30px 30px 0 30px">
         <Text fontSize="14px" lineHeight="21px" color="text.gold">
-          {lessons} lessons . {videos} videos
+          {lessonsCount} lessons . {contentsCount} videos
         </Text>
         <Text
           fontSize="18px"
@@ -39,7 +41,7 @@ const CourseCard: React.FunctionComponent<ICourseCardProps> = ({
         >
           {title}
         </Text>
-        <Link href="" passHref>
+        <Link href={`/course/${id}`} passHref>
           <ChakraLink
             color="#5B85F1"
             fontSize="14px"

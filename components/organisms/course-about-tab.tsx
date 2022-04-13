@@ -34,14 +34,19 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
   return (
     <Flex gap="50px" px="175px">
       <Box>
-        <Text fontWeight="600" mb="32px">
-          {courseTitle}
-        </Text>
         <Text
+          fontWeight="600"
+          mb="32px"
+          dangerouslySetInnerHTML={{ __html: courseTitle }}
+        >
+          {/* {courseTitle} */}
+        </Text>
+        {/* {aboutCourse} */}
+        <Box
           dangerouslySetInnerHTML={{
             __html: aboutCourse,
           }}
-        ></Text>
+        ></Box>
       </Box>
       <Box
         bgColor="text.blue"
@@ -89,8 +94,25 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
                   controls
                   controlsList="nodownload"
                   loop
-                  poster="/assets/images/video-poster.png"
+                  poster={
+                    thumbnail ? thumbnail : "/assets/images/video-poster.png"
+                  }
                 />
+
+                {/* <iframe
+                  src={`${videoLink}?h=55da59abf7&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  title="1. JSX.mp4"
+                ></iframe> */}
               </Box>
             </ModalBody>
 

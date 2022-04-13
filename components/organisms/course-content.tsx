@@ -1,47 +1,20 @@
 import { Box, Text } from "@chakra-ui/react";
 import LessonContent from "../molecules/lesson-content";
 
-interface ICourseContentProps {}
+interface ICourseContentProps {
+  courseContent: {
+    title: string;
+    description: string;
+    duration: number;
+    contents: {}[];
+    contentsCount: number;
+    resourcesCount: number;
+  }[];
+}
 
-const CourseContent: React.FunctionComponent<ICourseContentProps> = (props) => {
-  const courseContent = [
-    {
-      lessonTitle: "What is FAITH?",
-      lessonDesc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt.",
-      duration: 3,
-      videoNo: 2,
-      resourceNo: 2,
-      testNo: 1,
-    },
-    {
-      lessonTitle: "What is FAITH?",
-      lessonDesc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt.",
-      duration: 3,
-      videoNo: 2,
-      resourceNo: 2,
-      testNo: 1,
-    },
-    {
-      lessonTitle: "What is FAITH?",
-      lessonDesc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt.",
-      duration: 3,
-      videoNo: 2,
-      resourceNo: 2,
-      testNo: 1,
-    },
-    {
-      lessonTitle: "What is FAITH?",
-      lessonDesc:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt.",
-      duration: 3,
-      videoNo: 2,
-      resourceNo: 2,
-      testNo: 1,
-    },
-  ];
+const CourseContent: React.FunctionComponent<ICourseContentProps> = ({
+  courseContent,
+}) => {
   return (
     <Box bgColor="text.blue" pt="60px" pb="90px" px="175px">
       <Text fontWeight="600" mb="33px">
@@ -49,9 +22,15 @@ const CourseContent: React.FunctionComponent<ICourseContentProps> = (props) => {
       </Text>
       {courseContent.map((content, index) => (
         <LessonContent
-          key={content.lessonTitle}
+          key={content.title}
           lessonNumber={index + 1}
-          {...content}
+          lessonDesc={content.description}
+          duration={content.duration}
+          videoNo={content.contentsCount}
+          resourceNo={content.resourcesCount}
+          // testNo={content.contents.length}
+          testNo={2}
+          lessonTitle={content.title}
           lastLesson={index + 1 === courseContent.length}
         />
       ))}

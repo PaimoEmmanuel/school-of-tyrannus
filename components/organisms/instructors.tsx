@@ -1,25 +1,11 @@
 import { Box, Text, Flex, Img, Grid } from "@chakra-ui/react";
 
-interface IInstructorsProps {}
+interface IInstructorsProps {
+  instructors: { name: string; thumbnail: string }[];
+}
 
-const Instructors: React.FunctionComponent<IInstructorsProps> = (props) => {
-  const instructors = [
-    {
-      name: "Pst Ayo Omosehin",
-      avatar: "/assets/images/video-poster.png",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt. ",
-    },
-    {
-      name: "Pst Tope Falaye",
-      avatar: "/assets/images/video-poster.png",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt. ",
-    },
-    {
-      name: "Pst Tunji Adegoke",
-      avatar: "/assets/images/video-poster.png",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut neque, tincidunt. ",
-    },
-  ];
+const Instructors: React.FunctionComponent<IInstructorsProps> = ({instructors}) => {
+  
   return (
     <Box pt="53px" pb="90px" px="175px">
       <Text fontWeight="600" mb="54px">
@@ -43,14 +29,14 @@ const Instructors: React.FunctionComponent<IInstructorsProps> = (props) => {
                 borderRadius="50%"
                 mr="23px"
                 border="8px solid rgba(253, 211, 132, 0.4)"
-                src={instructor.avatar}
-                alt={instructor.name}
+                src={instructor.thumbnail}
+                // alt={instructor.name}
               />
-              <Text maxW="100px" textAlign="left">
-                Pst. Ayo Omosehin
+              <Text maxW="120px" textAlign="left">
+              {instructor.name}
               </Text>
             </Flex>
-            <Text mt="42px">{instructor.desc}</Text>
+            <Text mt="42px">{instructor.name}</Text>
           </Box>
         ))}
       </Grid>

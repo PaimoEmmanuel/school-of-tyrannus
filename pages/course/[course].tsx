@@ -1,26 +1,42 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import NavigationBar from "../../../components/organisms/navigation-bar";
+import NavigationBar from "../../components/organisms/navigation-bar";
 import { Box, Button, Flex, Img, Text } from "@chakra-ui/react";
-import SigninBg from "../../../components/molecules/signin-bg";
-import CourseTab from "../../../components/templates/course-tab";
-import Footer from "../../../components/organisms/footer";
+import SigninBg from "../../components/molecules/signin-bg";
+import CourseTab from "../../components/templates/course-tab";
+import Footer from "../../components/organisms/footer";
+import { useRouter } from "next/router";
+import { getAllCourses, getCourse } from "../../services/course";
 
-const CourseDetailsPage: NextPage = () => {
-  const instructors = [
-    { name: "Pst Ayo Omosehin", avatar: "/assets/images/video-poster.png" },
-    { name: "Pst Ayo Omosehin", avatar: "/assets/images/video-poster.png" },
-    { name: "Pst Ayo Omosehin", avatar: "/assets/images/video-poster.png" },
-  ];
-
+interface ICourseDetailsPage {
+  course: {
+    title: string;
+    instructors: { name: string; thumbnail: string }[];
+    lessons: {
+      title: string;
+      description: string;
+      duration: number;
+      contentsCount: number;
+      resourcesCount: number;
+      contents: {}[];
+    }[];
+    lessonsCount: number;
+    contentsCount: number;
+    about: string;
+    introVideoRetrievalId: string;
+    thumbnail: string;
+    totalDuration: number;
+    totalResources: number;
+  };
+}
+const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
   return (
     <>
       <Head>
-        <title>CourseTitle - School of Tyrannus</title>
+        <title>{course.title} - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
         <NavigationBar />
-
         <Box bgColor="text.blue" textAlign="center" pos="relative">
           <Box pos="relative" pt="88px" pb="77px" overflow="hidden">
             <SigninBg course={true} />
@@ -31,11 +47,10 @@ const CourseDetailsPage: NextPage = () => {
                 textTransform="uppercase"
                 mb="28px"
               >
-                Home / young believers / Principles of Faith-asking and
-                believing
+                Home / young believers / {course.title}
               </Text>
               <Text fontSize="36px" fontWeight="500" color="#131275" mb="52px">
-                Principles of Faith - asking and believing
+                {course.title}
               </Text>
               <Text
                 pos="relative"
@@ -57,7 +72,7 @@ const CourseDetailsPage: NextPage = () => {
                 mt="34px"
                 gap="55px"
               >
-                {instructors.map((instructor) => (
+                {course.instructors.map((instructor) => (
                   <Flex key={instructor.name} alignItems="center">
                     <Img
                       h="57px"
@@ -66,11 +81,15 @@ const CourseDetailsPage: NextPage = () => {
                       borderRadius="50%"
                       mr="23px"
                       border="8px solid rgba(253, 211, 132, 0.4)"
-                      src={instructor.avatar}
-                      alt={instructor.name}
+                      src={
+                        instructor.thumbnail
+                          ? instructor.thumbnail
+                          : "/assets/images/video-poster.png"
+                      }
+                      // alt={instructor.name}
                     />
-                    <Text maxW="100px" textAlign="left">
-                      Pst. Ayo Omosehin
+                    <Text maxW="120px" textAlign="left">
+                      {instructor.name}
                     </Text>
                   </Flex>
                 ))}
@@ -81,7 +100,7 @@ const CourseDetailsPage: NextPage = () => {
                 mt="48px"
                 textTransform="uppercase"
               >
-                4 lessons . 8 videos
+                {course.lessonsCount} lessons . {course.contentsCount} videos
               </Text>
             </Box>
           </Box>
@@ -101,7 +120,16 @@ const CourseDetailsPage: NextPage = () => {
         </Box>
       </Box>
       <Box mt="117px">
-        <CourseTab />
+        <CourseTab
+          title={course.title}
+          about={course.about}
+          introVideoRetrievalId={course.introVideoRetrievalId}
+          thumbnail={course.thumbnail}
+          lessons={course.lessons}
+          totalDuration={course.totalDuration}
+          totalResources={course.totalResources}
+          instructors={course.instructors}
+        />
       </Box>
       <Footer />
     </>
@@ -109,3 +137,27 @@ const CourseDetailsPage: NextPage = () => {
 };
 
 export default CourseDetailsPage;
+
+export const getStaticPaths = async () => {
+  const res = await getAllCourses();
+  const courses = await res.data;
+
+  const paths = courses.map((course: { id: string }) => ({
+    params: { course: String(course.id) },
+  }));
+  return { paths, fallback: false };
+};
+
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { course: string };
+}) => {
+  const res = await getCourse(params.course);
+  const course = await res.data;
+  return {
+    props: {
+      course,
+    },
+  };
+};
