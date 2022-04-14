@@ -6,8 +6,16 @@ import NavigationBar from "../components/organisms/navigation-bar";
 import HomeCourseTemplate from "../components/templates/home-course-template";
 import NewsLetter from "../components/molecules/newsletter";
 import Footer from "../components/organisms/footer";
+import { getLandingPageCourses } from "../services/home-page";
+import { useEffect, useState } from "react";
 
-const Home: NextPage = () => {
+interface IHome {
+  homeCourses: any[];
+}
+
+const Home: NextPage<IHome> = ({ homeCourses }) => {
+  console.log(homeCourses);
+
   return (
     <div className="">
       <Head>
@@ -16,37 +24,13 @@ const Home: NextPage = () => {
       <div>
         <NavigationBar />
         <HomeBanner />
-        {[1, 2, 3].map((item, index) => (
+        {homeCourses.map((item, index) => (
           <HomeCourseTemplate
             key={index + "oo"}
             index={index}
-            courses={[
-              {
-                title: "Principles of Faith - asking and believing",
-                lessons: 4,
-                videos: 8,
-              },
-              {
-                title: "Principles of Hope - esteeming the right things",
-                lessons: 4,
-                videos: 8,
-              },
-              {
-                title: "Principles of Hope - esteeming the right things",
-                lessons: 4,
-                videos: 8,
-              },
-              {
-                title: "Principles of Hope - esteeming the right things",
-                lessons: 4,
-                videos: 8,
-              },
-              // {
-              //   title: "Principles of Hope - esteeming the right things",
-              //   lessons: 4,
-              //   videos: 8,
-              // },
-            ]}
+            title={item.name}
+            about={item.description}
+            courses={item.courses}
           />
         ))}
         <HomeTestimony />
@@ -55,6 +39,16 @@ const Home: NextPage = () => {
       </div>
     </div>
   );
+};
+
+export const getStaticProps = async () => {
+  const res = await getLandingPageCourses();
+  const homeCourses = await res.data;
+  return {
+    props: {
+      homeCourses,
+    },
+  };
 };
 
 export default Home;

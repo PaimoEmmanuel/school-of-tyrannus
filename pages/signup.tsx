@@ -1,26 +1,33 @@
-import type { NextPage } from "next";
+import type {NextPage} from "next";
 import Head from "next/head";
 import NavigationBar from "../components/organisms/navigation-bar";
-import { Box, Button, Flex, Text, Link as ChakraLink } from "@chakra-ui/react";
+import {Box, Button, Flex, Link as ChakraLink, Spinner, Text,} from "@chakra-ui/react";
 import Input from "../components/molecules/input";
 import SigninBg from "../components/molecules/signin-bg";
-import { useState } from "react";
 import Link from "next/link";
 import PasswordInput from "../components/molecules/password";
+import {useSignUp} from "../hooks";
 
 const Signup: NextPage = () => {
-  const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    setEmailAddress,
+    setFirstName,
+    setLastName,
+    setPhoneNumber,
+    setPassword,
+    setConfirmPassword,
+    handleSignUp,
+    isSigningUp,
+    error,
+  } = useSignUp();
   return (
     <>
       <Head>
         <title>Sign up - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
-        <NavigationBar />
-        <SigninBg />
+        <NavigationBar/>
+        <SigninBg/>
         <Flex
           justifyContent="center"
           alignItems="center"
@@ -29,7 +36,6 @@ const Signup: NextPage = () => {
         >
           <Box
             // pending removal
-            transform="scale(1.3)"
             as="form"
             boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13);"
             p="70px 100px"
@@ -41,27 +47,42 @@ const Signup: NextPage = () => {
               Sign up
             </Text>
             <Input
-              value={fullname}
               onChange={(e) => {
-                setFullname(e.target.value);
+                setFirstName(e.target.value);
               }}
-              label={"Full Name"}
-              placeholder="Enter Full Name"
+              label={"First Name"}
+              placeholder="Enter First Name"
               type="text"
-              name="full-name"
+              name="first-name"
             />
             <Input
-              value={email}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setLastName(e.target.value);
+              }}
+              label={"Last Name"}
+              placeholder="Enter Last Name"
+              type="text"
+              name="last-name"
+            />
+            <Input
+              onChange={(e) => {
+                setEmailAddress(e.target.value);
               }}
               label={"Email Address"}
               placeholder="Enter email"
               type="email"
               name="email"
             />
+            <Input
+              onChange={(e) => {
+                setPhoneNumber(e.target.value);
+              }}
+              label={"Phone Number"}
+              placeholder="Enter phone number"
+              type="text"
+              name="phone-number"
+            />
             <PasswordInput
-              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -70,7 +91,6 @@ const Signup: NextPage = () => {
               type="password"
             />
             <PasswordInput
-              value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
               }}
@@ -78,8 +98,15 @@ const Signup: NextPage = () => {
               placeholder="Confirm password"
               type="password"
             />
+            {error && (
+              <Text fontSize="14px" mb="20px" color="red">
+                {error}
+              </Text>
+            )}
             <Button
               type="submit"
+              display="flex"
+              gap="16px"
               w="300px"
               h="50px"
               bgColor="text.orange"
@@ -95,9 +122,11 @@ const Signup: NextPage = () => {
               }}
               onClick={(e) => {
                 e.preventDefault();
+                handleSignUp();
               }}
             >
-              Sign up
+              {isSigningUp ? "Please wait" : "Sign up"}
+              {isSigningUp && <Spinner/>}
             </Button>
             <Text fontSize="12px" color="text.gray">
               Already have an account?{" "}

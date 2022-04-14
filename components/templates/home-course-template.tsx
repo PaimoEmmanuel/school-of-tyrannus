@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Box, Text, Link as ChakraLink, Flex } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import HomeCourseIconA from "../atoms/home-course-icon-a";
 import HomeCourseIconB from "../atoms/home-course-icon-b";
 import CourseCard from "../organisms/course-card";
@@ -10,13 +9,23 @@ import {
   HomeCourseBgC,
 } from "../atoms/home-course-bg";
 import HomeCourseIconC from "../atoms/home-course-icon-c";
+
 interface IHomeCourseTemplateProps {
   index: number;
-  courses: { title: string; lessons: number; videos: number }[];
+  title: string;
+  about: string;
+  courses: {
+    title: string;
+    lessonsCount: number;
+    contentsCount: number;
+    id: number;
+  }[];
 }
 
 const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
   index,
+  title,
+  about,
   courses,
 }) => {
   const getMedia = (index: number) => {
@@ -68,30 +77,28 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
         // gap="24px"
       >
         {getMedia(index).courseIcon({})}
-        Young Believers
+        {title}
       </Text>
       <Flex justifyContent="space-between" mb="40px" pos="relative">
         <Text maxW="583px" fontSize="14px" lineHeight="21px" color="#514F4F">
-          The formation of a young believer shapes how spiritually mature that
-          believer will be. Learn the foundation of the Apostle’s doctrine and
-          where God will have us be.
+          {about}
         </Text>
-        <Link href="" passHref>
-          <ChakraLink
-            h="42px"
-            w="164px"
-            bgColor="text.orange"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            borderRadius="4px"
-            fontWeight="500"
-            boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
-            color="white"
-          >
-            View all courses
-          </ChakraLink>
-        </Link>
+        {/*<Link href="" passHref>*/}
+        {/*  <ChakraLink*/}
+        {/*    h="42px"*/}
+        {/*    w="164px"*/}
+        {/*    bgColor="text.orange"*/}
+        {/*    display="flex"*/}
+        {/*    alignItems="center"*/}
+        {/*    justifyContent="center"*/}
+        {/*    borderRadius="4px"*/}
+        {/*    fontWeight="500"*/}
+        {/*    boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"*/}
+        {/*    color="white"*/}
+        {/*  >*/}
+        {/*    View all courses*/}
+        {/*  </ChakraLink>*/}
+        {/*</Link>*/}
       </Flex>
       <Flex justifyContent="space-between" gap="1%">
         {courses.map((course) => (

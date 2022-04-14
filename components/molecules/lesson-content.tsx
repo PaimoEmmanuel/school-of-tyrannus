@@ -22,7 +22,7 @@ const LessonContent: React.FC<ILessonContextProps> = ({
 }) => {
   return (
     <Flex alignItems="center" mb="50px">
-      <Box mr="130px">
+      <Box mr="90px" minW="204px">
         <Text fontWeight="300" color="text.gray" fontSize="34px">
           Lesson
         </Text>

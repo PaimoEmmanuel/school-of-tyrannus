@@ -1,15 +1,22 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NavigationBar from "../components/organisms/navigation-bar";
-import { Box, Button, Flex, Text, Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  Link as ChakraLink,
+  Spinner,
+} from "@chakra-ui/react";
 import Input from "../components/molecules/input";
 import SigninBg from "../components/molecules/signin-bg";
-import { useState } from "react";
 import Link from "next/link";
+import { useSignIn } from "../hooks";
 
 const Signin: NextPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { setEmail, setPassword, handleSignIn, isSigningIn, error } =
+    useSignIn();
   return (
     <>
       <Head>
@@ -26,7 +33,6 @@ const Signin: NextPage = () => {
         >
           <Box
             // pending removal
-            transform="scale(1.3)"
             as="form"
             boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13);"
             p="70px 100px"
@@ -38,7 +44,6 @@ const Signin: NextPage = () => {
               Sign in
             </Text>
             <Input
-              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -48,7 +53,6 @@ const Signin: NextPage = () => {
               name="email"
             />
             <Input
-              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -56,7 +60,14 @@ const Signin: NextPage = () => {
               placeholder="Enter password"
               type="password"
             />
+            {error && (
+              <Text fontSize="14px" mb="20px" color="red">
+                {error}
+              </Text>
+            )}
             <Button
+              display="flex"
+              gap="16px"
               type="submit"
               w="300px"
               h="50px"
@@ -73,9 +84,11 @@ const Signin: NextPage = () => {
               }}
               onClick={(e) => {
                 e.preventDefault();
+                handleSignIn();
               }}
             >
-              Sign in
+              {isSigningIn ? "Please wait" : "Sign in"}
+              {isSigningIn && <Spinner />}
             </Button>
             <Text fontSize="12px" color="text.gray">
               New here?{" "}
