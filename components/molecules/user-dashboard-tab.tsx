@@ -3,8 +3,8 @@ import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 
 const UserDashboardTab: React.FC = ({ }) => {
     return (
-        <Tabs mt="100px" mb="56px" mx="175px" maxW="10000px">
-            <TabList height="50px">
+        <Tabs mt="100" mb="50" mx="175" maxW="10000">
+            <TabList height="50">
                 <Tab
                     mr="10"
                     _selected={{
