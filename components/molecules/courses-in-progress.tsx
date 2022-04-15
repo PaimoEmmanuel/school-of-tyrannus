@@ -6,13 +6,14 @@ import {
     AccordionPanel,
     Box
 } from "@chakra-ui/react";
+import CourseAboutTab from "../organisms/course-about-tab";
 
 
 export interface ICoursesInProgressProps { };
 
 const CoursesInProgress: React.FunctionComponent<ICoursesInProgressProps> = () => {
     return (
-        <Accordion defaultIndex={[0]}
+        <Accordion defaultIndex={[1]}
             allowMultiple allowToggle
             mx='175px' mb='50px'>
             <AccordionItem>
@@ -24,11 +25,7 @@ const CoursesInProgress: React.FunctionComponent<ICoursesInProgressProps> = () =
                     <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel pb={4}>
-                    kjnvsvosnvomsvlsvnvsonvosvnsfvosvnosnvo
-                    kjnvsvosnvomsvlsvnvsonvosvnsfvosvnosnvo
-                    kjnvsvosnvomsvlsvnvsonvosvnsfvosvnosnvo
-                    kjnvsvosnvomsvlsvnvsonvosvnsfvosvnosnvo
-                    kjnvsvosnvomsvlsvnvsonvosvnsfvosvnosnvo
+                    <CoursesInProgress />
                 </AccordionPanel>
             </AccordionItem>
         </Accordion>

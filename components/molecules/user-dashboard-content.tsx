@@ -9,6 +9,7 @@ const UserDashboardContent: React.FunctionComponent<IUserDashboardContentProps> 
         <div>
             <UserDashboardTab />
             <CoursesInProgress />
+            
         </div>
 
     )
