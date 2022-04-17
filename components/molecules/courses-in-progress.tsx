@@ -7,6 +7,7 @@ import {
     Box
 } from "@chakra-ui/react";
 import CourseAboutTab from "../organisms/course-about-tab";
+import CourseInProgressCard from "../organisms/course-in-progress-card";
 
 
 export interface ICoursesInProgressProps { };
@@ -25,7 +26,7 @@ const CoursesInProgress: React.FunctionComponent<ICoursesInProgressProps> = () =
                     <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel pb={4}>
-                    <CoursesInProgress />
+                    <CourseInProgressCard />
                 </AccordionPanel>
             </AccordionItem>
         </Accordion>

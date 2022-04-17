@@ -6,16 +6,6 @@ import NavigationBar from "../components/organisms/navigation-bar";
 
 const UserDashboard: NextPage = () => {
     return (
-        // <div>
-        //     <div>
-        //         <NavigationBar />
-        //         <UserDashboardBanner />
-        //     </div>
-        //     <div>
-        //         <UserDashboardContent />
-        //     </div>
-        //     <Footer />
-        // </div>
         <>
             <NavigationBar />
             <UserDashboardBanner />
