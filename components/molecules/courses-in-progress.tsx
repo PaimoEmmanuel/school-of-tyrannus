@@ -6,7 +6,6 @@ import {
     AccordionPanel,
     Box
 } from "@chakra-ui/react";
-import CourseAboutTab from "../organisms/course-about-tab";
 import CourseInProgressCard from "../organisms/course-in-progress-card";
 
 
