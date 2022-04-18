@@ -11,6 +11,7 @@ import CourseContent from "../organisms/course-content";
 import FAQs from "../organisms/faqs";
 import Instructors from "../organisms/instructors";
 import Reviews from "../organisms/reviews";
+import PrivatePage from "./private-route";
 
 const LessonTab: React.FC = ({}) => {
   return (
@@ -49,7 +50,7 @@ const LessonTab: React.FC = ({}) => {
         >
           Resources
         </Tab>
-        <Tab
+        {/* <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
             color: "text.deepBlue",
@@ -70,7 +71,7 @@ const LessonTab: React.FC = ({}) => {
           _focus={{ outline: "none" }}
         >
           Discussions
-        </Tab>
+        </Tab> */}
       </TabList>
 
       <TabPanels>
@@ -153,7 +154,7 @@ const LessonTab: React.FC = ({}) => {
             Lesson Manual.pdf
           </a>
         </TabPanel>
-        <TabPanel mt="36px" p="0">
+        {/* <TabPanel mt="36px" p="0">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSf7siUyF_0FsNulz95mIyX_PkXMIReccuSZANwCgqIt8ZbSVQ/viewform?embedded=true"
             width="760"
@@ -167,9 +168,9 @@ const LessonTab: React.FC = ({}) => {
         </TabPanel>
         <TabPanel mt="36px" p="0">
           Discussions
-        </TabPanel>
+        </TabPanel> */}
       </TabPanels>
     </Tabs>
   );
 };
-export default LessonTab;
+export default PrivatePage(LessonTab);

@@ -1,13 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
 import LessonSideBarItem from "../molecules/lesson-sidebar-item";
 
-const LessonSideBar: React.FC = () => {
-  const curricula = [
-    ["Christ", "The person Christ", "The person Christ", "Lesson Test"],
-    ["Christ", "The person Christ", "The person Christ", "Lesson Test"],
-    ["Christ", "The person Christ", "The person Christ", "Lesson Test"],
-    ["Christ", "The person Christ", "The person Christ", "Lesson Test"],
-  ];
+interface ILessonSideBar {
+  lessons: { title: string; contents: {title: string}[] }[];
+  currentLesson: number[]
+  setCurrentLesson:  React.Dispatch<React.SetStateAction<number[]>>
+}
+const LessonSideBar: React.FC<ILessonSideBar> = ({ lessons, currentLesson, setCurrentLesson }) => {
   return (
     <Box
       bgColor="white"
@@ -25,8 +24,8 @@ const LessonSideBar: React.FC = () => {
         Course Contents
       </Text>
       <Box mt="26px">
-        {curricula.map((curriculum, index) => (
-          <LessonSideBarItem key={curriculum[index]} lessons={curricula[0]} />
+        {lessons.map((lesson, index) => (
+          <LessonSideBarItem key={index} parentIndex={index} contents={lesson} currentLesson={currentLesson} setCurrentLesson={setCurrentLesson} />
         ))}
       </Box>
     </Box>

@@ -13,34 +13,38 @@ import Link from "next/link";
 import LessonSideBar from "../../../components/organisms/lesson-sidebar";
 import { useEffect } from "react";
 import LessonTab from "../../../components/templates/lesson-tab";
+import {
+  getAllCourses,
+  getCourse,
+  getCourseDetails,
+} from "../../../services/course";
+import { useRouter } from "next/router";
+import { useChangeLesson } from "../../../hooks";
 
-const LessonPage: NextPage = () => {
-  const instructors = [
-    { name: "Pst Ayo Omosehin", avatar: "/assets/images/video-poster.png" },
-    { name: "Pst Ayo Omosehin", avatar: "/assets/images/video-poster.png" },
-    { name: "Pst Ayo Omosehin", avatar: "/assets/images/video-poster.png" },
-  ];
-  useEffect(() => {
-    const iframe = document.querySelector("iframe");
-    if (iframe) {
-      iframe.onload = () => {
-        // var c = iframe.contentWindow?.document;
-        // console.log(c);
-
-        const videPlayer = document.getElementById("#player");
-        videPlayer?.setAttribute(
-          "style",
-          "{ borderRadius: 12px, overflow: hidden }"
-        );
-        console.log(iframe);
-      };
-    }
-  }, []);
+interface ILessonPageProps {
+  course: {
+    title: string;
+    lessons: {
+      title: string;
+      contents: { title: string; videoRetrievalId: string }[];
+    }[];
+  };
+}
+const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
+  console.log(course);
+  const {
+    currentLesson,
+    goToPrev,
+    goToNext,
+    isFirstContent,
+    isLastContent,
+    setCurrentLesson,
+  } = useChangeLesson(course.lessons);
 
   return (
     <>
       <Head>
-        <title>CourseTitle - School of Tyrannus</title>
+        <title>{course.title} - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
         <NavigationBar />
@@ -76,7 +80,11 @@ const LessonPage: NextPage = () => {
             </ChakraLink>
           </Link>
           <Flex>
-            <LessonSideBar />
+            <LessonSideBar
+              currentLesson={currentLesson}
+              lessons={course.lessons}
+              setCurrentLesson={setCurrentLesson}
+            />
             <Box
               //   ml="416px"
               mx="64px"
@@ -103,11 +111,89 @@ const LessonPage: NextPage = () => {
                 top="0"
                 left="0"
               >
-                The Christ Man
+                {
+                  course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                    .title
+                }
               </Text>
-              <div style={{ padding: "62.5% 0 0 0", position: "relative" }}>
+              <Box pos="relative" padding="62.5% 0 0 0" role="group">
+                <Box
+                  as="button"
+                  display={isFirstContent ? "none" : "block"}
+                  pos="absolute"
+                  top="50%"
+                  transform="translateY(-50%)"
+                  left="0"
+                  zIndex={2}
+                  opacity={0}
+                  _groupHover={{ opacity: 1 }}
+                  transition="all .3s"
+                  disabled={isFirstContent}
+                  onClick={() => {
+                    goToPrev();
+                  }}
+                >
+                  <svg
+                    width="40"
+                    height="60"
+                    viewBox="0 0 50 70"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      width="50"
+                      height="70"
+                      transform="matrix(-1 0 0 1 50 0)"
+                      fill="#717171"
+                    />
+                    <path
+                      d="M35.2273 12.069L13.6364 35L35.2273 57.931"
+                      stroke="white"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Box>
+                <Box
+                  as="button"
+                  display={isLastContent ? "none" : "block"}
+                  pos="absolute"
+                  top="50%"
+                  transform="translateY(-50%)"
+                  right="0"
+                  opacity={0}
+                  zIndex={2}
+                  _groupHover={{ opacity: 1 }}
+                  transition="all .3s"
+                  disabled={isLastContent}
+                  onClick={() => {
+                    goToNext();
+                  }}
+                >
+                  <svg
+                    width="40"
+                    height="60"
+                    viewBox="0 0 50 70"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="50" height="70" fill="#717171" />
+                    <path
+                      d="M14.7727 12.069L36.3636 35L14.7727 57.931"
+                      stroke="white"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Box>
                 <iframe
-                  src="https://player.vimeo.com/video/644716104?h=55da59abf7&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                  // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
+                  src={`${
+                    course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                      .videoRetrievalId
+                  }&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
@@ -120,7 +206,7 @@ const LessonPage: NextPage = () => {
                   }}
                   title="1. JSX.mp4"
                 ></iframe>
-              </div>
+              </Box>
 
               {/* eslint-disable-next-line @next/next/no-sync-scripts */}
               <script src="https://player.vimeo.com/api/player.js"></script>
@@ -141,3 +227,26 @@ const LessonPage: NextPage = () => {
 };
 
 export default LessonPage;
+
+interface ICourseProps {
+  params: { course: string };
+}
+
+export const getStaticPaths = async () => {
+  const res = await getAllCourses();
+  const courses = await res.data;
+  const paths = courses.map((course: { id: string }) => ({
+    params: { course: String(course.id) },
+  }));
+  return { paths, fallback: false };
+};
+
+export const getStaticProps = async ({ params }: ICourseProps) => {
+  const res = await getCourseDetails(params.course);
+  const course = await res.data;
+  return {
+    props: {
+      course,
+    },
+  };
+};

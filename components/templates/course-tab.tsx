@@ -1,27 +1,11 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { ICourseTabProps } from "../../types/course";
 import CourseAboutTab from "../organisms/course-about-tab";
 import CourseContent from "../organisms/course-content";
 import FAQs from "../organisms/faqs";
 import Instructors from "../organisms/instructors";
 import Reviews from "../organisms/reviews";
 
-interface ICourseTabProps {
-  about: string;
-  title: string;
-  thumbnail: string;
-  introVideoRetrievalId: string;
-  totalDuration: number;
-  totalResources: number;
-  instructors: { name: string; thumbnail: string }[];
-  lessons: {
-    title: string;
-    description: string;
-    duration: number;
-    contents: {}[];
-    contentsCount: number;
-    resourcesCount: number;
-  }[];
-}
 const CourseTab: React.FC<ICourseTabProps> = ({
   about,
   title,
@@ -90,14 +74,14 @@ const CourseTab: React.FC<ICourseTabProps> = ({
       <TabPanels>
         <TabPanel mt="36px" mb="56px">
           <CourseAboutTab
-            courseTitle={"About this course: " + title}
-            aboutCourse={about}
-            thumbnail={
-              thumbnail ? thumbnail : "/assets/images/video-poster.png"
-            }
-            videoLink={introVideoRetrievalId}
-            duration={totalDuration}
-            resources={totalResources}
+            title={"About this course: " + title}
+            {...{
+              about,
+              thumbnail,
+              introVideoRetrievalId,
+              totalDuration,
+              totalResources,
+            }}
           />
         </TabPanel>
         <TabPanel p="0">
