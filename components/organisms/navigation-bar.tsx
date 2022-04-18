@@ -1,16 +1,26 @@
-import {Button, Flex, Link as ChakraLink, Menu, MenuButton, MenuItem, MenuList,} from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Link as ChakraLink,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import Link from "next/link";
-import {useContext} from "react";
+import { useContext } from "react";
 import LogoText from "../molecules/logo-text";
 import NavSearch from "../molecules/nav-search";
-import {UserContext} from "../../context/user-context";
+import { UserContext } from "../../context/user-context";
+import removeUser from "../../utils/remove-user";
+import { useRouter } from "next/router";
+import getUser from "../../utils/get-user";
 
-interface INavigationBarProps {
-}
+interface INavigationBarProps {}
 
 const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
-
-  const {user} = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
   return (
     <Flex
       as="nav"
@@ -21,8 +31,8 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
       zIndex="1"
     >
       <Flex minW="50%" justifyContent="space-between">
-        <LogoText/>
-        <NavSearch/>
+        <LogoText />
+        <NavSearch />
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <Link href="/about" passHref>
@@ -31,9 +41,9 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
         <Link href="/courses" passHref>
           <ChakraLink mr="45px">Courses</ChakraLink>
         </Link>
-        <Link href="/explore" passHref>
+        {/* <Link href="/explore" passHref>
           <ChakraLink mr="45px">Explore</ChakraLink>
-        </Link>
+        </Link> */}
         {!user.isLoggedIn ? (
           <>
             <Link href="/signin" passHref>
@@ -81,8 +91,16 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
               {String(user.details.Username)}
             </MenuButton>
             <MenuList>
-              <MenuItem>Sign Out</MenuItem>
-              <MenuItem>My Learning</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  removeUser();
+                  router.push("/signin");
+                  setUser(getUser());
+                }}
+              >
+                Sign Out
+              </MenuItem>
+              {/* <MenuItem>My Learning</MenuItem> */}
             </MenuList>
           </Menu>
         )}

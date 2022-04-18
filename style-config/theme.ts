@@ -26,7 +26,7 @@ const styles = {
       height: '100%',
     },
     'a': {
-      // _hover: { textDecoration: "none" }
+      _hover: { textDecoration: "none !important" }
     }
   }
 }

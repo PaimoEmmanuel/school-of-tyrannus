@@ -12,9 +12,17 @@ import {
 import Link from "next/link";
 
 interface ILessonSideBarItemProps {
-  lessons: string[];
+  contents: { title: string; contents: { title: string }[] };
+  parentIndex: number;
+  currentLesson: number[];
+  setCurrentLesson: React.Dispatch<React.SetStateAction<number[]>>;
 }
-const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({ lessons }) => {
+const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
+  contents,
+  parentIndex,
+  currentLesson,
+  setCurrentLesson,
+}) => {
   return (
     <Accordion defaultIndex={[0]} allowMultiple mb="36px">
       <AccordionItem border="none">
@@ -35,7 +43,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({ lessons }) => {
                 }}
               >
                 <Box flex="1" textAlign="left" fontWeight="600" fontSize="20px">
-                  Lesson 1
+                  {contents.title}
                 </Box>
                 <svg
                   width="22"
@@ -55,15 +63,28 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({ lessons }) => {
               </AccordionButton>
             </h2>
             <AccordionPanel p={0}>
-              {lessons.map((lesson, index) => (
+              {contents.contents.map((content, index) => (
                 <Text
-                  key={lesson}
+                  as="button"
+                  textAlign="left"
+                  key={content.title}
+                  fontWeight={
+                    parentIndex === currentLesson[0] &&
+                    index === currentLesson[1]
+                      ? "700"
+                      : "400"
+                  }
                   p="15px 0px"
                   borderBottom={
-                    index === lesson.length - 1 ? "" : "1px solid #E8E8E8"
+                    index === content.title.length - 1
+                      ? ""
+                      : "1px solid #E8E8E8"
                   }
+                  onClick={() => {
+                    setCurrentLesson([parentIndex, index])
+                  }}
                 >
-                  {index + 1 + ". " + lesson}
+                  {index + 1 + ". " + content.title}
                 </Text>
               ))}
             </AccordionPanel>

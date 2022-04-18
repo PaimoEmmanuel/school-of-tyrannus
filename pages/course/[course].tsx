@@ -1,35 +1,24 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NavigationBar from "../../components/organisms/navigation-bar";
-import { Box, Button, Flex, Img, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Img,
+  Text,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 import SigninBg from "../../components/molecules/signin-bg";
 import CourseTab from "../../components/templates/course-tab";
 import Footer from "../../components/organisms/footer";
 import { useRouter } from "next/router";
 import { getAllCourses, getCourse } from "../../services/course";
+import { ICourseDetails } from "../../types/course";
+import Link from "next/link";
 
-interface ICourseDetailsPage {
-  course: {
-    title: string;
-    instructors: { name: string; thumbnail: string }[];
-    lessons: {
-      title: string;
-      description: string;
-      duration: number;
-      contentsCount: number;
-      resourcesCount: number;
-      contents: {}[];
-    }[];
-    lessonsCount: number;
-    contentsCount: number;
-    about: string;
-    introVideoRetrievalId: string;
-    thumbnail: string;
-    totalDuration: number;
-    totalResources: number;
-  };
-}
-const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
+const CourseDetailsPage: NextPage<ICourseDetails> = ({ course }) => {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -104,19 +93,31 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
               </Text>
             </Box>
           </Box>
-          <Button
-            h="60px"
-            w="300px"
-            pos="absolute"
-            left="50%"
-            bottom="-30px"
-            transform={"translateX(-50%)"}
-            bgColor="text.orange"
-            boxShadow="0px 3px 26px rgba(253, 211, 132, 0.9)"
-            color="white"
-          >
-            START COURSE
-          </Button>
+          <Link href={`${router.asPath}/lesson`} passHref>
+            <ChakraLink
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              fontWeight="600"
+              borderRadius="4px"
+              h="60px"
+              w="300px"
+              pos="absolute"
+              left="50%"
+              bottom="-30px"
+              transform={"translateX(-50%)"}
+              bgColor="text.orange"
+              boxShadow="0px 3px 26px rgba(253, 211, 132, 0.9)"
+              color="white"
+              _hover={{
+                bgColor: "white",
+                border: "1px solid #EE9938",
+                color: "text.orange",
+              }}
+            >
+              START COURSE
+            </ChakraLink>
+          </Link>
         </Box>
       </Box>
       <Box mt="117px">
@@ -141,18 +142,16 @@ export default CourseDetailsPage;
 export const getStaticPaths = async () => {
   const res = await getAllCourses();
   const courses = await res.data;
-
   const paths = courses.map((course: { id: string }) => ({
     params: { course: String(course.id) },
   }));
   return { paths, fallback: false };
 };
 
-export const getStaticProps = async ({
-  params,
-}: {
+interface ICourseParams {
   params: { course: string };
-}) => {
+}
+export const getStaticProps = async ({ params }: ICourseParams) => {
   const res = await getCourse(params.course);
   const course = await res.data;
   return {

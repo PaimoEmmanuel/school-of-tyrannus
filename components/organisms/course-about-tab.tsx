@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -11,24 +12,23 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 interface ICourseAboutTabProps {
-  courseTitle: string;
-  aboutCourse: string;
+  title: string;
+  about: string;
   thumbnail: string;
-  duration: number;
-  resources: number;
-  videoLink: string;
+  totalDuration: number;
+  totalResources: number;
+  introVideoRetrievalId: string;
 }
 
 const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
-  courseTitle,
-  aboutCourse,
+  title,
+  about,
   thumbnail,
-  duration,
-  resources,
-  videoLink,
+  totalDuration,
+  totalResources,
+  introVideoRetrievalId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -37,14 +37,14 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
         <Text
           fontWeight="600"
           mb="32px"
-          dangerouslySetInnerHTML={{ __html: courseTitle }}
+          dangerouslySetInnerHTML={{ __html: title }}
         >
-          {/* {courseTitle} */}
+          {/* {title} */}
         </Text>
-        {/* {aboutCourse} */}
+        {/* {about} */}
         <Box
           dangerouslySetInnerHTML={{
-            __html: aboutCourse,
+            __html: about,
           }}
         ></Box>
       </Box>
@@ -87,20 +87,20 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
           >
             <ModalCloseButton />
             <ModalBody w="100%" padding="0">
-              <Box>
-                <video
+              <Box minH="500px">
+                {/* <video
                   width="100%"
-                  src={videoLink}
+                  src={introVideoRetrievalId}
                   controls
                   controlsList="nodownload"
                   loop
                   poster={
                     thumbnail ? thumbnail : "/assets/images/video-poster.png"
                   }
-                />
+                /> */}
 
-                {/* <iframe
-                  src={`${videoLink}?h=55da59abf7&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
+                <iframe
+                  src={`https://player.vimeo.com/video/695263272?h=7c106808d0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
@@ -112,7 +112,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
                     height: "100%",
                   }}
                   title="1. JSX.mp4"
-                ></iframe> */}
+                ></iframe>
               </Box>
             </ModalBody>
 
@@ -202,7 +202,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
                 strokeLinejoin="round"
               />
             </svg>
-            {duration} hours on-demand video
+            {totalDuration} hours on-demand video
           </Text>
 
           <Text
@@ -287,7 +287,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
                 strokeLinejoin="round"
               />
             </svg>
-            {resources} downloadable resources
+            {totalResources} downloadable resources
           </Text>
         </Box>
       </Box>

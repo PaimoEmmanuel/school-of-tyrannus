@@ -7,15 +7,12 @@ import HomeCourseTemplate from "../components/templates/home-course-template";
 import NewsLetter from "../components/molecules/newsletter";
 import Footer from "../components/organisms/footer";
 import { getLandingPageCourses } from "../services/home-page";
-import { useEffect, useState } from "react";
 
 interface IHome {
   homeCourses: any[];
 }
 
 const Home: NextPage<IHome> = ({ homeCourses }) => {
-  console.log(homeCourses);
-
   return (
     <div className="">
       <Head>
