@@ -31,7 +31,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
       zIndex="1"
     >
       <Flex minW="50%" justifyContent="space-between">
-        {/* <LogoText /> */}
+        <LogoText />
         <NavSearch />
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">

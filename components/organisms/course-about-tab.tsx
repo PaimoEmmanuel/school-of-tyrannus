@@ -87,8 +87,8 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
           >
             <ModalCloseButton />
             <ModalBody w="100%" padding="0">
-              <Box>
-                <video
+              <Box minH="500px">
+                {/* <video
                   width="100%"
                   src={introVideoRetrievalId}
                   controls
@@ -97,10 +97,10 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
                   poster={
                     thumbnail ? thumbnail : "/assets/images/video-poster.png"
                   }
-                />
+                /> */}
 
-                {/* <iframe
-                  src={`${introVideoRetrievalId}?h=55da59abf7&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
+                <iframe
+                  src={`https://player.vimeo.com/video/695263272?h=7c106808d0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
@@ -112,7 +112,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
                     height: "100%",
                   }}
                   title="1. JSX.mp4"
-                ></iframe> */}
+                ></iframe>
               </Box>
             </ModalBody>
 
