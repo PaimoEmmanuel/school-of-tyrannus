@@ -38,6 +38,8 @@ const useSignIn = () => {
         console.log("error", err.response.data);
         if (err.response.status === 400) {
           setError(err.response.data);
+        } else {
+          setError("An error occurred, please try again.")
         }
         setIsSigninIn(false);
       });

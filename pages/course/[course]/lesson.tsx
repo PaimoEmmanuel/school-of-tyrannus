@@ -4,9 +4,7 @@ import NavigationBar from "../../../components/organisms/navigation-bar";
 import {
   Box,
   Link as ChakraLink,
-  Button,
   Flex,
-  Img,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -15,7 +13,6 @@ import { useEffect } from "react";
 import LessonTab from "../../../components/templates/lesson-tab";
 import {
   getAllCourses,
-  getCourse,
   getCourseDetails,
 } from "../../../services/course";
 import { useRouter } from "next/router";
@@ -31,7 +28,6 @@ interface ILessonPageProps {
   };
 }
 const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
-  console.log(course);
   const {
     currentLesson,
     goToPrev,
