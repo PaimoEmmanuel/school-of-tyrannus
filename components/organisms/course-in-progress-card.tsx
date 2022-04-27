@@ -41,7 +41,7 @@ const CourseInProgressCard: React.FC<ICourseInProgressCard> = ({
 
                 <Progress
                     h="10px"
-                    opacity="0.5"
+                    // opacity="0.5"
                     top="53px"
                     left="37px"
                     borderRadius="14px"
@@ -52,6 +52,7 @@ const CourseInProgressCard: React.FC<ICourseInProgressCard> = ({
                     maxW="187px"
                     size='md'
                     value={30}
+                    bgBlendMode='overlay'
                 // value={percentageValue}
                 />
                 <Text
