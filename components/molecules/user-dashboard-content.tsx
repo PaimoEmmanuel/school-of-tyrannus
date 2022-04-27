@@ -1,3 +1,4 @@
+import CoursesInactive from "./course-in-active";
 import CoursesInProgress from "./courses-in-progress";
 import UserDashboardTab from "./user-dashboard-tab";
 
@@ -9,7 +10,8 @@ const UserDashboardContent: React.FunctionComponent<IUserDashboardContentProps> 
         <div>
             <UserDashboardTab />
             <CoursesInProgress />
-            
+            <CoursesInactive />
+
         </div>
 
     )
