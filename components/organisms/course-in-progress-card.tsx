@@ -9,22 +9,27 @@ import Link from "next/link";
 import * as React from 'react';
 
 export interface ICourseInProgressCard {
-    id?: number;
-    title?: string;
-    percentageValue?: number;
-    completed?: boolean
-    lessonCount?: number;
-    contentCount?: number;
+    id: number;
+    title: string;
+    value: number;
+    completed: boolean
+    lessonCount: number;
+    contentCount: number;
+    maxValue: number;
 };
 
 const CourseInProgressCard: React.FC<ICourseInProgressCard> = ({
     id,
     title,
-    percentageValue,
+    value,
     completed,
     lessonCount,
-    contentCount
+    contentCount,
+    maxValue
 }) => {
+    //for the course progress
+    // const [progressVlaue, setProgressValue] = React.useState<number>(0)
+
     return (
         <Box
             filter="drop-shadow(2px 7px 18px rgba(67, 108, 212, 0.13))"
@@ -37,24 +42,23 @@ const CourseInProgressCard: React.FC<ICourseInProgressCard> = ({
             <Box
                 h="117px"
                 borderRadius="4px 4px 0px 0px"
-                background="linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/assets/images/course-card-img.png)">
+                background="linear-gradient(0deg, rgba(0, 0, 0, 0.6),
+                 rgba(0, 0, 0, 0.6)), url(/assets/images/course-card-img.png)">
 
-                <Progress
-                    h="10px"
-                    // opacity="0.5"
-                    top="53px"
-                    left="37px"
-                    borderRadius="14px"
-                    border="1px solid rgba(255, 255, 255, 0.7)"
+
+                <Progress h="10px" top="53px" left="37px" borderRadius="14px"
+                    border="1px solid rgba(255, 255, 255, 0.2)"
                     boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
                     boxSizing="border-box"
-                    colorScheme="orange"
-                    maxW="187px"
-                    size='md'
-                    value={30}
-                    bgBlendMode='overlay'
-                // value={percentageValue}
+                    colorScheme="orange" maxW="187px" size='md'
+                    variant="outlined"
+                    value={35}
+                    max={100}
+                //  value={(value/maxValue)*100}
+                // max={maxValue}
                 />
+                {/* <ProgressBar value={value} max={max}/> */}
+
                 <Text
                     position="absolute"
                     left="35px"
@@ -65,7 +69,15 @@ const CourseInProgressCard: React.FC<ICourseInProgressCard> = ({
                     fontSize="14px">
                     35% completed
                 </Text>
-                {/* <Text>{percentageValue} Completed</Text> */}
+                {/* <Text
+                    position="absolute"
+                    left="35px"
+                    top="68px"
+                    color=" rgba(255, 255, 255, 1)"
+                    fontWeight={400}
+                    lineHeight="21px"
+                    fontSize="14px
+                >{(value/max)*100}</> */}
             </Box>
 
             <Box p="30px 30px 0 30px">
