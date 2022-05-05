@@ -13,7 +13,10 @@ import Instructors from "../organisms/instructors";
 import Reviews from "../organisms/reviews";
 import PrivatePage from "./private-route";
 
-const LessonTab: React.FC = ({}) => {
+interface ILessonTab {
+  resources: { title: string; link: string }[];
+}
+const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
   return (
     <Tabs mx="34px">
       <TabList pt="38px">
@@ -40,28 +43,6 @@ const LessonTab: React.FC = ({}) => {
         >
           Resources
         </Tab>
-        {/* <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "700",
-          }}
-          fontWeight="500"
-          _focus={{ outline: "none" }}
-        >
-          Test
-        </Tab>
-        <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "700",
-          }}
-          fontWeight="500"
-          _focus={{ outline: "none" }}
-        >
-          Discussions
-        </Tab> */}
       </TabList>
 
       <TabPanels>
@@ -108,25 +89,16 @@ const LessonTab: React.FC = ({}) => {
           </Text>
         </TabPanel>
         <TabPanel mt="36px" p="0">
-          <a href="" download>
-            Lesson Manual.pdf
-          </a>
+          {resources.length > 0 ? (
+            resources.map((resource) => (
+              <a key={resource.link} href={resource.link} download>
+                {resource.title}
+              </a>
+            ))
+          ) : (
+            <Text>No resource available</Text>
+          )}
         </TabPanel>
-        {/* <TabPanel mt="36px" p="0">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSf7siUyF_0FsNulz95mIyX_PkXMIReccuSZANwCgqIt8ZbSVQ/viewform?embedded=true"
-            width="760"
-            height="500"
-            frameBorder="0"
-            marginHeight={0}
-            marginWidth={0}
-          >
-            Loading…
-          </iframe>
-        </TabPanel>
-        <TabPanel mt="36px" p="0">
-          Discussions
-        </TabPanel> */}
       </TabPanels>
     </Tabs>
   );

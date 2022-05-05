@@ -4,7 +4,7 @@ import { getContentTakenStatus } from "../services/course";
 
 interface Lessons {
   title: string;
-  contents: { title: string; videoRetrievalId: string; id: number }[];
+  contents: { title: string; videoRetrievalId: string; id: string }[];
 }
 
 const useChangeLesson = (lessons: Lessons[]) => {
@@ -39,13 +39,30 @@ const useChangeLesson = (lessons: Lessons[]) => {
     if (nextDisabled) {
       toast({
         title: "Can't proceed.",
-        description: "Can't go, you never finish this one",
+        description: "Finish current lesson to proceed to the next.",
         status: "warning",
         duration: 5000,
         isClosable: true,
       });
     }
   }, [nextDisabled, toast]);
+
+  const goToLesson = (lesson: number[]) => {
+    setNextDisabled(false);
+    setLoadingContent(true);
+    const prevLessonId =
+      Number(lessons[lesson[0]].contents[lesson[1]].id) === 1
+        ? 1
+        : Number(lessons[lesson[0]].contents[lesson[1]].id) - 1;
+    getContentTakenStatus(String(prevLessonId)).then((res) => {
+      if (res.data.contentStatus !== "Completed") {
+        setNextDisabled(true);
+        return setLoadingContent(false);
+      }
+      setCurrentLesson(lesson);
+      setLoadingContent(false);
+    });
+  };
 
   const goToNext = () => {
     setNextDisabled(false);
@@ -54,7 +71,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
       String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
     )
       .then((res) => {
-        if (res.data.contentStatus === "NotStarted") {
+        if (res.data.contentStatus !== "Completed") {
           setNextDisabled(true);
           return setLoadingContent(false);
         }
@@ -101,7 +118,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
     goToNext,
     isFirstContent,
     isLastContent,
-    setCurrentLesson,
+    goToLesson,
     loadingContent,
   };
 };

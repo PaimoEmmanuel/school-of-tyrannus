@@ -1,19 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NavigationBar from "../../../components/organisms/navigation-bar";
-import {
-  Box,
-  Flex,
-  Link as ChakraLink,
-  Skeleton,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Flex, Skeleton, Spinner, Text } from "@chakra-ui/react";
 import LessonSideBar from "../../../components/organisms/lesson-sidebar";
 import LessonTab from "../../../components/templates/lesson-tab";
 import { getAllCourses, getCourseDetails } from "../../../services/course";
-import { useChangeLesson, useCourseEnrol } from "../../../hooks";
+import {
+  useChangeLesson,
+  useCourseEnrol,
+  useMonitorContentStatus,
+} from "../../../hooks";
 import LessonControl from "../../../components/organisms/lesson-control";
 import LessonManual from "../../../components/molecules/lesson-manual";
 
@@ -23,7 +19,12 @@ interface ILessonPageProps {
     id: string;
     lessons: {
       title: string;
-      contents: { title: string; videoRetrievalId: string; id: number }[];
+      contents: {
+        title: string;
+        videoRetrievalId: string;
+        id: string;
+        resources: { title: string; link: string }[];
+      }[];
     }[];
   };
 }
@@ -35,10 +36,13 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
     goToNext,
     isFirstContent,
     isLastContent,
-    setCurrentLesson,
+    goToLesson,
     loadingContent,
   } = useChangeLesson(course.lessons);
   const { loading, error } = useCourseEnrol();
+
+  useMonitorContentStatus(course, currentLesson, loading, loadingContent);
+  console.log(course);
 
   return (
     <>
@@ -53,7 +57,7 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
               <LessonSideBar
                 currentLesson={currentLesson}
                 lessons={course.lessons}
-                setCurrentLesson={setCurrentLesson}
+                goToLesson={goToLesson}
               />
             </Skeleton>
             <Box pos="relative" w="100%">
@@ -139,7 +143,13 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
                       borderRadius="12px 12px 0px 0px"
                       mb="120px"
                     >
-                      <LessonTab />
+                      <LessonTab
+                        resources={
+                          course.lessons[currentLesson[0]].contents[
+                            currentLesson[1]
+                          ].resources
+                        }
+                      />
                     </Box>
                   </Skeleton>
                 </Box>

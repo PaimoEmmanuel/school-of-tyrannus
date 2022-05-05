@@ -15,13 +15,13 @@ interface ILessonSideBarItemProps {
   contents: { title: string; contents: { title: string }[] };
   parentIndex: number;
   currentLesson: number[];
-  setCurrentLesson: React.Dispatch<React.SetStateAction<number[]>>;
+  goToLesson: (lesson: number[]) => void;
 }
 const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
   contents,
   parentIndex,
   currentLesson,
-  setCurrentLesson,
+  goToLesson,
 }) => {
   return (
     <Accordion defaultIndex={[0]} allowMultiple mb="36px">
@@ -83,7 +83,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                       : "1px solid #E8E8E8"
                   }
                   onClick={() => {
-                    setCurrentLesson([parentIndex, index]);
+                    goToLesson([parentIndex, index]);
                   }}
                 >
                   {index + 1 + ". " + content.title}

@@ -29,3 +29,16 @@ export const getContentTakenStatus = (contentId: string) => {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
+
+export const startContent = (contentId: string) => {
+  return request.get(`LandingPage/StartContent/${contentId}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });
+};
+
+export const finishContent = (contentId: string) => {
+  return request.get(`LandingPage/FinishContent/${contentId}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });
+};
+
