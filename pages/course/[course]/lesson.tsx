@@ -6,6 +6,7 @@ import {
   Flex,
   Link as ChakraLink,
   Skeleton,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -18,9 +19,10 @@ import LessonControl from "../../../components/organisms/lesson-control";
 interface ILessonPageProps {
   course: {
     title: string;
+    id: string;
     lessons: {
       title: string;
-      contents: { title: string; videoRetrievalId: string }[];
+      contents: { title: string; videoRetrievalId: string; id: number }[];
     }[];
   };
 }
@@ -33,6 +35,7 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
     isFirstContent,
     isLastContent,
     setCurrentLesson,
+    loadingContent,
   } = useChangeLesson(course.lessons);
   const { loading, error } = useCourseEnrol();
 
@@ -126,29 +129,39 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
                     .title
                 }
               </Text>
-              <Skeleton isLoaded={!loading}>
-                <Box pos="relative" padding="62.5% 0 0 0" role="group">
-                  <iframe
-                    // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
-                    src={`${
-                      course.lessons[currentLesson[0]].contents[
-                        currentLesson[1]
-                      ].videoRetrievalId
-                    }&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479`}
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    title="1. JSX.mp4"
-                  ></iframe>
-                </Box>
-              </Skeleton>
+              {loadingContent ? (
+                <Flex
+                  h="500px"
+                  w="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Spinner thickness="7px" h="70px" w="70px" />
+                </Flex>
+              ) : (
+                <Skeleton isLoaded={!loading}>
+                  <Box pos="relative" padding="62.5% 0 0 0" role="group">
+                    <iframe
+                      // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
+                      src={`${
+                        course.lessons[currentLesson[0]].contents[
+                          currentLesson[1]
+                        ].videoRetrievalId
+                      }?controls=0`}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    ></iframe>
+                  </Box>
+                </Skeleton>
+              )}
 
               {/* eslint-disable-next-line @next/next/no-sync-scripts */}
               <script src="https://player.vimeo.com/api/player.js"></script>

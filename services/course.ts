@@ -13,8 +13,6 @@ export const getCourseDetails = (id: string) => {
 };
 
 export const enrollCourse = (id: number) => {
-  console.log(getUser().token);
-
   return request.get(`LandingPage/EnrollForACourse/${id}`, {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
@@ -22,6 +20,12 @@ export const enrollCourse = (id: number) => {
 
 export const getCourseEnrollmentStatus = (id: string) => {
   return request.get(`LandingPage/RetrieveUsersCourseStatus/1`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });
+};
+
+export const getContentTakenStatus = (contentId: string) => {
+  return request.get(`LandingPage/RetrieveUsersContentStatus/${contentId}`, {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
