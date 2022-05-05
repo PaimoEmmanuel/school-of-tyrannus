@@ -32,7 +32,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
     >
       <Flex minW="50%" justifyContent="space-between">
         <LogoText />
-        <NavSearch />
+        {/* <NavSearch /> */}
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <Link href="/about" passHref>

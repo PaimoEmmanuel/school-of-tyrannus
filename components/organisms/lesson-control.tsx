@@ -21,13 +21,13 @@ const LessonControl: React.FunctionComponent<ILessonControlProps> = ({
   return (
     <Flex
       pos="fixed"
-      left="382px"
+      left="0"
       bottom="0px"
       fontSize="14px"
       fontWeight="500"
       justifyContent="space-between"
       alignItems="center"
-      w="calc(100% - 382px)"
+      w="100%"
       p="22px 50px"
       bgColor="white"
       boxShadow="0px -4px 32px rgba(104, 104, 104, 0.17)"
