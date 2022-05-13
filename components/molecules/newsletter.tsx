@@ -16,7 +16,7 @@ const NewsLetter: React.FunctionComponent = () => {
                        borderRadius="4px" pl="30px" color="#767474"
                        _placeholder={{color: "#767474"}}/>
                 <Button type="submit" w="222px" h="48px" borderRadius="3px" bgColor="#EE9938" fontSize={"14px"}
-                        color="white" fontWeight="500">Subscribe</Button>
+                        color="black" fontWeight="500">Subscribe</Button>
             </Flex>
         </Box>
     );

@@ -9,7 +9,9 @@ export const getCourse = (id: string) => {
   return request.get(`/LandingPage/RetrieveCourseById/${id}`);
 };
 export const getCourseDetails = (id: string) => {
-  return request.get(`Course/RetrieveById/${id}`);
+  return request.get(`/LandingPage/RetrieveCourseByIdExplicitly/${id}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });
 };
 
 export const enrollCourse = (id: number) => {
@@ -42,3 +44,8 @@ export const finishContent = (contentId: string) => {
   });
 };
 
+export const takeQuiz = (contentId: string) => {
+  return request.get(`LandingPage/TakeQuiz/${contentId}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });
+};

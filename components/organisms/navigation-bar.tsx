@@ -60,7 +60,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
                 borderRadius="4px"
                 fontWeight="500"
                 boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
-                color="white"
+                color="black"
               >
                 Register
               </ChakraLink>

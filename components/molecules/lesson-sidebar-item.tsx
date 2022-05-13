@@ -10,17 +10,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { ICourseLessons } from "../../types/course";
 
 interface ILessonSideBarItemProps {
-  contents: { title: string; contents: { title: string }[] };
+  contents: ICourseLessons["lessons"][0];
   parentIndex: number;
   currentLesson: number[];
-  goToLesson: (lesson: number[]) => void;
+  onTakeTest: () => void;
+  goToLesson: (lesson: [number, number]) => void;
 }
 const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
   contents,
   parentIndex,
   currentLesson,
+  onTakeTest,
   goToLesson,
 }) => {
   return (
@@ -45,6 +48,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                 <Box flex="1" textAlign="left" fontWeight="600" fontSize="14px">
                   {contents.title}
                 </Box>
+
                 <svg
                   width="19"
                   height="11"
@@ -64,30 +68,111 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
             </h2>
             <AccordionPanel p={0}>
               {contents.contents.map((content, index) => (
-                <Text
-                  as="button"
+                <Box
                   w="100%"
-                  textAlign="left"
                   key={content.title}
                   fontSize="12px"
-                  fontWeight={
-                    parentIndex === currentLesson[0] &&
-                    index === currentLesson[1]
-                      ? "700"
-                      : "400"
-                  }
                   p="15px 0px"
                   borderBottom={
                     index === content.title.length - 1
                       ? ""
                       : "1px solid #E8E8E8"
                   }
-                  onClick={() => {
-                    goToLesson([parentIndex, index]);
-                  }}
                 >
-                  {index + 1 + ". " + content.title}
-                </Text>
+                  <Text
+                    as="button"
+                    display="flex"
+                    justifyContent="space-between"
+                    textAlign="left"
+                    w="100%"
+                    gap="12px"
+                    mb="12px"
+                    fontWeight={
+                      parentIndex === currentLesson[0] &&
+                      index === currentLesson[1]
+                        ? "700"
+                        : "400"
+                    }
+                    onClick={() => {
+                      goToLesson([parentIndex, index]);
+                    }}
+                  >
+                    {index + 1 + ". " + content.title}
+
+                    {content.hasQuiz &&
+                    content.userStatus.quizStatus === "Completed" ? (
+                      <svg
+                        width="17"
+                        height="17"
+                        viewBox="0 0 17 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="8.5" cy="8.5" r="8.5" fill="#A0E874" />
+                        <path
+                          d="M12 6.34717L7.1875 11.1597L5 8.97217"
+                          stroke="white"
+                          strokeWidth="1.75"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    ) : content.userStatus.contentStatus === "Completed" ? (
+                      <svg
+                        width="17"
+                        height="17"
+                        viewBox="0 0 17 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="8.5" cy="8.5" r="8.5" fill="#A0E874" />
+                        <path
+                          d="M12 6.34717L7.1875 11.1597L5 8.97217"
+                          stroke="white"
+                          strokeWidth="1.75"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 19 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="9.5"
+                          cy="9.5"
+                          r="8.5"
+                          fill="#ECFFE0"
+                          stroke="#A0E874"
+                          strokeDasharray="3 0"
+                        />
+                      </svg>
+                    )}
+                  </Text>
+                  {content.hasQuiz &&
+                  parentIndex === currentLesson[0] &&
+                  index === currentLesson[1] ? (
+                    <Button
+                      bgColor="text.orange"
+                      fontSize="12px"
+                      fontWeight="500"
+                      _hover={{
+                        bgColor: "white",
+                        border: "1px solid #EE9938",
+                        color: "text.orange",
+                      }}
+                      onClick={onTakeTest}
+                    >
+                      Take test
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </Box>
               ))}
             </AccordionPanel>
           </>

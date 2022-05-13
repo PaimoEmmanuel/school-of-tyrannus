@@ -1,16 +1,19 @@
 import { Box, Flex, Text, Link as ChakraLink } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
+import { ICourseLessons } from "../../types/course";
 import LessonSideBarItem from "../molecules/lesson-sidebar-item";
 
 interface ILessonSideBar {
-  lessons: { title: string; contents: { title: string }[] }[];
+  lessons: ICourseLessons["lessons"];
   currentLesson: number[];
-  goToLesson: (lesson: number[]) => void;
+  onTakeTest: () => void;
+  goToLesson: (lesson: [number, number]) => void;
 }
 const LessonSideBar: React.FC<ILessonSideBar> = ({
   lessons,
   currentLesson,
+  onTakeTest,
   goToLesson,
 }) => {
   const [open, setOpen] = useState(true);
@@ -112,6 +115,7 @@ const LessonSideBar: React.FC<ILessonSideBar> = ({
         {lessons.map((lesson, index) => (
           <LessonSideBarItem
             key={index}
+            onTakeTest={onTakeTest}
             parentIndex={index}
             contents={lesson}
             currentLesson={currentLesson}

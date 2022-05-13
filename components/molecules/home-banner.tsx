@@ -26,6 +26,7 @@ const HomeBanner: React.FunctionComponent<IHomeBannerProps> = () => {
           <ChakraLink
             h="50px"
             w="300px"
+            color="black"
             bgColor="text.orange"
             display="flex"
             alignItems="center"

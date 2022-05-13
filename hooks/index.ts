@@ -4,6 +4,7 @@ import useChangeLesson from "./change-lesson";
 import useCourseEnrol from "./course-enrol";
 import useEnrolledForCourse from "./enrolled-course";
 import useMonitorContentStatus from "./monitor-content-status";
+import useFetchCourse from "./fetch-course";
 
 export {
   useSignIn,
@@ -12,4 +13,5 @@ export {
   useCourseEnrol,
   useEnrolledForCourse,
   useMonitorContentStatus,
+  useFetchCourse,
 };

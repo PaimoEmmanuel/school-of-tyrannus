@@ -1,4 +1,5 @@
 import {
+  Link,
   Tab,
   TabList,
   TabPanel,
@@ -90,10 +91,20 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
         </TabPanel>
         <TabPanel mt="36px" p="0">
           {resources.length > 0 ? (
-            resources.map((resource) => (
-              <a key={resource.link} href={resource.link} download>
-                {resource.title}
-              </a>
+            resources.map((resource, index) => (
+              <Link
+                display="block"
+                w="fit-content"
+                textDecor="underline"
+                mb="1rem"
+                target="_blank"
+                key={resource.link}
+                href={resource.link}
+                download
+                rel="noreferrer"
+              >
+                {index + 1}. {resource.title}
+              </Link>
             ))
           ) : (
             <Text>No resource available</Text>

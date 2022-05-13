@@ -1,6 +1,7 @@
 import Player from "@vimeo/player";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { finishContent, startContent } from "../services/course";
+import { ICourseLessons } from "../types/course";
 
 interface course {
   title: string;
@@ -11,12 +12,21 @@ interface course {
   }[];
 }
 const useMonitorContentStatus = (
-  course: course,
+  loadingCourse: boolean,
+  course: ICourseLessons,
   currentLesson: number[],
   loading: boolean,
-  loadingContent: boolean
+  loadingContent: boolean,
+  goToNext: () => void,
 ) => {
+  const [testModalOpen, setTestmodalOpen] = useState(false);
   useEffect(() => {
+    setTestmodalOpen(false);
+  }, [currentLesson]);
+  useEffect(() => {
+    if (loadingCourse) {
+      return;
+    }
     const iframe = document.querySelector("iframe");
     if (iframe) {
       const player = new Player(iframe);
@@ -25,27 +35,37 @@ const useMonitorContentStatus = (
           course.lessons[currentLesson[0]].contents[currentLesson[1]].id
         )
           .then((res) => {
-            console.log("content succesfully started", res.data);
             player.off("play");
           })
           .catch((err) => {
             console.log("Error in starting content", err.response);
           });
       });
-
       player.on("ended", () => {
+        setTestmodalOpen(true);
+      });
+      const handleFinishContent = () => {
         finishContent(
           course.lessons[currentLesson[0]].contents[currentLesson[1]].id
         )
           .then((res) => {
-            console.log("content succesfully finished", res.data);
-            player.off("ended");
+            if (
+              course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                .hasQuiz
+            ) {
+              setTestmodalOpen(true);
+            } else {
+              goToNext();
+            }
+            player.off("ended", handleFinishContent);
           })
           .catch((err) => {
             console.log("Error in finishing content", err.response);
           });
-      });
+      };
+      player.on("ended", handleFinishContent);
     }
-  }, [course.lessons, currentLesson, loading, loadingContent]);
+  }, [course.lessons, currentLesson, goToNext, loading, loadingContent, loadingCourse]);
+  return { testModalOpen, setTestmodalOpen };
 };
 export default useMonitorContentStatus;

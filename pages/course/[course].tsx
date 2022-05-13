@@ -126,7 +126,7 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                   transform={"translateX(-50%)"}
                   bgColor="text.orange"
                   boxShadow="0px 3px 26px rgba(253, 211, 132, 0.9)"
-                  color="white"
+                  // color="white"
                   _hover={{
                     bgColor: "white",
                     border: "1px solid #EE9938",

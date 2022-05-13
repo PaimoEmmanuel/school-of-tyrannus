@@ -1,23 +1,37 @@
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getContentTakenStatus } from "../services/course";
+import { ICourseLessons } from "../types/course";
 
-interface Lessons {
-  title: string;
-  contents: { title: string; videoRetrievalId: string; id: string }[];
-}
-
-const useChangeLesson = (lessons: Lessons[]) => {
+const useChangeLesson = (
+  lessonsLoading: boolean,
+  lessons: ICourseLessons["lessons"],
+  setContentToCompleted: (lesson: [number, number]) => void
+) => {
   // First value for changing lesson, second value for changing the content/video
-  const [currentLesson, setCurrentLesson] = useState([0, 0]);
+  const [currentLesson, setCurrentLesson] = useState<[number, number]>([0, 0]);
   const [isFirstContent, setIsFirstContent] = useState(true);
   const [isLastContent, setIsLastContent] = useState(false);
   const [loadingContent, setLoadingContent] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(false);
-
+  const [currentLessonStatus, setCurrentLessonStatus] = useState({
+    videoStatus: "",
+    quizStatus: "",
+  });
   const toast = useToast();
 
   useEffect(() => {
+    if (lessonsLoading) {
+      return;
+    }
+    getContentTakenStatus(
+      String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
+    ).then((res) => {
+      setCurrentLessonStatus({
+        videoStatus: res.data.contentStatus,
+        quizStatus: res.data.quizStatus,
+      });
+    });
     //   When it is the first lesson
     if (currentLesson[0] === 0 && currentLesson[1] === 0) {
       setIsFirstContent(true);
@@ -27,13 +41,13 @@ const useChangeLesson = (lessons: Lessons[]) => {
     // When it is the last lesson
     if (
       currentLesson[0] === lessons.length - 1 &&
-      currentLesson[1] === lessons[length - 1].contents.length - 1
+      currentLesson[1] === lessons[lessons.length - 1].contents.length - 1
     ) {
       setIsLastContent(true);
     } else {
       setIsLastContent(false);
     }
-  }, [currentLesson, lessons]);
+  }, [currentLesson, lessons, lessonsLoading]);
 
   useEffect(() => {
     if (nextDisabled) {
@@ -47,7 +61,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
     }
   }, [nextDisabled, toast]);
 
-  const goToLesson = (lesson: number[]) => {
+  const goToLesson = (lesson: [number, number]) => {
     setNextDisabled(false);
     setLoadingContent(true);
     const prevLessonId =
@@ -55,7 +69,13 @@ const useChangeLesson = (lessons: Lessons[]) => {
         ? 1
         : Number(lessons[lesson[0]].contents[lesson[1]].id) - 1;
     getContentTakenStatus(String(prevLessonId)).then((res) => {
-      if (res.data.contentStatus !== "Completed") {
+      if (
+        lessons[lesson[0]].contents[lesson[1]].hasQuiz &&
+        res.data.quizStatus !== "Completed"
+      ) {
+        setNextDisabled(true);
+        return setLoadingContent(false);
+      } else if (res.data.contentStatus !== "Completed") {
         setNextDisabled(true);
         return setLoadingContent(false);
       }
@@ -71,7 +91,13 @@ const useChangeLesson = (lessons: Lessons[]) => {
       String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
     )
       .then((res) => {
-        if (res.data.contentStatus !== "Completed") {
+        if (
+          lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
+          res.data.quizStatus !== "Completed"
+        ) {
+          setNextDisabled(true);
+          return setLoadingContent(false);
+        } else if (res.data.contentStatus !== "Completed") {
           setNextDisabled(true);
           return setLoadingContent(false);
         }
@@ -80,6 +106,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
             currentLesson[1] <
             lessons[currentLesson[0]].contents.length - 1
           ) {
+            setContentToCompleted(currentLesson);
             setCurrentLesson([currentLesson[0], currentLesson[1] + 1]);
             return setLoadingContent(false);
           }
@@ -87,6 +114,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
             currentLesson[1] ===
             lessons[currentLesson[0]].contents.length - 1
           ) {
+            setContentToCompleted(currentLesson);
             setCurrentLesson([currentLesson[0] + 1, 0]);
             return setLoadingContent(false);
           }
@@ -112,6 +140,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
       ]);
     }
   };
+
   return {
     currentLesson,
     goToPrev,
@@ -120,6 +149,7 @@ const useChangeLesson = (lessons: Lessons[]) => {
     isLastContent,
     goToLesson,
     loadingContent,
+    currentLessonStatus,
   };
 };
 

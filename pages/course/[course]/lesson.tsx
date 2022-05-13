@@ -1,35 +1,22 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NavigationBar from "../../../components/organisms/navigation-bar";
-import { Box, Flex, Skeleton, Spinner, Text } from "@chakra-ui/react";
+import { Box, Flex, Skeleton, Spinner, Text, useToast } from "@chakra-ui/react";
 import LessonSideBar from "../../../components/organisms/lesson-sidebar";
 import LessonTab from "../../../components/templates/lesson-tab";
 import { getAllCourses, getCourseDetails } from "../../../services/course";
 import {
   useChangeLesson,
   useCourseEnrol,
+  useFetchCourse,
   useMonitorContentStatus,
 } from "../../../hooks";
 import LessonControl from "../../../components/organisms/lesson-control";
 import LessonManual from "../../../components/molecules/lesson-manual";
+import TestModal from "../../../components/organisms/test-modal";
 
-interface ILessonPageProps {
-  course: {
-    title: string;
-    id: string;
-    lessons: {
-      title: string;
-      contents: {
-        title: string;
-        videoRetrievalId: string;
-        id: string;
-        resources: { title: string; link: string }[];
-      }[];
-    }[];
-  };
-}
-
-const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
+const LessonPage: NextPage = () => {
+  const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
   const {
     currentLesson,
     goToPrev,
@@ -38,11 +25,21 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
     isLastContent,
     goToLesson,
     loadingContent,
-  } = useChangeLesson(course.lessons);
+    currentLessonStatus,
+  } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
   const { loading, error } = useCourseEnrol();
 
-  useMonitorContentStatus(course, currentLesson, loading, loadingContent);
-  console.log(course);
+  const { testModalOpen, setTestmodalOpen } = useMonitorContentStatus(
+    loadingCourse,
+    course,
+    currentLesson,
+    loading,
+    loadingContent,
+    goToNext
+  );
+  // console.log(course);
+
+  const toast = useToast();
 
   return (
     <>
@@ -53,8 +50,22 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
         <NavigationBar />
         <Box bgColor="text.lightBlue">
           <Flex pos="relative">
-            <Skeleton isLoaded={!loading}>
+            <Skeleton isLoaded={!loadingCourse && !loading}>
               <LessonSideBar
+                onTakeTest={() => {
+                  console.log(currentLessonStatus);
+
+                  if (currentLessonStatus.videoStatus === "Completed") {
+                    setTestmodalOpen(true);
+                  } else {
+                    toast({
+                      description: "Finish current lesson to take the test.",
+                      status: "warning",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                  }
+                }}
                 currentLesson={currentLesson}
                 lessons={course.lessons}
                 goToLesson={goToLesson}
@@ -109,7 +120,7 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
                       <Spinner thickness="7px" h="70px" w="70px" />
                     </Flex>
                   ) : (
-                    <Skeleton isLoaded={!loading}>
+                    <Skeleton isLoaded={!loadingCourse && !loading}>
                       <Box pos="relative" padding="62.5% 0 0 0" role="group">
                         <iframe
                           // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
@@ -135,7 +146,7 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
 
                   {/* eslint-disable-next-line @next/next/no-sync-scripts */}
                   <script src="https://player.vimeo.com/api/player.js"></script>
-                  <Skeleton isLoaded={!loading}>
+                  <Skeleton isLoaded={!loadingCourse && !loading}>
                     <Box
                       bgColor="white"
                       mt="36px"
@@ -153,12 +164,12 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
                     </Box>
                   </Skeleton>
                 </Box>
-                <Skeleton isLoaded={!loading}>
+                <Skeleton isLoaded={!loadingCourse && !loading}>
                   <LessonManual />
                 </Skeleton>
               </Flex>
 
-              <Skeleton isLoaded={!loading}>
+              <Skeleton isLoaded={!loadingCourse && !loading}>
                 <LessonControl
                   goToNext={goToNext}
                   goToPrev={goToPrev}
@@ -175,6 +186,22 @@ const LessonPage: NextPage<ILessonPageProps> = ({ course }) => {
           </Flex>
         </Box>
       </Box>
+      {course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz && (
+        <TestModal
+          testLink={
+            course.lessons[currentLesson[0]].contents[currentLesson[1]].quizUrl
+          }
+          id={course.lessons[currentLesson[0]].contents[currentLesson[1]].id}
+          title={
+            course.lessons[currentLesson[0]].contents[currentLesson[1]].title
+          }
+          onTestModalCLose={() => {
+            setTestmodalOpen(false);
+          }}
+          isOpen={testModalOpen}
+          goToNext={goToNext}
+        />
+      )}
     </>
   );
 };
@@ -185,21 +212,21 @@ interface ICourseProps {
   params: { course: string };
 }
 
-export const getStaticPaths = async () => {
-  const res = await getAllCourses();
-  const courses = await res.data;
-  const paths = courses.map((course: { id: string }) => ({
-    params: { course: String(course.id) },
-  }));
-  return { paths, fallback: false };
-};
+// export const getStaticPaths = async () => {
+//   const res = await getAllCourses();
+//   const courses = await res.data;
+//   const paths = courses.map((course: { id: string }) => ({
+//     params: { course: String(course.id) },
+//   }));
+//   return { paths, fallback: false };
+// };
 
-export const getStaticProps = async ({ params }: ICourseProps) => {
-  const res = await getCourseDetails(params.course);
-  const course = await res.data;
-  return {
-    props: {
-      course,
-    },
-  };
-};
+// export const getStaticProps = async ({ params }: ICourseProps) => {
+//   const res = await getCourseDetails(params.course);
+//   const course = await res.data;
+//   return {
+//     props: {
+//       course,
+//     },
+//   };
+// };

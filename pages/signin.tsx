@@ -72,7 +72,6 @@ const Signin: NextPage = () => {
               w="300px"
               h="50px"
               bgColor="text.orange"
-              color="white"
               fontSize="14"
               fontWeight="500"
               boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
