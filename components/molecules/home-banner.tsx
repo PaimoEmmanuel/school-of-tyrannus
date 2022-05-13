@@ -11,16 +11,11 @@ const HomeBanner: React.FunctionComponent<IHomeBannerProps> = () => {
       bgSize="cover"
     >
       <Box p="107px 0 128px 0" ml="175px" maxW="489px" color="white">
-        <Text fontWeight="500" fontSize="48px" lineHeight="72px" mb="24px">
-          School of Tyrannus
+        <Text fontWeight="500" fontSize="48px" lineHeight="62px" mb="24px">
+          Welcome to the School of Tyrannus
         </Text>
         <Text fontSize="14px" lineHeight="21px" mb="45px">
-          Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But
-          Spake Evil Of That Way Before The Multitude, He Departed From Them,
-          And Separated The Disciples, Disputing Daily In The School Of One
-          Tyrannus. And This Continued By The Space Of Two Years; So That All
-          They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews
-          And Greeks.
+          Experience Bountiful Growth in the Spirit by The Word of Truth.
         </Text>
         <Link href="/courses" passHref>
           <ChakraLink
