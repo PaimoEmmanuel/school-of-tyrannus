@@ -24,33 +24,33 @@ const Footer: React.FunctionComponent = () => {
           <Grid templateColumns="repeat(2, minmax(0, 1fr))" mt="30px">
             <Box>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Audio Messages
+                <a href="https://nlwc.church/audio-messages/" target='_blank' rel="noreferrer">Audio Messages</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Short Videos Library
+                <a href="https://nlwc.church/video-library/" target='_blank' rel="noreferrer">Short Videos Library</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                E-books Library
+                <a href="https://nlwc.church/ebooks-library/" target='_blank' rel="noreferrer">E-books Library</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Listen Live
+                <a href="https://nlwc.church/listenlive/" target='_blank' rel="noreferrer">Listen Live</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Watch Live
+                <a href="https://nlwc.church/video-library/" target='_blank' rel="noreferrer"> Watch Live</a>
               </Text>
             </Box>
             <Box>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Singlz&apos; Summit
+                <a href="https://singlzsummit.com/" target='_blank' rel="noreferrer">Singlz&apos; Summit</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Testimonies
+                <a href="https://nlwc.church/testimonies/" target='_blank' rel="noreferrer">Testimonies</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                Couples&apos; Garden
+                <a href="https://nlwc.church/couples-garden/" target='_blank' rel="noreferrer">Couples&apos; Garden</a>
               </Text>
               <Text opacity="0.6" fontSize="14px" mb="26px">
-                House Fellowships
+                <a href="https://nlwc.church/house-fellowship/" target='_blank' rel="noreferrer">House Fellowships</a>
               </Text>
             </Box>
           </Grid>
