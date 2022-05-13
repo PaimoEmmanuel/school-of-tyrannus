@@ -21,7 +21,6 @@ const useSignIn = () => {
         const token = res.data;
         if (res.status === 200) {
           console.log(token);
-          const user = jwt(token);
           localStorage.setItem("tyrannus-tk", token);
           setUser(getUser());
           if (typeof router.query.redirect === "string") {
@@ -35,11 +34,11 @@ const useSignIn = () => {
         }
       })
       .catch((err) => {
-        console.log("error", err.response.data);
-        if (err.response.status === 400) {
+        if (err?.response?.status === 400) {
           setError(err.response.data);
         } else {
-          setError("An error occurred, please try again.")
+          setError("An error occurred, please try again.");
+          console.log("error", err);
         }
         setIsSigninIn(false);
       });
