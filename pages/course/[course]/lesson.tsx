@@ -4,7 +4,7 @@ import NavigationBar from "../../../components/organisms/navigation-bar";
 import { Box, Flex, Skeleton, Spinner, Text, useToast } from "@chakra-ui/react";
 import LessonSideBar from "../../../components/organisms/lesson-sidebar";
 import LessonTab from "../../../components/templates/lesson-tab";
-import { getAllCourses, getCourseDetails } from "../../../services/course";
+// import { getAllCourses, getCourseDetails } from "../../../services/course";
 import {
   useChangeLesson,
   useCourseEnrol,
@@ -53,8 +53,6 @@ const LessonPage: NextPage = () => {
             <Skeleton isLoaded={!loadingCourse && !loading}>
               <LessonSideBar
                 onTakeTest={() => {
-                  console.log(currentLessonStatus);
-
                   if (currentLessonStatus.videoStatus === "Completed") {
                     setTestmodalOpen(true);
                   } else {

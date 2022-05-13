@@ -44,17 +44,18 @@ const useFetchCourse = () => {
   const setContentToCompleted = (lesson: [number, number]) => {
     const newCourseObject = { ...course };
     if (newCourseObject.lessons[lesson[0]].contents[lesson[1]].hasQuiz) {
-      newCourseObject.lessons[lesson[0]].contents[lesson[1]].userStatus
-        .quizStatus === "Completed";
-      newCourseObject.lessons[lesson[0]].contents[lesson[1]].userStatus
-        .contentStatus === "Completed";
+      newCourseObject.lessons[lesson[0]].contents[
+        lesson[1]
+      ].userStatus.quizStatus = "Completed";
+      newCourseObject.lessons[lesson[0]].contents[
+        lesson[1]
+      ].userStatus.contentStatus = "Completed";
     } else {
-      newCourseObject.lessons[lesson[0]].contents[lesson[1]].userStatus
-        .contentStatus === "Completed";
+      newCourseObject.lessons[lesson[0]].contents[
+        lesson[1]
+      ].userStatus.contentStatus = "Completed";
     }
-    newCourseObject.lessons[lesson[0]].contents[lesson[1]].userStatus
-      .contentStatus;
-    setCourse;
+    setCourse({ ...newCourseObject });
   };
   return { course, loadingCourse, setContentToCompleted };
 };

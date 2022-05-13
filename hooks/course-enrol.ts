@@ -18,7 +18,6 @@ const useCourseEnrol = () => {
       }
       enrollCourse(Number(query.course))
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             setLoading(false);
           } else {
@@ -33,7 +32,7 @@ const useCourseEnrol = () => {
         });
     }
   };
-  useEffect(onEnrol, [loadingEnrolled]);
+  useEffect(onEnrol, [enrolled, loadingEnrolled, query.course]);
   return { loading, error };
 };
 

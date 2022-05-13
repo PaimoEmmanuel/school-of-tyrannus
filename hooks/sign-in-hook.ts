@@ -14,13 +14,11 @@ const useSignIn = () => {
   const router = useRouter();
 
   const handleSignIn = () => {
-    console.log("logging in");
     setIsSigninIn(true);
     signIn({ email, password })
       .then((res) => {
         const token = res.data;
         if (res.status === 200) {
-          console.log(token);
           localStorage.setItem("tyrannus-tk", token);
           setUser(getUser());
           if (typeof router.query.redirect === "string") {
