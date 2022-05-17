@@ -21,7 +21,7 @@ export const enrollCourse = (id: number) => {
 };
 
 export const getCourseEnrollmentStatus = (id: string) => {
-  return request.get(`LandingPage/RetrieveUsersCourseStatus/1`, {
+  return request.get(`LandingPage/RetrieveUsersCourseStatus/${id}`, {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
