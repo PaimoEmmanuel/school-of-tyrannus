@@ -35,7 +35,11 @@ const LessonContent: React.FC<ILessonContextProps> = ({
           {lessonNumber < 10 ? `0${lessonNumber}` : lessonNumber}
         </Text>
       </Box>
-      <Box borderBottom={lastLesson ? "" : "1px solid #E7E4E4"} pb="53px">
+      <Box
+        w="100%"
+        borderBottom={lastLesson ? "" : "1px solid #E7E4E4"}
+        pb="53px"
+      >
         <Text fontWeight="600" mb="32px">
           {lessonTitle}
         </Text>
@@ -72,8 +76,18 @@ const LessonContent: React.FC<ILessonContextProps> = ({
               strokeLinejoin="round"
             />
           </svg>
-          {duration} hours to complete . {videoNo} videos . {resourceNo}{" "}
-          resources . {testNo} Lesson Test
+          {duration} hours to complete .{" "}
+          {videoNo > 1 ? videoNo + " videos" : videoNo + " video"} .{" "}
+          {!resourceNo
+            ? ""
+            : resourceNo > 1
+            ? resourceNo + " resources. "
+            : resourceNo + " resource. "}
+          {!testNo
+            ? ""
+            : testNo > 1
+            ? testNo + " Lesson Tests. "
+            : testNo + " Lesson Test. "}
         </Text>
       </Box>
     </Flex>

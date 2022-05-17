@@ -9,6 +9,7 @@ interface ICourseContentProps {
     contents: {}[];
     contentsCount: number;
     resourcesCount: number;
+    testCount: number
   }[];
 }
 
@@ -29,7 +30,7 @@ const CourseContent: React.FunctionComponent<ICourseContentProps> = ({
           videoNo={content.contentsCount}
           resourceNo={content.resourcesCount}
           // testNo={content.contents.length}
-          testNo={2}
+          testNo={content.testCount}
           lessonTitle={content.title}
           lastLesson={index + 1 === courseContent.length}
         />

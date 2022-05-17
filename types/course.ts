@@ -8,6 +8,7 @@ export interface ICourseDetails {
       duration: number;
       contentsCount: number;
       resourcesCount: number;
+      testCount: number;
       contents: {}[];
     }[];
     lessonsCount: number;
@@ -34,6 +35,7 @@ export interface ICourseTabProps {
     contents: {}[];
     contentsCount: number;
     resourcesCount: number;
+    testCount: number;
   }[];
 }
 
@@ -49,9 +51,9 @@ export interface ICourseLessons {
       videoRetrievalId: string;
       id: string;
       userStatus: {
-        contentStatus: string
-        quizStatus: string
-      }
+        contentStatus: string;
+        quizStatus: string;
+      };
       resources: { title: string; link: string }[];
     }[];
   }[];
