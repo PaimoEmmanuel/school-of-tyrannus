@@ -100,9 +100,9 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
         {/*  </ChakraLink>*/}
         {/*</Link>*/}
       </Flex>
-      <Flex justifyContent="space-between" gap="1%">
+      <Flex gap="20px">
         {courses.map((course) => (
-          <Box key={course.title} minW="260px" maxW="24%">
+          <Box key={course.title} minW="260px" w="23.5%" maxW="23.5%">
             <CourseCard {...course} />
           </Box>
         ))}
