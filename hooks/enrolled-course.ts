@@ -13,15 +13,17 @@ const useEnrolledForCourse = () => {
     if (!user.isLoggedIn) {
       return setLoadingEnrolled(false);
     }
-    getCourseEnrollmentStatus(String(query.course))
-      .then((res) => {
-        setEnrolled(res.data.enrolled);
-        setLoadingEnrolled(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (query.course && query.course.length) {
+      getCourseEnrollmentStatus(String(query.course))
+        .then((res) => {
+          setEnrolled(res.data.enrolled);
+          setLoadingEnrolled(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [query.course, user.isLoggedIn]);
   return { loadingEnrolled, enrolled };
 };
 
