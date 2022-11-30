@@ -8,27 +8,32 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import LogoText from "../molecules/logo-text";
 import NavSearch from "../molecules/nav-search";
 import { UserContext } from "../../context/user-context";
 import removeUser from "../../utils/remove-user";
 import { useRouter } from "next/router";
 import getUser from "../../utils/get-user";
+import MobileNav from "../molecules/mobile-nav";
 
 interface INavigationBarProps {}
 
 const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
   const { user, setUser } = useContext(UserContext);
   const router = useRouter();
+  const [openNav, setOpenNav] = useState(false);
   return (
     <Flex
       as="nav"
       p={{ base: "1.25rem 1.5rem", lg: "0.875rem 4rem" }}
       justifyContent="space-between"
       alignItems="center"
-      pos="relative"
-      zIndex="1"
+      pos={openNav ? "fixed" : "relative"}
+      bgColor="white"
+      w="100%"
+      height={openNav ? "74px" : "auto"}
+      zIndex="99"
     >
       <Flex justifyContent="space-between">
         <LogoText />
@@ -109,6 +114,12 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
           </Menu>
         )}
       </Flex>
+      <MobileNav
+        openNav={openNav}
+        toggleNav={() => {
+          setOpenNav(!openNav);
+        }}
+      />
     </Flex>
   );
 };

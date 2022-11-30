@@ -27,7 +27,7 @@ const NewsLetter: React.FunctionComponent = () => {
       </Text>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
-        gap={{ base: "24px", lg: "" }}
+        gap={{ base: "24px", lg: "0" }}
         as="form"
         w={"100%"}
         maxW="728px"
