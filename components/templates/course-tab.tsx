@@ -18,7 +18,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
 }) => {
   return (
     <Tabs>
-      <TabList mx="175px">
+      <TabList mx={{base: "1.5rem", lg:"175px"}}>
         <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
@@ -72,7 +72,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
       </TabList>
 
       <TabPanels>
-        <TabPanel mt="36px" mb="56px">
+        <TabPanel mt="36px" mb="56px" px="1.5rem">
           <CourseAboutTab
             title={"About this course: " + title}
             {...{

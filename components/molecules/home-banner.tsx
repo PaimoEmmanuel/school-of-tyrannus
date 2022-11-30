@@ -10,11 +10,21 @@ const HomeBanner: React.FunctionComponent<IHomeBannerProps> = () => {
       bg="linear-gradient(91.54deg, rgba(11, 9, 102, 0.8) 27.31%, rgba(22, 16, 135, 0.736) 52.67%, rgba(23, 13, 89, 0) 111.41%), url(/assets/images/banner.png)"
       bgSize="cover"
     >
-      <Box p="107px 0 128px 0" ml="175px" maxW="489px" color="white">
-        <Text fontWeight="500" fontSize="48px" lineHeight="62px" mb="24px">
+      <Box
+        p={{ base: "4rem 1.5rem", lg: "107px 0 128px 0" }}
+        ml={{ lg: "175px" }}
+        maxW={{ md: "489px" }}
+        color="white"
+      >
+        <Text
+          fontWeight="500"
+          fontSize={{ base: "30px", lg: "48px" }}
+          lineHeight={{ lg: "62px" }}
+          mb="24px"
+        >
           Welcome to the School of Tyrannus
         </Text>
-        <Text fontSize="14px" lineHeight="21px" mb="45px">
+        <Text fontSize={{ lg: "14px" }} lineHeight="21px" mb="45px">
           Experience Bountiful Growth in the Spirit by The Word of Truth.
         </Text>
         <Link href="/courses" passHref>

@@ -32,7 +32,11 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <Flex gap="50px" px="175px">
+    <Flex
+      flexDir={{ base: "column", xl: "row" }}
+      gap="50px"
+      px={{lg: "175px" }}
+    >
       <Box>
         <Text
           fontWeight="600"
@@ -43,6 +47,8 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
         </Text>
         {/* {about} */}
         <Box
+          textAlign="justify"
+          __css={{ p: { marginBottom: "1.5rem" } }}
           dangerouslySetInnerHTML={{
             __html: about,
           }}
@@ -50,8 +56,8 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
       </Box>
       <Box
         bgColor="text.blue"
-        maxW="448px"
-        minW="448px"
+        maxW={{ lg: "448px" }}
+        minW={{ lg: "448px" }}
         borderRadius="8px"
         p="30px"
         pb="50px"

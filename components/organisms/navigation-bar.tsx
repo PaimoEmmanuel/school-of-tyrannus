@@ -24,17 +24,21 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
   return (
     <Flex
       as="nav"
-      p="14px 64px"
+      p={{ base: "1.25rem 1.5rem", lg: "0.875rem 4rem" }}
       justifyContent="space-between"
       alignItems="center"
       pos="relative"
       zIndex="1"
     >
-      <Flex minW="50%" justifyContent="space-between">
+      <Flex justifyContent="space-between">
         <LogoText />
         {/* <NavSearch /> */}
       </Flex>
-      <Flex justifyContent="space-between" alignItems="center">
+      <Flex
+        display={{ base: "none", lg: "flex" }}
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Link href="/about" passHref>
           <ChakraLink mr="45px">About Tyrannus</ChakraLink>
         </Link>

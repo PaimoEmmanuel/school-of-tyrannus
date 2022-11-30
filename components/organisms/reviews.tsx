@@ -9,21 +9,21 @@ interface IReviewsProps {
 const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
   const reviews = [
     {
-      name: "Gbemi Adebayo",
+      name: "Gbemi Adebayo 1",
       occupation: "Lawyer",
       image: "/assets/images/video-poster.png",
       testimony:
         "Since I started the course on Charity, a rush of grace has come with relating better with my brethren and my mum. I now see how much change has to occur in me first.",
     },
     {
-      name: "Gbemi Lawal",
+      name: "Gbemi Lawal 2",
       occupation: "Accountant",
       image: "/assets/images/banner.png",
       testimony:
         "Since I started the course on Charity, a rush of grace has come with relating better me first.",
     },
     {
-      name: "Seun Adebayo",
+      name: "Seun Adebayo 3",
       occupation: "Doctor",
       image: "/assets/images/video-poster.png",
       testimony: "I now see how much change has to occur in me first.",
@@ -31,7 +31,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
   ];
   const [translate, setTranslate] = useState(0);
   return (
-    <Box pt="53px" pb="90px" px="175px">
+    <Box pt="53px" pb="90px" px={{ base: "1.5rem", lg: "175px" }}>
       {page !== "home" && (
         <Text fontWeight="600" mb="54px">
           Reviews
@@ -40,14 +40,14 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
       <Box overflow="hidden">
         <Flex
           justifyContent="space-between"
-          gap="68px"
+          gap={{ lg: "68px" }}
           transform={`translateX(-${translate}%)`}
           transition="all .3s"
         >
           {reviews.map((review, index) => (
-            <Box minW="47%" key={review.name}>
+            <Box minW={{ base: "100%", lg: "47%" }} key={review.name}>
               <Testimony
-                name="Gbemi Adebayo"
+                name={"Gbemi Adebayo " + (index + 1)}
                 image={review.image}
                 occupation="Accountant"
                 testimony="Since I started the course on Charity, a rush of grace 
@@ -70,7 +70,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
                   as="span"
                   h="10px"
                   w="10px"
-                  bgColor={translate / 104 >= index ? "text.orange" : "#C4C4C4"}
+                  bgColor={translate / 100 >= index ? "text.orange" : "#C4C4C4"}
                   display="inline-block"
                   borderRadius="50%"
                 ></Box>
@@ -92,7 +92,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
             opacity={translate > 0 ? "1" : "0.4"}
             onClick={() => {
               if (translate > 0) {
-                setTranslate(translate - 104);
+                setTranslate(translate - 100);
               }
             }}
           >
@@ -118,10 +118,10 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
             boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13)"
             borderRadius="4px"
             cursor="pointer"
-            opacity={translate < (reviews.length - 2) * 104 ? "1" : "0.4"}
+            opacity={translate < (reviews.length - 1) * 100 ? "1" : "0.4"}
             onClick={() => {
-              if (translate < (reviews.length - 2) * 104) {
-                setTranslate(translate + 104);
+              if (translate < (reviews.length - 1) * 100) {
+                setTranslate(translate + 100);
               }
             }}
           >

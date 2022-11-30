@@ -61,7 +61,7 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
   };
   return (
     <Box
-      p="56px 175px 114px"
+      p={{ base: "2.5rem 1.5rem", lg: "56px 175px 114px" }}
       bgColor={getMedia(index).bgColor}
       overflowX="hidden"
       pos="relative"
@@ -74,6 +74,8 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
         lineHeight="39px"
         fontWeight="500"
         mb="30px"
+        zIndex="10"
+        pos="relative"
         // gap="24px"
       >
         {getMedia(index).courseIcon({})}

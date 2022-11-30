@@ -8,7 +8,7 @@ interface IHomeTestimonyProps {}
 const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
   return (
     <>
-      <Box pt={"103px"} pos={"relative"}>
+      <Box p="103px 1.5rem 1.5rem" pos={"relative"}>
         <Box pos="absolute" top={"0"} left="0" zIndex="-1" w="100%">
           <svg
             viewBox="0 0 1440 1072"
@@ -20,9 +20,9 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
         </Box>
         <Text
           textAlign="center"
-          fontSize="26px"
+          fontSize={{base: "24px", lg:"26px"}}
           fontWeight="500"
-          lineHeight="39px"
+          lineHeight={{lg:"39px"}}
           mb="33px"
         >
           Why you should enroll
@@ -44,8 +44,8 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
           mt={"108px"}
           mb="51px"
           fontWeight="500"
-          fontSize="26px"
-          lineHeight={"39px"}
+          fontSize={{base: "24px", lg:"26px"}}
+          lineHeight={{lg:"39px"}}
         >
           What people say
         </Text>

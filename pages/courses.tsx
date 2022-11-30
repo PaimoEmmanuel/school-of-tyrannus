@@ -26,7 +26,7 @@ const Home: NextPage<ICoursesProps> = ({ courses }) => {
           bgSize="cover"
         >
           <Box
-            p="107px 0 128px 0"
+            p={{ base: "107px 1.5rem", lg: "107px 0 128px 0" }}
             ml="175px"
             maxW="489px"
             mx="auto"

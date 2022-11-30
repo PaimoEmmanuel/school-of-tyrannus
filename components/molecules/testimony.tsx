@@ -15,14 +15,14 @@ const Testimony: React.FunctionComponent<ITestimonyProps> = ({
   image,
 }) => {
   return (
-    <Box pos="relative" ml="90px">
+    <Box pos="relative" ml={{ base: "50px", lg: "90px" }}>
       <Text
         pos="absolute"
-        top="-60px"
-        left="-100px"
+        top={{ base: "-22px", lg: "-60px" }}
+        left={{ base: "-50px", lg: "-100px" }}
         color="#6677A0"
         fontFamily="'Roboto', sans-serif"
-        fontSize={"193.6px"}
+        fontSize={{ base: "87px", lg: "193.6px" }}
       >
         “
       </Text>

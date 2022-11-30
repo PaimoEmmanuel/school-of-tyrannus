@@ -39,19 +39,25 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
         ) : (
           <>
             <Box bgColor="text.blue" textAlign="center" pos="relative">
-              <Box pos="relative" pt="88px" pb="77px" overflow="hidden">
+              <Box
+                pos="relative"
+                pt="88px"
+                pb="77px"
+                px="1.5rem"
+                overflow="hidden"
+              >
                 <SigninBg course={true} />
                 <Box pos="relative">
                   <Text
                     fontWeight="300"
-                    fontSize="14px"
+                    fontSize={{ base: "12px", lg: "14px" }}
                     textTransform="uppercase"
                     mb="28px"
                   >
                     Home / young believers / {course.title}
                   </Text>
                   <Text
-                    fontSize="36px"
+                    fontSize={{ base: "18px", lg: "36px" }}
                     fontWeight="500"
                     color="#131275"
                     mb="52px"
@@ -69,6 +75,7 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                     fontWeight="600"
                     color="white"
                     textTransform="uppercase"
+                    fontSize={{ base: "14px", lg: "16px" }}
                   >
                     instructors
                   </Text>
@@ -94,7 +101,11 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                           }
                           // alt={instructor.name}
                         />
-                        <Text maxW="120px" textAlign="left">
+                        <Text
+                          maxW="120px"
+                          textAlign="left"
+                          fontSize={{ base: "14px", lg: "16px" }}
+                        >
                           {instructor.name}
                         </Text>
                       </Flex>
@@ -105,6 +116,7 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                     color="rgba(19, 18, 117, 0.7)"
                     mt="48px"
                     textTransform="uppercase"
+                    fontSize={{ base: "14px", lg: "16px" }}
                   >
                     {course.lessonsCount} lessons . {course.contentsCount}{" "}
                     videos
