@@ -9,7 +9,7 @@ interface ICourseContentProps {
     contents: {}[];
     contentsCount: number;
     resourcesCount: number;
-    testCount: number
+    testCount: number;
   }[];
 }
 
@@ -17,7 +17,12 @@ const CourseContent: React.FunctionComponent<ICourseContentProps> = ({
   courseContent,
 }) => {
   return (
-    <Box bgColor="text.blue" pt="60px" pb="90px" px="175px">
+    <Box
+      bgColor="text.blue"
+      pt="60px"
+      pb="90px"
+      px={{ base: "1.5rem", lg: "175px" }}
+    >
       <Text fontWeight="600" mb="33px">
         Course content
       </Text>

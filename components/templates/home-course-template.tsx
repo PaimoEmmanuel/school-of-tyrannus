@@ -104,7 +104,12 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
       </Flex>
       <Flex gap="20px">
         {courses.map((course) => (
-          <Box key={course.title} minW="260px" w="23.5%" maxW="23.5%">
+          <Box key={course.title} minW="255px" maxW="calc((100% - 60px) / 4)">
+            <CourseCard {...course} />
+          </Box>
+        ))}
+        {courses.map((course) => (
+          <Box key={course.title} minW="255px" maxW="calc((100% - 60px) / 4)">
             <CourseCard {...course} />
           </Box>
         ))}

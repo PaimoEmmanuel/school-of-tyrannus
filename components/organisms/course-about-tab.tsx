@@ -35,7 +35,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
     <Flex
       flexDir={{ base: "column", xl: "row" }}
       gap="50px"
-      px={{lg: "175px" }}
+      px={{ lg: "175px" }}
     >
       <Box>
         <Text
@@ -140,7 +140,11 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
           zIndex="1"
           h="234px"
           cursor="pointer"
-          background={`linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${thumbnail})`}
+          background={`linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${
+            // thumbnail ? thumbnail : "/assets/images/video-poster.png"
+            "/assets/images/video-poster.png"
+          })`}
+          bgPos="50%"
           bgSize="cover"
           borderRadius="4px"
           css={{

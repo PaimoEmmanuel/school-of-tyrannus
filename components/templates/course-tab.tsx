@@ -18,13 +18,17 @@ const CourseTab: React.FC<ICourseTabProps> = ({
 }) => {
   return (
     <Tabs>
-      <TabList mx={{base: "1.5rem", lg:"175px"}}>
+      <TabList
+        mx={{ base: "1.5rem", lg: "175px" }}
+        overflowX={{ base: "scroll", lg: "hidden" }}
+      >
         <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
             color: "text.deepBlue",
             fontWeight: "600",
           }}
+          whiteSpace="nowrap"
           _focus={{ outline: "none" }}
         >
           About
@@ -35,6 +39,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
             color: "text.deepBlue",
             fontWeight: "600",
           }}
+          whiteSpace="nowrap"
           _focus={{ outline: "none" }}
         >
           Course content
@@ -45,16 +50,18 @@ const CourseTab: React.FC<ICourseTabProps> = ({
             color: "text.deepBlue",
             fontWeight: "600",
           }}
+          whiteSpace="nowrap"
           _focus={{ outline: "none" }}
         >
           Instructors
         </Tab>
-        {/* <Tab
+        <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
             color: "text.deepBlue",
             fontWeight: "600",
           }}
+          whiteSpace="nowrap"
           _focus={{ outline: "none" }}
         >
           Reviews
@@ -65,10 +72,11 @@ const CourseTab: React.FC<ICourseTabProps> = ({
             color: "text.deepBlue",
             fontWeight: "600",
           }}
+          whiteSpace="nowrap"
           _focus={{ outline: "none" }}
         >
           FAQ
-        </Tab> */}
+        </Tab>
       </TabList>
 
       <TabPanels>
@@ -90,12 +98,12 @@ const CourseTab: React.FC<ICourseTabProps> = ({
         <TabPanel p="0">
           <Instructors instructors={instructors} />
         </TabPanel>
-        {/* <TabPanel p="0" bgColor="text.pink">
+        <TabPanel p="0" bgColor="text.pink">
           <Reviews />
         </TabPanel>
         <TabPanel p="0">
           <FAQs />
-        </TabPanel> */}
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
