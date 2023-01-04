@@ -33,7 +33,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
       bgColor="white"
       w="100%"
       height={openNav ? "74px" : "auto"}
-      zIndex="99"
+      zIndex="9999"
     >
       <Flex justifyContent="space-between">
         <LogoText />

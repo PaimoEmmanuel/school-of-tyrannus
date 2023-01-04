@@ -14,6 +14,7 @@ const LessonManual: React.FunctionComponent<ILessonManualProps> = (props) => {
       overflowY="scroll"
       pos="sticky"
       top="0"
+      display={{ base: "none", xl: "block" }}
     >
       <Text fontWeight="600" mb="18px">
         Lesson Manual

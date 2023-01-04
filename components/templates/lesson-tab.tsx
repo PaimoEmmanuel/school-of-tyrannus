@@ -7,11 +7,6 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import CourseAboutTab from "../organisms/course-about-tab";
-import CourseContent from "../organisms/course-content";
-import FAQs from "../organisms/faqs";
-import Instructors from "../organisms/instructors";
-import Reviews from "../organisms/reviews";
 import PrivatePage from "./private-route";
 
 interface ILessonTab {
@@ -19,8 +14,8 @@ interface ILessonTab {
 }
 const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
   return (
-    <Tabs mx="34px">
-      <TabList pt="38px">
+    <Tabs mx={{ base: "24px", lg: "34px" }}>
+      <TabList pt="38px" overflowX="scroll">
         <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
@@ -29,6 +24,7 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
           }}
           fontWeight="500"
           _focus={{ outline: "none" }}
+          whiteSpace="nowrap"
         >
           Overview
         </Tab>
@@ -41,8 +37,22 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
           }}
           fontWeight="500"
           _focus={{ outline: "none" }}
+          whiteSpace="nowrap"
         >
           Resources
+        </Tab>
+        <Tab
+          _selected={{
+            borderBottom: "3px solid #0B0966",
+            color: "text.deepBlue",
+            fontWeight: "700",
+          }}
+          fontWeight="500"
+          _focus={{ outline: "none" }}
+          display={{ base: "block", xl: "none" }}
+          whiteSpace="nowrap"
+        >
+          Lesson Manual
         </Tab>
       </TabList>
 
@@ -109,6 +119,39 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
           ) : (
             <Text>No resource available</Text>
           )}
+        </TabPanel>
+        <TabPanel mt="36px" p="0" display={{ base: "block", xl: "none" }}>
+          <Text
+            fontSize="14px"
+            css={{
+              strong: {
+                fontSize: "14px",
+                fontWeight: "600",
+                display: "block",
+                marginBottom: "8px",
+              },
+            }}
+          >
+            <strong>Time Stamp - 0:00 - 0:30</strong>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa
+            pulvinar lacus posuere pretium ac, turpis molestie. Egestas
+            ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo
+            egestas ut neque, tincidunt. Orci lorem convallis cursus feugiat
+            aliquam cras at. Curabitur consequat vel nulla nunc. Morbi congue mi
+            tincidunt odio ut. Sed quam gravida interdum ut habitasse porttitor
+            aliquam egestas purus. Nibh in sed mollis dui nisi, massa. Mi tempus
+            nec, porttitor lacus felis nisi fringilla vestibulum. A nam eu
+            semper id adipiscing. <br /> <br />
+            <strong>Time Stamp - 0:30 - 1:00</strong> Eleifend vestibulum
+            vestibulum urna viverra pulvinar. Eget felis arcu sollicitudin dolor
+            mus. Augue cras varius proin nunc varius enim. Tristique sed non
+            pretium, accumsan amet donec. Ipsum tellus metus quam viverra.
+            Sollicitudin dolor mauris ultrices orci consequat aliquet vitae ut
+            pellentesque. Nec dui nec vitae accumsan nibh pulvinar faucibus
+            volutpat ut. Facilisis justo, sed lectus dui sed sem habitasse.
+            Quisque blandit leo euismod sit libero vitae neque eget. Ut
+            accumsan, in eget neque tristique posuere amet neque.
+          </Text>
         </TabPanel>
       </TabPanels>
     </Tabs>

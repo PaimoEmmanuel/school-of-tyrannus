@@ -50,7 +50,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                 </Box>
 
                 <svg
-                  width="19"
+                  width="14"
                   height="11"
                   viewBox="0 0 19 11"
                   fill="none"

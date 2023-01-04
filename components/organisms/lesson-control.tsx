@@ -28,7 +28,8 @@ const LessonControl: React.FunctionComponent<ILessonControlProps> = ({
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p="22px 50px"
+      p={{ base: "22px", lg: "22px 50px" }}
+      gap="12px"
       bgColor="white"
       boxShadow="0px -4px 32px rgba(104, 104, 104, 0.17)"
     >
@@ -56,7 +57,9 @@ const LessonControl: React.FunctionComponent<ILessonControlProps> = ({
         Previous
       </Text>
       <Text>
-        Lesson {index + 1} -{" "}
+        <Text as="span" display={{ base: "none", lg: "inline" }}>
+          Lesson {index + 1} -{" "}
+        </Text>
         <Text as="span" fontWeight="700">
           {title}
         </Text>
