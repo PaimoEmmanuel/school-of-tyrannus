@@ -52,7 +52,7 @@ const LessonPage: NextPage = () => {
           <Flex pos="relative">
             <Skeleton
               isLoaded={!loadingCourse && !loading}
-              pos={{ base: "sticky", lg: "static" }}
+              pos={{ base: "sticky" }}
               height="100vh"
               top="-14px"
               zIndex="99"

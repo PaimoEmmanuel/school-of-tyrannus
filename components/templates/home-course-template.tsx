@@ -78,7 +78,7 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
   }, []);
   return (
     <Box
-      p={{ base: "2.5rem 1.5rem", lg: "56px 175px 114px" }}
+      p={{ base: "2.5rem 1.5rem 5rem", lg: "56px 175px 114px" }}
       bgColor={getMedia(index).bgColor}
       overflowX="hidden"
       pos="relative"
@@ -103,7 +103,7 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
           {about}
         </Text>
       </Flex>
-      <Box pos="relative" px={{ base: "60px", lg: "0" }}>
+      <Box pos="relative">
         <Flex
           display={showArrows() ? "flex" : "none"}
           minW="42px"
@@ -117,8 +117,10 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
           cursor="pointer"
           zIndex="9999"
           pos="absolute"
-          left={{ base: "0", lg: "-80px" }}
-          top="50%"
+          left={{ lg: "-80px" }}
+          top={{ lg: "50%" }}
+          bottom={{ base: "-80px", lg: "unset" }}
+          right={{ base: "60px", lg: "unset" }}
           transform="translateY(-50%)"
           opacity={translate < 0 ? "100%" : "50%"}
           onClick={() => {
@@ -185,7 +187,8 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
           zIndex="9999"
           pos="absolute"
           right={{ base: "0", lg: "-80px" }}
-          top="50%"
+          top={{ lg: "50%" }}
+          bottom={{ base: "-80px", lg: "unset" }}
           transform="translateY(-50%) rotate(180deg)"
           opacity={translatePeak ? "50%" : "100%"}
           onClick={() => {
