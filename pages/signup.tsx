@@ -1,12 +1,19 @@
-import type {NextPage} from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
 import NavigationBar from "../components/organisms/navigation-bar";
-import {Box, Button, Flex, Link as ChakraLink, Spinner, Text,} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Link as ChakraLink,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import Input from "../components/molecules/input";
 import SigninBg from "../components/molecules/signin-bg";
 import Link from "next/link";
 import PasswordInput from "../components/molecules/password";
-import {useSignUp} from "../hooks";
+import { useSignUp } from "../hooks";
 
 const Signup: NextPage = () => {
   const {
@@ -26,13 +33,14 @@ const Signup: NextPage = () => {
         <title>Sign up - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
-        <NavigationBar/>
-        <SigninBg/>
+        <NavigationBar />
+        <SigninBg />
         <Flex
           justifyContent="center"
           alignItems="center"
           bgColor="text.blue"
           minH="94vh"
+          padding="60px 0 120px"
         >
           <Box
             // pending removal
@@ -125,7 +133,7 @@ const Signup: NextPage = () => {
               }}
             >
               {isSigningUp ? "Please wait" : "Sign up"}
-              {isSigningUp && <Spinner/>}
+              {isSigningUp && <Spinner />}
             </Button>
             <Text fontSize="12px" color="text.gray">
               Already have an account?{" "}

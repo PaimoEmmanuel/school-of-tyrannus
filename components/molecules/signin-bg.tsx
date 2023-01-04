@@ -6,7 +6,7 @@ interface ISigninBgProps {
 
 const SigninBg: React.FC<ISigninBgProps> = ({course}) => (
   <>
-    <Box pos="absolute" left="0" top={course ? "50px" : ""} bottom={course ? "" : "0"}>
+    <Box pos="absolute" left="0" top={course ? "50px" : "0"} bottom={course ? "" : "0"} w="100%" overflow="hidden">
       <svg
         width="616"
         height="667"
