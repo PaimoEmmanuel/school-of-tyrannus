@@ -1,5 +1,6 @@
 import { Box, Text, Flex, Img } from "@chakra-ui/react";
 import { useState } from "react";
+import { useMediaQuery } from "@chakra-ui/react";
 import Testimony from "../molecules/testimony";
 
 interface IReviewsProps {
@@ -30,6 +31,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
     },
   ];
   const [translate, setTranslate] = useState(0);
+  const [isLargeScreen] = useMediaQuery("(min-width: 992px)");
   return (
     <Box pt="53px" pb="90px" px={{ base: "1.5rem", lg: "175px" }}>
       {page !== "home" && (
@@ -64,7 +66,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
         <Flex gap="22px">
           {reviews.map(
             (review, index) =>
-              index < reviews.length / 2 && (
+              index < (isLargeScreen ? reviews.length / 2 : reviews.length) && (
                 <Box
                   key={review.name}
                   as="span"
@@ -118,10 +120,22 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
             boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13)"
             borderRadius="4px"
             cursor="pointer"
-            opacity={translate < (reviews.length - 1) * 100 ? "1" : "0.4"}
+            opacity={
+              translate <
+              (!isLargeScreen ? reviews.length - 1 : reviews.length / 2 - 1) *
+                100
+                ? "1"
+                : "0.4"
+            }
             onClick={() => {
-              if (translate < (reviews.length - 1) * 100) {
-                setTranslate(translate + 100);
+              if (isLargeScreen) {
+                if (translate < ((reviews.length - 1) / 2) * 100) {
+                  setTranslate(translate + 100);
+                }
+              } else {
+                if (translate < (reviews.length - 1) * 100) {
+                  setTranslate(translate + 100);
+                }
               }
             }}
           >

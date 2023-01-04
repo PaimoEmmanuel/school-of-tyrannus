@@ -1,4 +1,10 @@
-import { Box, Flex, Text, Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Link as ChakraLink,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { ICourseLessons } from "../../types/course";
@@ -16,20 +22,29 @@ const LessonSideBar: React.FC<ILessonSideBar> = ({
   onTakeTest,
   goToLesson,
 }) => {
-  const [open, setOpen] = useState(true);
+  const [isAtLeastTabSize] = useMediaQuery("(min-width: 992px)");
+  const [open, setOpen] = useState(isAtLeastTabSize ? true : false);
   return (
     <Box
       bgColor="white"
-      pos={open ? "sticky" : "initial"}
+      pos={{
+        base: open ? "absolute" : "static",
+        lg: open ? "sticky" : "static",
+      }}
       top="0"
+      zIndex="9"
       align-self="flex-start"
-      height="auto"
+      height="100%"
       overflow={open ? "scroll" : "hidden"}
-      p={open ? "18px 34px 48px 60px" : "0"}
+      p={{
+        base: open ? "18px 24px" : "0",
+        lg: open ? "18px 34px 48px 60px" : "0",
+      }}
       borderRadius="0px 12px 0px 0px"
       mt="14px"
-      maxW={open ? "382px" : "0"}
-      minW={open ? "382px" : "0"}
+      maxW={{ base: open ? "280px" : "0", lg: open ? "382px" : "0" }}
+      minW={{ base: open ? "280px" : "0", lg: open ? "382px" : "0" }}
+      // transition="all .2s"
     >
       <Flex justifyContent="space-between" alignItems="center" pb="60px">
         <Link href="/" passHref>
@@ -64,8 +79,9 @@ const LessonSideBar: React.FC<ILessonSideBar> = ({
           justifyContent="center"
           alignItems="center"
           as="button"
-          h="46px"
-          w="46px"
+          display="flex"
+          h={{ base: "36px", sm: "46px" }}
+          w={{ base: "36px", sm: "46px" }}
           pos={open ? "relative" : "absolute"}
           zIndex="10"
           left={open ? "" : "2rem"}
@@ -75,6 +91,7 @@ const LessonSideBar: React.FC<ILessonSideBar> = ({
           onClick={() => {
             setOpen(!open);
           }}
+          __css={{ svg: { width: { base: "14px", sm: "20px" } } }}
         >
           <svg
             width="20"

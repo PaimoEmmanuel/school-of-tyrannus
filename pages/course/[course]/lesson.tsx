@@ -50,7 +50,13 @@ const LessonPage: NextPage = () => {
         <NavigationBar />
         <Box bgColor="text.lightBlue">
           <Flex pos="relative">
-            <Skeleton isLoaded={!loadingCourse && !loading}>
+            <Skeleton
+              isLoaded={!loadingCourse && !loading}
+              pos={{ base: "sticky", lg: "static" }}
+              height="100vh"
+              top="-14px"
+              zIndex="99"
+            >
               <LessonSideBar
                 onTakeTest={() => {
                   if (currentLessonStatus.videoStatus === "Completed") {
@@ -85,18 +91,18 @@ const LessonPage: NextPage = () => {
                     borderRadius: "12px",
                   },
                 }}
-                ml="32px"
-                gap="24px"
+                ml={{ base: "0", md: "32px" }}
+                gap={{ base: "0", md: "24px" }}
               >
                 <Box pos="relative" minW="calc(100% - 456px)">
                   <Text
                     pos="absolute"
-                    p="25px 27px"
+                    p={{ base: "16px 24px", lg: "25px 27px" }}
                     w="100%"
                     bg="rgba(113, 113, 113, 1)"
                     borderRadius="12px 12px 0 0"
                     zIndex="88"
-                    fontSize="20px"
+                    fontSize={{ base: "14px", lg: "20px" }}
                     fontWeight="700"
                     color="white"
                     top="0"

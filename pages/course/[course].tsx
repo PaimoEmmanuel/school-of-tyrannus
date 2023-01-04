@@ -17,6 +17,7 @@ import { getAllCourses, getCourse } from "../../services/course";
 import { ICourseDetails } from "../../types/course";
 import { useEnrolledForCourse } from "../../hooks";
 import { useRouter } from "next/router";
+import getThumbnail from "../../utils/get-instructor-thumbnail";
 
 interface ICourseDetailsPage extends ICourseDetails {
   enrolled: boolean;
@@ -94,12 +95,8 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                           borderRadius="50%"
                           mr="23px"
                           border="8px solid rgba(253, 211, 132, 0.4)"
-                          src={
-                            instructor.thumbnail
-                              ? instructor.thumbnail
-                              : "/assets/images/video-poster.png"
-                          }
-                          // alt={instructor.name}
+                          src={getThumbnail(instructor.name)}
+                          alt={instructor.name}
                         />
                         <Text
                           maxW="120px"

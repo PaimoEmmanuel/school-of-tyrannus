@@ -9,6 +9,8 @@ interface ILessonContextProps {
   resourceNo: number;
   testNo: number;
   lastLesson?: boolean;
+  openAccordion: boolean;
+  setOpenAccordion: () => void;
 }
 const LessonContent: React.FC<ILessonContextProps> = ({
   lessonTitle,
@@ -19,26 +21,72 @@ const LessonContent: React.FC<ILessonContextProps> = ({
   resourceNo,
   testNo,
   lastLesson,
+  openAccordion,
+  setOpenAccordion,
 }) => {
   return (
-    <Flex alignItems="center" mb="50px">
-      <Box mr="90px" minW="204px">
-        <Text fontWeight="300" color="text.gray" fontSize="34px">
-          Lesson
-        </Text>
-        <Text
-          fontSize="120px"
-          fontWeight="600"
-          color="rgba(67, 108, 212, 0.4)"
-          mt="-30px"
+    <Flex
+      alignItems={{ md: "center" }}
+      mb="50px"
+      flexDir={{ base: "column", md: "row" }}
+    >
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        cursor={{ base: "pointer", md: "arrow" }}
+        onClick={setOpenAccordion}
+      >
+        <Box mr="90px" minW="204px">
+          <Text
+            fontWeight="300"
+            color="text.gray"
+            fontSize={{ base: "24px", md: "34px" }}
+          >
+            Lesson
+          </Text>
+          <Text
+            fontSize={{ base: "74px", md: "120px" }}
+            fontWeight="600"
+            color="rgba(67, 108, 212, 0.4)"
+            mt="-30px"
+          >
+            {lessonNumber < 10 ? `0${lessonNumber}` : lessonNumber}
+          </Text>
+        </Box>
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          h="50px"
+          w="50px"
+          bgColor="#C5D6FF"
+          borderRadius="4px"
+          display={{ base: "flex", md: "none" }}
         >
-          {lessonNumber < 10 ? `0${lessonNumber}` : lessonNumber}
-        </Text>
-      </Box>
+          <svg
+            width="14"
+            height="8"
+            viewBox="0 0 14 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13 7L7 1L1 7"
+              stroke="#131275"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Flex>
+      </Flex>
+
       <Box
         w="100%"
         borderBottom={lastLesson ? "" : "1px solid #E7E4E4"}
-        pb="53px"
+        pb={{ base: openAccordion ? "53px" : "0", md: "53px" }}
+        h={{ base: openAccordion ? "auto" : "0px", md: "auto" }}
+        overflow="hidden"
+        transition="all .3s"
       >
         <Text fontWeight="600" mb="32px">
           {lessonTitle}
