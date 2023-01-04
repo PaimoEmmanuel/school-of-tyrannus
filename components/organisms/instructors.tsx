@@ -14,7 +14,7 @@ const Instructors: React.FunctionComponent<IInstructorsProps> = ({
         Instructors
       </Text>
       <Grid
-        templateColumns="repeat(3, 1fr)"
+        templateColumns={{base: "repeat(1, 1fr)", md:"repeat(3, 1fr)"}}
         justifyContent="center"
         flexWrap="wrap"
         alignItems="center"
@@ -38,7 +38,6 @@ const Instructors: React.FunctionComponent<IInstructorsProps> = ({
               <Text maxW="120px" textAlign="left">
                 {instructor.name}
               </Text>
-              star-svgrepo-com.svg
             </Flex>
             <Text mt="42px">{instructor.name}</Text>
           </Box>

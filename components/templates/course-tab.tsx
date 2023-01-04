@@ -55,7 +55,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
         >
           Instructors
         </Tab>
-        <Tab
+        {/* <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
             color: "text.deepBlue",
@@ -76,7 +76,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
           _focus={{ outline: "none" }}
         >
           FAQ
-        </Tab>
+        </Tab> */}
       </TabList>
 
       <TabPanels>
@@ -98,12 +98,12 @@ const CourseTab: React.FC<ICourseTabProps> = ({
         <TabPanel p="0">
           <Instructors instructors={instructors} />
         </TabPanel>
-        <TabPanel p="0" bgColor="text.pink">
+        {/* <TabPanel p="0" bgColor="text.pink">
           <Reviews />
         </TabPanel>
         <TabPanel p="0">
           <FAQs />
-        </TabPanel>
+        </TabPanel> */}
       </TabPanels>
     </Tabs>
   );

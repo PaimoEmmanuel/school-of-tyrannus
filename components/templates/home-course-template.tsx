@@ -1,5 +1,6 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
 import HomeCourseIconA from "../atoms/home-course-icon-a";
 import HomeCourseIconB from "../atoms/home-course-icon-b";
 import CourseCard from "../organisms/course-card";
@@ -59,6 +60,22 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
       bgColor: "#FFFFFF",
     };
   };
+
+  const [translate, setTranslate] = useState(0);
+  const [translatePeak, setTranslatePeak] = useState(false);
+  const [isLargeScreen] = useMediaQuery("(min-width: 992px)");
+  const [isMediumScreen] = useMediaQuery("(min-width: 480px)");
+  const showArrows = () => {
+    if (courses.length <= 1) return false;
+    if (isMediumScreen && courses.length <= 2) return false;
+    if (isLargeScreen && courses.length <= 4) return false;
+    return true;
+  };
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setTranslate(0);
+    });
+  }, []);
   return (
     <Box
       p={{ base: "2.5rem 1.5rem", lg: "56px 175px 114px" }}
@@ -81,39 +98,126 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
         {getMedia(index).courseIcon({})}
         {title}
       </Text>
-      <Flex justifyContent="space-between" mb="40px" pos="relative">
+      <Flex justifyContent="space-between" pos="relative">
         <Text maxW="583px" fontSize="14px" lineHeight="21px" color="#514F4F">
           {about}
         </Text>
-        {/*<Link href="" passHref>*/}
-        {/*  <ChakraLink*/}
-        {/*    h="42px"*/}
-        {/*    w="164px"*/}
-        {/*    bgColor="text.orange"*/}
-        {/*    display="flex"*/}
-        {/*    alignItems="center"*/}
-        {/*    justifyContent="center"*/}
-        {/*    borderRadius="4px"*/}
-        {/*    fontWeight="500"*/}
-        {/*    boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"*/}
-        {/*    color="white"*/}
-        {/*  >*/}
-        {/*    View all courses*/}
-        {/*  </ChakraLink>*/}
-        {/*</Link>*/}
       </Flex>
-      <Flex gap="20px">
-        {courses.map((course) => (
-          <Box key={course.title} minW="255px" maxW="calc((100% - 60px) / 4)">
-            <CourseCard {...course} />
-          </Box>
-        ))}
-        {courses.map((course) => (
-          <Box key={course.title} minW="255px" maxW="calc((100% - 60px) / 4)">
-            <CourseCard {...course} />
-          </Box>
-        ))}
-      </Flex>
+      <Box pos="relative" px={{ base: "60px", lg: "0" }}>
+        <Flex
+          display={showArrows() ? "flex" : "none"}
+          minW="42px"
+          h="59px"
+          bgColor="white"
+          justifyContent="center"
+          alignItems="center"
+          boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13)"
+          borderRadius="4px"
+          mr="9px"
+          cursor="pointer"
+          zIndex="9999"
+          pos="absolute"
+          left={{ base: "0", lg: "-80px" }}
+          top="50%"
+          transform="translateY(-50%)"
+          opacity={translate < 0 ? "100%" : "50%"}
+          onClick={() => {
+            if (translate < 0) {
+              if (isLargeScreen || isMediumScreen) {
+                setTranslate(translate + 102);
+              } else {
+                setTranslate(translate + 106.5);
+              }
+              setTranslatePeak(false);
+            }
+          }}
+        >
+          <svg
+            width="16"
+            height="21"
+            viewBox="0 0 16 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.9639 20.7833L10.9805 20.7833L0.493865 10.86L10.9805 0.893326L15.9639 0.893326L5.4772 10.86L15.9639 20.7833Z"
+              fill="#000000"
+            />
+          </svg>
+        </Flex>
+        <Box overflowX="hidden">
+          <Flex
+            gap="20px"
+            py="40px"
+            transform={`translateX(${translate}%)`}
+            transition="all .3s"
+          >
+            {courses.map((course) => (
+              <Box
+                key={course.title}
+                minW={{
+                  base: "100%",
+                  sm: "calc((100% - 20px) / 2)",
+                  lg: "calc((100% - 60px) / 4)",
+                }}
+                maxW={{
+                  base: "100%",
+                  sm: "calc((100% - 20px) / 2)",
+                  lg: "calc((100% - 60px) / 4)",
+                }}
+              >
+                <CourseCard {...course} />
+              </Box>
+            ))}
+          </Flex>
+        </Box>
+        <Flex
+          display={showArrows() ? "flex" : "none"}
+          minW="42px"
+          h="59px"
+          bgColor="white"
+          justifyContent="center"
+          alignItems="center"
+          boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13)"
+          borderRadius="4px"
+          mr="9px"
+          cursor="pointer"
+          zIndex="9999"
+          pos="absolute"
+          right={{ base: "0", lg: "-80px" }}
+          top="50%"
+          transform="translateY(-50%) rotate(180deg)"
+          opacity={translatePeak ? "50%" : "100%"}
+          onClick={() => {
+            if (isLargeScreen) {
+              if (translate > -((courses.length - 4) / 4) * 102) {
+                setTranslate(translate - 102);
+              } else setTranslatePeak(true);
+            } else if (isMediumScreen) {
+              if (translate > (-(courses.length - 2) / 2) * 100) {
+                setTranslate(translate - 102);
+              } else setTranslatePeak(true);
+            } else {
+              if (translate > (-(courses.length - 1) / 1) * 106.5) {
+                setTranslate(translate - 106.5);
+              } else setTranslatePeak(true);
+            }
+          }}
+        >
+          <svg
+            width="16"
+            height="21"
+            viewBox="0 0 16 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.9639 20.7833L10.9805 20.7833L0.493865 10.86L10.9805 0.893326L15.9639 0.893326L5.4772 10.86L15.9639 20.7833Z"
+              fill="#000000"
+            />
+          </svg>
+        </Flex>
+      </Box>
     </Box>
   );
 };
