@@ -20,6 +20,7 @@ interface IHomeCourseTemplateProps {
     lessonsCount: number;
     contentsCount: number;
     id: number;
+    thumbnail: string;
   }[];
 }
 
@@ -28,6 +29,7 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
   title,
   about,
   courses,
+  // thumbnail,
 }) => {
   const getMedia = (index: number) => {
     if (index === 0) {

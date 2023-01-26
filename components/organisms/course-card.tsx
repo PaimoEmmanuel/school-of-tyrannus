@@ -4,6 +4,7 @@ import * as React from "react";
 
 interface ICourseCardProps {
   title: string;
+  thumbnail: string;
   lessonsCount: number;
   contentsCount: number;
   id: number;
@@ -13,6 +14,7 @@ const CourseCard: React.FunctionComponent<ICourseCardProps> = ({
   title,
   lessonsCount,
   contentsCount,
+  thumbnail,
   id,
 }) => {
   return (
@@ -24,10 +26,10 @@ const CourseCard: React.FunctionComponent<ICourseCardProps> = ({
       h="100%"
     >
       <Img
-        height="114px"
+        height="174px"
         w="100%"
         objectFit="cover"
-        src="/assets/images/course-card-img.png"
+        src={thumbnail ? thumbnail : "/assets/images/course-card-img.png"}
       />
       <Box p="30px 30px 0 30px">
         <Text fontSize="14px" lineHeight="21px" color="text.gold">
