@@ -124,7 +124,7 @@ const LessonContent: React.FC<ILessonContextProps> = ({
               strokeLinejoin="round"
             />
           </svg>
-          {duration} hours to complete .{" "}
+          {duration} hours.{" "}
           {videoNo > 1 ? videoNo + " videos" : videoNo + " video"} .{" "}
           {!resourceNo
             ? ""

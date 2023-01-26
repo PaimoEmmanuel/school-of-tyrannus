@@ -20,7 +20,14 @@ const CourseTab: React.FC<ICourseTabProps> = ({
     <Tabs>
       <TabList
         mx={{ base: "1.5rem", lg: "175px" }}
-        overflowX={{ base: "scroll", lg: "hidden" }}
+        overflow={{ base: "scroll", lg: "visible" }}
+        css={{
+          "-ms-overflow-style": "none" /* Internet Explorer 10+ */,
+          "scrollbar-width": "none" /* Firefox */,
+          "&::-webkit-scrollbar": {
+            display: "none" /* Safari and Chrome */,
+          },
+        }}
       >
         <Tab
           _selected={{

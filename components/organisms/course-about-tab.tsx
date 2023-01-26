@@ -37,7 +37,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
       gap="50px"
       px={{ lg: "175px" }}
     >
-      <Box>
+      <Box w="100%">
         <Text
           fontWeight="600"
           mb="32px"

@@ -1,4 +1,5 @@
 import {
+  Box,
   Link,
   Tab,
   TabList,
@@ -15,7 +16,17 @@ interface ILessonTab {
 const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
   return (
     <Tabs mx={{ base: "24px", lg: "34px" }}>
-      <TabList pt="38px" overflowX="scroll">
+      <TabList
+        pt="38px"
+        overflowX="scroll"
+        css={{
+          "-ms-overflow-style": "none" /* Internet Explorer 10+ */,
+          "scrollbar-width": "none" /* Firefox */,
+          "&::-webkit-scrollbar": {
+            display: "none" /* Safari and Chrome */,
+          },
+        }}
+      >
         <Tab
           _selected={{
             borderBottom: "3px solid #0B0966",
@@ -58,8 +69,11 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
 
       <TabPanels>
         <TabPanel mt="36px" p="0">
-          <Text
+          <Box
             css={{
+              p: {
+                marginBottom: "24px",
+              },
               strong: {
                 color: "#161087",
                 fontWeight: "600",
@@ -68,36 +82,44 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
               },
             }}
           >
-            <strong>Introduction</strong>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa
-            pulvinar lacus posuere pretium ac, turpis molestie. Egestas
-            ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo
-            egestas ut neque, tincidunt. Orci lorem convallis cursus feugiat
-            aliquam cras at. Curabitur consequat vel nulla nunc. Morbi congue mi
-            tincidunt odio ut. Sed quam gravida interdum ut habitasse porttitor
-            aliquam egestas purus. Nibh in sed mollis dui nisi, massa. Mi tempus
-            nec, porttitor lacus felis nisi fringilla vestibulum. A nam eu
-            semper id adipiscing. <br /> <br />
-            <strong>Memory Verse</strong> Eleifend vestibulum vestibulum urna
-            viverra pulvinar. Eget felis arcu sollicitudin dolor mus. Augue cras
-            varius proin nunc varius enim. Tristique sed non pretium, accumsan
-            amet donec. Ipsum tellus metus quam viverra. Sollicitudin dolor
-            mauris ultrices orci consequat aliquet vitae ut pellentesque. Nec
-            dui nec vitae accumsan nibh pulvinar faucibus volutpat ut. Facilisis
-            justo, sed lectus dui sed sem habitasse. Quisque blandit leo euismod
-            sit libero vitae neque eget. Ut accumsan, in eget neque tristique
-            posuere amet neque.
-            <br /> <br />
-            <strong>Why men should be strong</strong> Eleifend vestibulum
-            vestibulum urna viverra pulvinar. Eget felis arcu sollicitudin dolor
-            mus. Augue cras varius proin nunc varius enim. Tristique sed non
-            pretium, accumsan amet donec. Ipsum tellus metus quam viverra.
-            Sollicitudin dolor mauris ultrices orci consequat aliquet vitae ut
-            pellentesque. Nec dui nec vitae accumsan nibh pulvinar faucibus
-            volutpat ut. Facilisis justo, sed lectus dui sed sem habitasse.
-            Quisque blandit leo euismod sit libero vitae neque eget. Ut
-            accumsan, in eget neque tristique posuere amet neque.
-          </Text>
+            <div>
+              <p>
+                <strong>Introduction</strong>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
+                massa pulvinar lacus posuere pretium ac, turpis molestie.
+                Egestas ultricies sed sit ornare nunc, eu tempus. A molestie
+                elementum, leo egestas ut neque, tincidunt. Orci lorem convallis
+                cursus feugiat aliquam cras at. Curabitur consequat vel nulla
+                nunc. Morbi congue mi tincidunt odio ut. Sed quam gravida
+                interdum ut habitasse porttitor aliquam egestas purus. Nibh in
+                sed mollis dui nisi, massa. Mi tempus nec, porttitor lacus felis
+                nisi fringilla vestibulum. A nam eu semper id adipiscing.
+              </p>
+              <p>
+                <strong>Memory Verse</strong> Eleifend vestibulum vestibulum
+                urna viverra pulvinar. Eget felis arcu sollicitudin dolor mus.
+                Augue cras varius proin nunc varius enim. Tristique sed non
+                pretium, accumsan amet donec. Ipsum tellus metus quam viverra.
+                Sollicitudin dolor mauris ultrices orci consequat aliquet vitae
+                ut pellentesque. Nec dui nec vitae accumsan nibh pulvinar
+                faucibus volutpat ut. Facilisis justo, sed lectus dui sed sem
+                habitasse. Quisque blandit leo euismod sit libero vitae neque
+                eget. Ut accumsan, in eget neque tristique posuere amet neque.
+              </p>
+              <p>
+                <strong>Why men should be strong</strong> Eleifend vestibulum
+                vestibulum urna viverra pulvinar. Eget felis arcu sollicitudin
+                dolor mus. Augue cras varius proin nunc varius enim. Tristique
+                sed non pretium, accumsan amet donec. Ipsum tellus metus quam
+                viverra. Sollicitudin dolor mauris ultrices orci consequat
+                aliquet vitae ut pellentesque. Nec dui nec vitae accumsan nibh
+                pulvinar faucibus volutpat ut. Facilisis justo, sed lectus dui
+                sed sem habitasse. Quisque blandit leo euismod sit libero vitae
+                neque eget. Ut accumsan, in eget neque tristique posuere amet
+                neque.
+              </p>
+            </div>
+          </Box>
         </TabPanel>
         <TabPanel mt="36px" p="0">
           {resources.length > 0 ? (
