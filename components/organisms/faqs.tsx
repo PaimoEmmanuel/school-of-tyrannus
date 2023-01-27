@@ -47,7 +47,7 @@ const FAQs: React.FunctionComponent<IFAQsProps> = (props) => {
     },
   ];
   return (
-    <Box pt="53px" pb="200px" px="175px">
+    <Box pt="53px" pb="200px" px={{ base: "1.5rem", lg: "175px" }}>
       <Text fontWeight="600" mb="54px">
         FAQs - Frequently asked questions
       </Text>
@@ -64,7 +64,7 @@ const FAQs: React.FunctionComponent<IFAQsProps> = (props) => {
             >
               <h2>
                 <AccordionButton
-                  p="24px 40px"
+                  p={{ base: "24px 16px", sm: "24px 40px" }}
                   boxShadow="2px 7px 18px rgba(67, 108, 212, 0.13)"
                   _focus={{ outline: "none" }}
                 >
@@ -74,7 +74,7 @@ const FAQs: React.FunctionComponent<IFAQsProps> = (props) => {
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel my="30px" mx="47px" fontSize="14px">
+              <AccordionPanel my="30px" mx={{ sm: "47px" }} fontSize="14px">
                 {faq.content}
               </AccordionPanel>
             </AccordionItem>
