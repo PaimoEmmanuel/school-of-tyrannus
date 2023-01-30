@@ -6,6 +6,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Box,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useContext, useState } from "react";
@@ -24,103 +25,107 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
   const router = useRouter();
   const [openNav, setOpenNav] = useState(false);
   return (
-    <Flex
-      as="nav"
-      p={{ base: "1.25rem 1.5rem", lg: "0.875rem 4rem" }}
-      justifyContent="space-between"
-      alignItems="center"
-      pos={openNav ? "fixed" : "relative"}
-      bgColor="white"
-      w="100%"
-      height={openNav ? "74px" : "auto"}
-      zIndex="9999"
-    >
-      <Flex justifyContent="space-between">
-        <LogoText />
-        {/* <NavSearch /> */}
-      </Flex>
+    <>
+      <Box h="74px" w="100%"></Box>
       <Flex
-        display={{ base: "none", lg: "flex" }}
+        as="nav"
+        p={{ base: "1.25rem 1.5rem", lg: "0.875rem 4rem" }}
         justifyContent="space-between"
         alignItems="center"
+        pos="fixed"
+        top="0"
+        bgColor="white"
+        w="100%"
+        height={openNav ? "74px" : "auto"}
+        zIndex="999999"
       >
-        <Link href="/about" passHref>
-          <ChakraLink mr="45px">About Tyrannus</ChakraLink>
-        </Link>
-        <Link href="/courses" passHref>
-          <ChakraLink mr="45px">Courses</ChakraLink>
-        </Link>
-        {/* <Link href="/explore" passHref>
+        <Flex justifyContent="space-between">
+          <LogoText />
+          {/* <NavSearch /> */}
+        </Flex>
+        <Flex
+          display={{ base: "none", lg: "flex" }}
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Link href="/about" passHref>
+            <ChakraLink mr="45px">About Tyrannus</ChakraLink>
+          </Link>
+          <Link href="/courses" passHref>
+            <ChakraLink mr="45px">Courses</ChakraLink>
+          </Link>
+          {/* <Link href="/explore" passHref>
           <ChakraLink mr="45px">Explore</ChakraLink>
         </Link> */}
-        {!user.isLoggedIn ? (
-          <>
-            <Link href="/signin" passHref>
-              <ChakraLink mr="45px">Sign in</ChakraLink>
-            </Link>
-            <Link href="/signup" passHref>
-              <ChakraLink
-                h="42px"
-                w="128px"
-                bgColor="text.orange"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius="4px"
-                fontWeight="500"
-                boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
-                color="black"
-              >
-                Register
-              </ChakraLink>
-            </Link>
-          </>
-        ) : (
-          <Menu>
-            <MenuButton
-              as={Button}
-              rightIcon={
-                <svg
-                  width="11"
-                  height="6"
-                  viewBox="0 0 11 6"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+          {!user.isLoggedIn ? (
+            <>
+              <Link href="/signin" passHref>
+                <ChakraLink mr="45px">Sign in</ChakraLink>
+              </Link>
+              <Link href="/signup" passHref>
+                <ChakraLink
+                  h="42px"
+                  w="128px"
+                  bgColor="text.orange"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  borderRadius="4px"
+                  fontWeight="500"
+                  boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
+                  color="black"
                 >
-                  <path
-                    d="M9.52148 1L5.52148 5L1.52148 1"
-                    stroke="#203064"
-                    strokeWidth="1.14286"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              }
-            >
-              {String(user.details.Username)}
-            </MenuButton>
-            <MenuList>
-              <MenuItem
-                onClick={() => {
-                  removeUser();
-                  router.push("/signin");
-                  setUser(getUser());
-                }}
+                  Register
+                </ChakraLink>
+              </Link>
+            </>
+          ) : (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={
+                  <svg
+                    width="11"
+                    height="6"
+                    viewBox="0 0 11 6"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.52148 1L5.52148 5L1.52148 1"
+                      stroke="#203064"
+                      strokeWidth="1.14286"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
               >
-                Sign Out
-              </MenuItem>
-              {/* <MenuItem>My Learning</MenuItem> */}
-            </MenuList>
-          </Menu>
-        )}
+                {String(user.details.Username)}
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    removeUser();
+                    router.push("/signin");
+                    setUser(getUser());
+                  }}
+                >
+                  Sign Out
+                </MenuItem>
+                {/* <MenuItem>My Learning</MenuItem> */}
+              </MenuList>
+            </Menu>
+          )}
+        </Flex>
+        <MobileNav
+          openNav={openNav}
+          toggleNav={() => {
+            setOpenNav(!openNav);
+          }}
+        />
       </Flex>
-      <MobileNav
-        openNav={openNav}
-        toggleNav={() => {
-          setOpenNav(!openNav);
-        }}
-      />
-    </Flex>
+    </>
   );
 };
 

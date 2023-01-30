@@ -1,7 +1,19 @@
-import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
-import * as React from "react";
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { saveEmail } from "../../services/newsletter";
 
 const NewsLetter: React.FunctionComponent = () => {
+  const [email, setEmail] = useState("");
+  const [savingEmail, setSavingEmail] = useState(false);
+  const toast = useToast();
   return (
     <Box
       textAlign="center"
@@ -36,6 +48,7 @@ const NewsLetter: React.FunctionComponent = () => {
       >
         <Input
           type="email"
+          name="email"
           placeholder="Enter email address"
           h="48px"
           border="1px solid #E9E9E9"
@@ -46,6 +59,10 @@ const NewsLetter: React.FunctionComponent = () => {
           color="#767474"
           _placeholder={{ color: "#767474" }}
           boxShadow={{ base: "2px 7px 18px rgba(67, 108, 212, 0.13)", lg: "" }}
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
         />
         <Button
           type="submit"
@@ -57,8 +74,37 @@ const NewsLetter: React.FunctionComponent = () => {
           fontSize={"14px"}
           color="black"
           fontWeight="500"
+          onClick={(e) => {
+            e.preventDefault();
+            if (email.length > 0) {
+              setSavingEmail(true);
+              saveEmail(email)
+                .then((res) => {
+                  setSavingEmail(false);
+                  setEmail("");
+                  toast({
+                    description:
+                      "You have successfuly subscribed to our newsletter!",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                })
+                .catch((err) => {
+                  setSavingEmail(false);
+                  toast({
+                    description:
+                      err?.response?.data ||
+                      "An error occurred please try again.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                });
+            }
+          }}
         >
-          Subscribe
+          {savingEmail ? <Spinner borderColor="white" /> : "Subscribe"}
         </Button>
       </Flex>
     </Box>
