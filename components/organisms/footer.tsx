@@ -17,8 +17,8 @@ const Footer: React.FunctionComponent = () => {
       >
         <Box>
           <Img
-            src="/assets/images/logo.png"
-            w={{ base: "74px", lg: "28px" }}
+            src="/assets/images/logo-white.png"
+            w={{ base: "90px", lg: "128px" }}
             mr="10.5px"
           />
           <Text maxW="176px" mt="38px">

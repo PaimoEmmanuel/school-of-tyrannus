@@ -75,6 +75,7 @@ const MobileNav: React.FunctionComponent<IMobileNavProps> = ({
         overflow="hidden"
         transition="all .3s"
         left="0"
+        top="80px"
         background="rgba(0, 0, 0, 0.5)"
       >
         <List

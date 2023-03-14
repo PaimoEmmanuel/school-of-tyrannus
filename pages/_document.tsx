@@ -8,7 +8,7 @@ export default function Document() {
                     name="description"
                     content="An online school for the learning of the doctrine of the new testament"
                 />
-                <link rel="icon" href="/assets/images/logo.png"/>
+                <link rel="icon" href="/assets/images/favicon.png"/>
 
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link

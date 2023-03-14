@@ -6,10 +6,14 @@ interface ILogoTextProps {}
 const LogoText: React.FunctionComponent<ILogoTextProps> = (props) => {
   return (
     <Flex as="a" href="/" alignItems="center">
-      <Img src="/assets/images/logo.png" w="28px" mr="10.5px" />
-      <Text fontSize="18.67px" lineHeight="28px" fontWeight="500">
+      <Img
+        src="/assets/images/logo.png"
+        w={{ base: "90px", lg: "128px" }}
+        mr="10.5px"
+      />
+      {/* <Text fontSize="18.67px" lineHeight="28px" fontWeight="500">
         Tyrannus
-      </Text>
+      </Text> */}
     </Flex>
   );
 };
