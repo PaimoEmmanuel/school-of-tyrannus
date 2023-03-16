@@ -17,7 +17,7 @@ const Footer: React.FunctionComponent = () => {
       >
         <Box>
           <Img
-            src="/assets/images/logo-white.png"
+            src="/assets/images/tyrannus-white-logo.svg"
             w={{ base: "90px", lg: "128px" }}
             mr="10.5px"
           />

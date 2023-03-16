@@ -20,7 +20,7 @@ const Signin: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Sign in - School of Tyrannus</title>
+        <title>Forgot Password - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
         <NavigationBar />
@@ -41,7 +41,7 @@ const Signin: NextPage = () => {
             borderRadius="4px"
           >
             <Text fontSize="24px" lineHeight="36px" fontWeight="600" mb="50px">
-              Sign in
+              Forgot Password
             </Text>
             <Input
               onChange={(e) => {
@@ -52,14 +52,14 @@ const Signin: NextPage = () => {
               type="email"
               name="email"
             />
-            <Input
+            {/* <Input
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
               label={"Password"}
               placeholder="Enter password"
               type="password"
-            />
+            /> */}
             {error && (
               <Text fontSize="14px" mb="20px" color="red">
                 {error}
@@ -91,23 +91,13 @@ const Signin: NextPage = () => {
             </Button>
             <Flex justifyContent="space-between">
               <Text fontSize="12px" color="text.gray">
-                New here? {" "}
+                New here?{" "}
                 <Link href="/signup" passHref>
                   <ChakraLink color="black" fontWeight="600">
                     Sign up
                   </ChakraLink>
                 </Link>
               </Text>
-              <Link href="/forgot-password" passHref>
-                <ChakraLink
-                  color="black"
-                  fontWeight="600"
-                  fontSize="12px"
-                  // color="text.gray"
-                >
-                  Forgot Passowrd?
-                </ChakraLink>
-              </Link>
             </Flex>
           </Box>
         </Flex>

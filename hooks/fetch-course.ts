@@ -21,6 +21,7 @@ const defaultCourse: ICourseLessons = {
             quizStatus: "",
           },
           resources: [{ title: "", link: "" }],
+          overview: ""
         },
       ],
     },

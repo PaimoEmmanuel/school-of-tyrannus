@@ -7,7 +7,7 @@ const LogoText: React.FunctionComponent<ILogoTextProps> = (props) => {
   return (
     <Flex as="a" href="/" alignItems="center">
       <Img
-        src="/assets/images/logo.png"
+        src="/assets/images/tyrannus-logo.svg"
         w={{ base: "90px", lg: "128px" }}
         mr="10.5px"
       />

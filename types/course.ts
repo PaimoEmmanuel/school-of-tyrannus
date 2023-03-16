@@ -55,6 +55,7 @@ export interface ICourseLessons {
         quizStatus: string;
       };
       resources: { title: string; link: string }[];
+      overview: string;
     }[];
   }[];
 }

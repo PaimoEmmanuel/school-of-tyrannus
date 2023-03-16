@@ -164,6 +164,9 @@ const LessonPage: NextPage = () => {
                             currentLesson[1]
                           ].resources
                         }
+                        overview={course.lessons[currentLesson[0]].contents[
+                          currentLesson[1]
+                        ].overview}
                       />
                     </Box>
                   </Skeleton>

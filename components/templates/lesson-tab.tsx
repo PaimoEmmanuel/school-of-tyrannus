@@ -12,8 +12,9 @@ import PrivatePage from "./private-route";
 
 interface ILessonTab {
   resources: { title: string; link: string }[];
+  overview: string;
 }
-const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
+const LessonTab: React.FC<ILessonTab> = ({ resources, overview }) => {
   return (
     <Tabs mx={{ base: "24px", lg: "34px" }}>
       <TabList
@@ -81,45 +82,8 @@ const LessonTab: React.FC<ILessonTab> = ({ resources }) => {
                 marginBottom: "8px",
               },
             }}
-          >
-            <div>
-              <p>
-                <strong>Introduction</strong>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. A,
-                massa pulvinar lacus posuere pretium ac, turpis molestie.
-                Egestas ultricies sed sit ornare nunc, eu tempus. A molestie
-                elementum, leo egestas ut neque, tincidunt. Orci lorem convallis
-                cursus feugiat aliquam cras at. Curabitur consequat vel nulla
-                nunc. Morbi congue mi tincidunt odio ut. Sed quam gravida
-                interdum ut habitasse porttitor aliquam egestas purus. Nibh in
-                sed mollis dui nisi, massa. Mi tempus nec, porttitor lacus felis
-                nisi fringilla vestibulum. A nam eu semper id adipiscing.
-              </p>
-              <p>
-                <strong>Memory Verse</strong> Eleifend vestibulum vestibulum
-                urna viverra pulvinar. Eget felis arcu sollicitudin dolor mus.
-                Augue cras varius proin nunc varius enim. Tristique sed non
-                pretium, accumsan amet donec. Ipsum tellus metus quam viverra.
-                Sollicitudin dolor mauris ultrices orci consequat aliquet vitae
-                ut pellentesque. Nec dui nec vitae accumsan nibh pulvinar
-                faucibus volutpat ut. Facilisis justo, sed lectus dui sed sem
-                habitasse. Quisque blandit leo euismod sit libero vitae neque
-                eget. Ut accumsan, in eget neque tristique posuere amet neque.
-              </p>
-              <p>
-                <strong>Why men should be strong</strong> Eleifend vestibulum
-                vestibulum urna viverra pulvinar. Eget felis arcu sollicitudin
-                dolor mus. Augue cras varius proin nunc varius enim. Tristique
-                sed non pretium, accumsan amet donec. Ipsum tellus metus quam
-                viverra. Sollicitudin dolor mauris ultrices orci consequat
-                aliquet vitae ut pellentesque. Nec dui nec vitae accumsan nibh
-                pulvinar faucibus volutpat ut. Facilisis justo, sed lectus dui
-                sed sem habitasse. Quisque blandit leo euismod sit libero vitae
-                neque eget. Ut accumsan, in eget neque tristique posuere amet
-                neque.
-              </p>
-            </div>
-          </Box>
+            dangerouslySetInnerHTML={{ __html: overview }}
+          ></Box>
         </TabPanel>
         <TabPanel mt="36px" p="0">
           {resources.length > 0 ? (
