@@ -38,10 +38,12 @@ const Home: NextPage<ICoursesProps> = ({ courses }) => {
               {/* School of Tyrannus */}
             </Text>
             <Text fontSize="14px" lineHeight="21px" mb="45px">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              odit aliquam, assumenda neque architecto nam ut voluptatum omnis
-              in? Vel consequuntur rem natus nam nemo laboriosam, ut ea possimus
-              nesciunt!
+              But when divers were hardened, and believed not, but
+              spake evil of that way before the multitude, he departed from
+              them, and separated the disciples, disputing daily in <strong>the school
+              of one Tyrannus</strong>. And this continued by the space of two years; so
+              that all they which dwelt in Asia heard the word of the Lord
+              Jesus, both Jews and Greeks. Acts 19:9-10 (KJV)
             </Text>
           </Box>
         </Box>
