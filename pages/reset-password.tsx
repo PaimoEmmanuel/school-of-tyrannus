@@ -12,15 +12,23 @@ import {
 import Input from "../components/molecules/input";
 import SigninBg from "../components/molecules/signin-bg";
 import Link from "next/link";
-import { useForgotPassword } from "../hooks";
+import { useResetPassword, useSignIn } from "../hooks";
+import PasswordInput from "../components/molecules/password";
 
-const Signin: NextPage = () => {
-  const { email, setEmail, sendPasswordToken, sendingMail, mailSent, error } =
-    useForgotPassword();
+const ResetPassword: NextPage = () => {
+  const {
+    tokenState,
+    email,
+    setPassword,
+    setConfirmPassword,
+    error,
+    resettingPassword,
+    handlePasswordReset,
+  } = useResetPassword();
   return (
     <>
       <Head>
-        <title>Forgot Password - School of Tyrannus</title>
+        <title>Reset Password - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
         <NavigationBar />
@@ -42,38 +50,20 @@ const Signin: NextPage = () => {
             borderRadius="4px"
             w={{ base: "100%", sm: "fit-content" }}
           >
-            {mailSent ? (
-              <Box zIndex="10">
-                <Box margin="12px auto" w="fit-content">
-                  <svg
-                    width="64"
-                    height="64"
-                    viewBox="0 0 64 64"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="30"
-                      fill="white"
-                      stroke="#219653"
-                      strokeWidth="3"
-                    />
-                    <path
-                      d="M20 32.1213L26 38.1213C27.1716 39.2929 29.071 39.2929 30.2426 38.1213L44.3639 24"
-                      stroke="#219653"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Box>
-                <Text textAlign="center">
-                  A password reset link has been sent to your mail. Please check
-                  your spam as well.
-                </Text>
-              </Box>
+            {tokenState.error ? (
+              <Text color="red" textAlign="center">
+                {tokenState.error}
+                <Link href="/forgot-password" passHref>
+                  <ChakraLink textDecor="underline">
+                    Please try again.
+                  </ChakraLink>
+                </Link>
+              </Text>
+            ) : tokenState.verifying ? (
+              <Flex flexDir="column" gap="20px" alignItems="center">
+                <Spinner h="50px" w="50px" thickness="5px" />
+                <Text>Loading </Text>
+              </Flex>
             ) : (
               <>
                 <Text
@@ -82,16 +72,32 @@ const Signin: NextPage = () => {
                   fontWeight="600"
                   mb="50px"
                 >
-                  Forgot Password
+                  Reset Password
                 </Text>
                 <Input
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  isReadOnly
+                  value={email}
                   label={"Email address"}
                   placeholder="Enter email"
                   type="email"
                   name="email"
+                />
+                <PasswordInput
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  label={"New Password"}
+                  placeholder="Enter password"
+                  type="password"
+                  autoComplete="new-password"
+                />
+                <PasswordInput
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
+                  label={"Confirm new Password"}
+                  placeholder="Confirm password"
+                  type="password"
                 />
                 {error && (
                   <Text fontSize="14px" mb="20px" color="red">
@@ -116,11 +122,11 @@ const Signin: NextPage = () => {
                   }}
                   onClick={(e) => {
                     e.preventDefault();
-                    sendPasswordToken();
+                    handlePasswordReset();
                   }}
                 >
-                  {sendingMail ? "Please wait" : "Reset password"}
-                  {sendingMail && <Spinner />}
+                  {resettingPassword ? "Please wait" : "Sign in"}
+                  {resettingPassword && <Spinner />}
                 </Button>
                 <Flex justifyContent="space-between">
                   <Text fontSize="12px" color="text.gray">
@@ -140,5 +146,4 @@ const Signin: NextPage = () => {
     </>
   );
 };
-
-export default Signin;
+export default ResetPassword;

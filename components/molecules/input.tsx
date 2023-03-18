@@ -14,7 +14,7 @@ interface IInputProps extends InputProps {
 const Input: React.FC<IInputProps> = ({ label, ...props }) => {
   const [focus, setFocus] = useState(false);
   return (
-    <Box pos="relative" h="37px" w="300px" mb="30px">
+    <Box pos="relative" h="37px" w={{ base: "100%", sm: "300px" }} mb="30px">
       <Text
         as="label"
         pos={"absolute"}

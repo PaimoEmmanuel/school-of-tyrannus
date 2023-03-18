@@ -5,6 +5,8 @@ import useCourseEnrol from "./course-enrol";
 import useEnrolledForCourse from "./enrolled-course";
 import useMonitorContentStatus from "./monitor-content-status";
 import useFetchCourse from "./fetch-course";
+import useForgotPassword from "./forgot-password";
+import useResetPassword from "./reset-password";
 
 export {
   useSignIn,
@@ -14,4 +16,6 @@ export {
   useEnrolledForCourse,
   useMonitorContentStatus,
   useFetchCourse,
+  useForgotPassword,
+  useResetPassword,
 };

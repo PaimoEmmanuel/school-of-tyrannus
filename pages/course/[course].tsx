@@ -24,8 +24,6 @@ interface ICourseDetailsPage extends ICourseDetails {
 }
 
 const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
-  console.log("course:", course);
-
   const router = useRouter();
   const { loadingEnrolled, enrolled } = useEnrolledForCourse();
   return (

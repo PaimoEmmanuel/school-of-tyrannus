@@ -18,5 +18,12 @@ export const requestPasswordReset = (email: string) => {
 };
 
 export const validateEmailToken = (token: string) => {
-  return request.get(`/Auth/ValidateEmailToken//${token}`);
+  return request.get(`/Auth/ValidateEmailToken/${token}`);
+};
+
+export const resetPassword = (reqBody: ILoginRequest) => {
+  return request.post(`/Auth/SetPasswordAndLogin`, {
+    ...reqBody,
+    emailAddress: reqBody.email,
+  });
 };

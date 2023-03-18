@@ -17,27 +17,27 @@ const useSignUp = () => {
   const router = useRouter();
 
   const inputValidate = () => {
-    if (firstName === "") {
+    if (firstName.trim().length === 0) {
       setError("Please enter your first name");
       return false;
     }
-    if (lastName === "") {
+    if (lastName.trim().length === 0) {
       setError("Please enter your last name");
       return false;
     }
-    if (emailAddress === "") {
+    if (emailAddress.trim().length === 0) {
       setError("Please enter your email address");
       return false;
     }
-    if (phoneNumber === "") {
+    if (phoneNumber.trim().length === 0) {
       setError("Please enter your phone number");
       return false;
     }
-    if (password === "") {
+    if (password.trim().length === 0) {
       setError("Please enter your password");
       return false;
     }
-    if (confirmPassword === "") {
+    if (confirmPassword.trim().length === 0) {
       setError("Please confirm your password");
       return false;
     }
@@ -67,15 +67,14 @@ const useSignUp = () => {
             router.push("/");
           } else {
             setIsSigningUp(false);
-            console.log(res);
+            setError("An error occurred, please try again.");
           }
         })
         .catch((err) => {
           setIsSigningUp(false);
-          console.log(err);
           if (err?.response?.status === 400) {
             setError(err.response.data);
-          } else console.log(err);
+          } else setError("An error occurred, please try again.");
         });
     }
   };
