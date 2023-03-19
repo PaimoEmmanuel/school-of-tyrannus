@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import Player from "@vimeo/player";
 import { useEffect, useState } from "react";
 import { finishContent, startContent } from "../services/course";
@@ -15,11 +16,13 @@ const useMonitorContentStatus = (
   loadingCourse: boolean,
   course: ICourseLessons,
   currentLesson: number[],
-  loading: boolean,
+  // loading: boolean,
   loadingContent: boolean,
-  goToNext: () => void,
+  goToNext: () => void
 ) => {
   const [testModalOpen, setTestmodalOpen] = useState(false);
+  const toast = useToast();
+
   useEffect(() => {
     setTestmodalOpen(false);
   }, [currentLesson]);
@@ -38,7 +41,12 @@ const useMonitorContentStatus = (
             player.off("play");
           })
           .catch((err) => {
-            console.log("Error in starting content", err.response);
+            toast({
+              description: "Error in starting content",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
           });
       });
       player.on("ended", () => {
@@ -60,12 +68,24 @@ const useMonitorContentStatus = (
             player.off("ended", handleFinishContent);
           })
           .catch((err) => {
-            console.log("Error in finishing content", err.response);
+            toast({
+              description: "Error in finishing content",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
           });
       };
       player.on("ended", handleFinishContent);
     }
-  }, [course.lessons, currentLesson, goToNext, loading, loadingContent, loadingCourse]);
+  }, [
+    course.lessons,
+    currentLesson,
+    goToNext,
+    loadingContent,
+    loadingCourse,
+    toast,
+  ]);
   return { testModalOpen, setTestmodalOpen };
 };
 export default useMonitorContentStatus;

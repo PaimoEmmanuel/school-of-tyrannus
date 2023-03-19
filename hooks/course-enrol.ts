@@ -1,39 +1,62 @@
+import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { enrollCourse } from "../services/course";
-import useEnrolledForCourse from "./enrolled-course";
 
-const useCourseEnrol = () => {
+const useCourseEnrol = (
+  courseId: number,
+  enrolledForCourse: boolean,
+  loadingEnrolled: boolean
+) => {
   const router = useRouter();
-  const query = router.query;
-  // const {user} = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { loadingEnrolled, enrolled } = useEnrolledForCourse();
+  const toast = useToast();
+
   const onEnrol = () => {
     if (!loadingEnrolled) {
       setError("");
-      if (enrolled) {
-        return setLoading(false);
+      if (enrolledForCourse) {
+        // return setLoading(false);
+        router.push(`${courseId}/lesson`);
       }
-      enrollCourse(Number(query.course))
+      setLoading(true);
+      enrollCourse(courseId)
         .then((res) => {
-          if (res.status === 200) {
-            setLoading(false);
+          if (res.data.courseType === "Regular") {
+            router.push(`${courseId}/lesson`);
           } else {
-            setLoading(false);
-            setError("An error occurred, please try again.");
+            if (res.data.isSuccessful) {
+              toast({
+                description: res.data.responseMessage,
+                status: "success",
+                duration: null,
+                isClosable: true,
+              });
+            } else {
+              toast({
+                description: res.data.responseMessage,
+                status: "error",
+                duration: null,
+                isClosable: true,
+              });
+            }
           }
+          setLoading(false);
         })
         .catch((err) => {
           setLoading(false);
           setError("An error occurred, please try again.");
-          console.log(err.response);
+          toast({
+            description: "An error occurred, please try again.",
+            status: "error",
+            duration: null,
+            isClosable: true,
+          });
         });
     }
   };
-  useEffect(onEnrol, [enrolled, loadingEnrolled, query.course]);
-  return { loading, error };
+  return { onEnrol, loading, error };
 };
 
 export default useCourseEnrol;

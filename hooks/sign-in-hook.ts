@@ -27,7 +27,7 @@ const useSignIn = () => {
             router.push("/");
           }
         } else {
-          console.log(res.data);
+          setError("An error occurred, please try again.");
           setIsSigninIn(false);
         }
       })
@@ -36,7 +36,6 @@ const useSignIn = () => {
           setError(err.response.data);
         } else {
           setError("An error occurred, please try again.");
-          console.log("error", err);
         }
         setIsSigninIn(false);
       });

@@ -27,17 +27,14 @@ const LessonPage: NextPage = () => {
     loadingContent,
     currentLessonStatus,
   } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
-  const { loading, error } = useCourseEnrol();
 
   const { testModalOpen, setTestmodalOpen } = useMonitorContentStatus(
     loadingCourse,
     course,
     currentLesson,
-    loading,
     loadingContent,
     goToNext
   );
-  // console.log(course);
 
   const toast = useToast();
 
@@ -51,7 +48,7 @@ const LessonPage: NextPage = () => {
         <Box bgColor="text.lightBlue">
           <Flex pos="relative">
             <Skeleton
-              isLoaded={!loadingCourse && !loading}
+              isLoaded={!loadingCourse}
               pos={{ base: "sticky" }}
               height="100vh"
               top="-14px"
@@ -125,7 +122,7 @@ const LessonPage: NextPage = () => {
                       <Spinner thickness="7px" h="70px" w="70px" />
                     </Flex>
                   ) : (
-                    <Skeleton isLoaded={!loadingCourse && !loading}>
+                    <Skeleton isLoaded={!loadingCourse}>
                       <Box pos="relative" padding="62.5% 0 0 0" role="group">
                         <iframe
                           // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
@@ -151,7 +148,7 @@ const LessonPage: NextPage = () => {
 
                   {/* eslint-disable-next-line @next/next/no-sync-scripts */}
                   <script src="https://player.vimeo.com/api/player.js"></script>
-                  <Skeleton isLoaded={!loadingCourse && !loading}>
+                  <Skeleton isLoaded={!loadingCourse}>
                     <Box
                       bgColor="white"
                       mt="36px"
@@ -174,12 +171,12 @@ const LessonPage: NextPage = () => {
                     </Box>
                   </Skeleton>
                 </Box>
-                <Skeleton isLoaded={!loadingCourse && !loading}>
+                <Skeleton isLoaded={!loadingCourse}>
                   <LessonManual />
                 </Skeleton>
               </Flex>
 
-              <Skeleton isLoaded={!loadingCourse && !loading}>
+              <Skeleton isLoaded={!loadingCourse}>
                 <LessonControl
                   goToNext={goToNext}
                   goToPrev={goToPrev}

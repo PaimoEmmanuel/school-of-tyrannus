@@ -4,6 +4,7 @@ import Link from "next/link";
 import NavigationBar from "../../components/organisms/navigation-bar";
 import {
   Box,
+  Button,
   Flex,
   Img,
   Link as ChakraLink,
@@ -15,7 +16,7 @@ import CourseTab from "../../components/templates/course-tab";
 import Footer from "../../components/organisms/footer";
 import { getAllCourses, getCourse } from "../../services/course";
 import { ICourseDetails } from "../../types/course";
-import { useEnrolledForCourse } from "../../hooks";
+import { useCourseEnrol, useEnrolledForCourse } from "../../hooks";
 import { useRouter } from "next/router";
 import getThumbnail from "../../utils/get-instructor-thumbnail";
 
@@ -25,7 +26,14 @@ interface ICourseDetailsPage extends ICourseDetails {
 
 const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
   const router = useRouter();
+  const query = router.query;
   const { loadingEnrolled, enrolled } = useEnrolledForCourse();
+  const { onEnrol, loading, error } = useCourseEnrol(
+    Number(query.course),
+    enrolled,
+    loadingEnrolled
+  );
+
   return (
     <>
       <Head>
@@ -120,31 +128,38 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                   </Text>
                 </Box>
               </Box>
-              <Link href={`${router.asPath}/lesson`} passHref>
-                <ChakraLink
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  fontWeight="600"
-                  borderRadius="4px"
-                  h="60px"
-                  w="300px"
-                  pos="absolute"
-                  left="50%"
-                  bottom="-30px"
-                  transform={"translateX(-50%)"}
-                  bgColor="text.orange"
-                  boxShadow="0px 3px 26px rgba(253, 211, 132, 0.9)"
-                  // color="white"
-                  _hover={{
-                    bgColor: "white",
-                    border: "1px solid #EE9938",
-                    color: "text.orange",
-                  }}
-                >
-                  {enrolled ? "CONTINUE COURSE" : "START COURSE"}
-                </ChakraLink>
-              </Link>
+              {/* <Link href={`${router.asPath}/lesson`} passHref> */}
+              <Button
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                fontWeight="600"
+                borderRadius="4px"
+                h="60px"
+                w="300px"
+                pos="absolute"
+                left="50%"
+                bottom="-30px"
+                transform={"translateX(-50%)"}
+                bgColor="text.orange"
+                boxShadow="0px 3px 26px rgba(253, 211, 132, 0.9)"
+                // color="white"
+                _hover={{
+                  bgColor: "white",
+                  border: "1px solid #EE9938",
+                  color: "text.orange",
+                }}
+                onClick={onEnrol}
+              >
+                {loading ? (
+                  <Spinner />
+                ) : enrolled ? (
+                  "CONTINUE COURSE"
+                ) : (
+                  "START COURSE"
+                )}
+              </Button>
+              {/* </Link> */}
             </Box>
             <Box mt="117px">
               <CourseTab

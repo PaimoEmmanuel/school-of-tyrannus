@@ -27,6 +27,8 @@ const useChangeLesson = (
     getContentTakenStatus(
       String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
     ).then((res) => {
+      // console.log("content taken status:", res.data);
+
       setCurrentLessonStatus({
         videoStatus: res.data.contentStatus,
         quizStatus: res.data.quizStatus,
@@ -122,7 +124,12 @@ const useChangeLesson = (
         return;
       })
       .catch((err) => {
-        console.log(err);
+        toast({
+          description: "An error occurred, please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       });
   };
 
