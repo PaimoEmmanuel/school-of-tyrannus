@@ -1,5 +1,20 @@
-import { Box, List, ListItem, Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Link as ChakraLink,
+  MenuList,
+  MenuItem,
+  MenuButton,
+  Menu,
+} from "@chakra-ui/react";
 import Link from "next/link";
+import router from "next/router";
+import { useContext } from "react";
+import { UserContext } from "../../context/user-context";
+import getUser from "../../utils/get-user";
+import removeUser from "../../utils/remove-user";
 
 interface IMobileNavProps {
   openNav: boolean;
@@ -10,6 +25,8 @@ const MobileNav: React.FunctionComponent<IMobileNavProps> = ({
   openNav,
   toggleNav,
 }) => {
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <Box display={{ base: "block", lg: "none" }}>
       <button type="button" title="nav" onClick={toggleNav}>
@@ -88,6 +105,7 @@ const MobileNav: React.FunctionComponent<IMobileNavProps> = ({
           alignItems="center"
           gap="36px"
           py="24px"
+          pb={user.isLoggedIn ? "88px" : "24px"}
           zIndex="90"
         >
           <ListItem>
@@ -104,37 +122,72 @@ const MobileNav: React.FunctionComponent<IMobileNavProps> = ({
               </ChakraLink>
             </Link>
           </ListItem>
-          {/* <ListItem>
-            <Link href="/explore" passHref>
-              <ChakraLink fontSize="18px" _hover={{ fontWeight: 600 }}>
-                Explore
-              </ChakraLink>
-            </Link>
-          </ListItem> */}
-          <ListItem>
-            <Link href="/signin" passHref>
-              <ChakraLink fontSize="18px" _hover={{ fontWeight: 600 }}>
-                Sign in
-              </ChakraLink>
-            </Link>
-          </ListItem>
-          <Link href="/signup" passHref>
-            <ChakraLink
-              h="50px"
-              w="300px"
-              color="black"
-              bgColor="text.orange"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              borderRadius="4px"
-              fontWeight="500"
-              boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
-              _hover={{ textDecoration: "none" }}
-            >
-              Register
-            </ChakraLink>
-          </Link>
+
+          {!user.isLoggedIn ? (
+            <>
+              <ListItem>
+                <Link href="/signin" passHref>
+                  <ChakraLink fontSize="18px" _hover={{ fontWeight: 600 }}>
+                    Sign in
+                  </ChakraLink>
+                </Link>
+              </ListItem>
+              <Link href="/signup" passHref>
+                <ChakraLink
+                  h="50px"
+                  w="300px"
+                  color="black"
+                  bgColor="text.orange"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  borderRadius="4px"
+                  fontWeight="500"
+                  boxShadow="4px 7px 12px rgba(238, 153, 56, 0.2)"
+                  _hover={{ textDecoration: "none" }}
+                >
+                  Register
+                </ChakraLink>
+              </Link>
+            </>
+          ) : (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={
+                  <svg
+                    width="11"
+                    height="6"
+                    viewBox="0 0 11 6"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.52148 1L5.52148 5L1.52148 1"
+                      stroke="#203064"
+                      strokeWidth="1.14286"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+              >
+                {String(user.details.Username)}
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    removeUser();
+                    router.push("/signin");
+                    setUser(getUser());
+                  }}
+                >
+                  Sign Out
+                </MenuItem>
+                {/* <MenuItem>My Learning</MenuItem> */}
+              </MenuList>
+            </Menu>
+          )}
         </List>
       </Box>
     </Box>

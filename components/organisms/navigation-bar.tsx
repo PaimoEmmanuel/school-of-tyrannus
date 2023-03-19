@@ -36,7 +36,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
         top="0"
         bgColor="white"
         w="100%"
-        height={openNav ? "80px" : "auto"}
+        height={openNav ? "89px" : "auto"}
         zIndex="999999"
       >
         <Flex justifyContent="space-between">

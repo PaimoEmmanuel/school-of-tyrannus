@@ -92,9 +92,10 @@ const LessonPage: NextPage = () => {
                   },
                 }}
                 ml={{ base: "0", md: "32px" }}
+                mr={{ base: "0", md: "32px", lg: "0" }}
                 gap={{ base: "0", md: "24px" }}
               >
-                <Box pos="relative" minW="calc(100% - 456px)">
+                <Box pos="relative" minW="calc(100% - 456px)" w="100%">
                   <Text
                     pos="absolute"
                     p={{ base: "16px 24px", lg: "25px 27px" }}
@@ -164,9 +165,11 @@ const LessonPage: NextPage = () => {
                             currentLesson[1]
                           ].resources
                         }
-                        overview={course.lessons[currentLesson[0]].contents[
-                          currentLesson[1]
-                        ].overview}
+                        overview={
+                          course.lessons[currentLesson[0]].contents[
+                            currentLesson[1]
+                          ].overview
+                        }
                       />
                     </Box>
                   </Skeleton>
