@@ -17,8 +17,7 @@ const useCourseEnrol = (
     if (!loadingEnrolled) {
       setError("");
       if (enrolledForCourse) {
-        // return setLoading(false);
-        router.push(`${courseId}/lesson`);
+        return router.push(`${courseId}/lesson`);
       }
       setLoading(true);
       enrollCourse(courseId)
