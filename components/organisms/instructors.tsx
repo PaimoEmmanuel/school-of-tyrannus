@@ -7,9 +7,7 @@ interface IInstructorsProps {
 
 const Instructors: React.FunctionComponent<IInstructorsProps> = ({
   instructors,
-}) => {
-  console.log('instructors: ', instructors);
-  
+}) => {  
   return (
     <Box pt="53px" pb="90px" px={{base: "1.5rem", lg:"175px"}}>
       <Text fontWeight="600" mb="54px">

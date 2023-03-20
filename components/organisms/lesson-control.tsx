@@ -32,6 +32,7 @@ const LessonControl: React.FunctionComponent<ILessonControlProps> = ({
       gap="12px"
       bgColor="white"
       boxShadow="0px -4px 32px rgba(104, 104, 104, 0.17)"
+      zIndex="99"
     >
       <Text
         as="button"
