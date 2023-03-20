@@ -57,14 +57,14 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
               >
                 <SigninBg course={true} />
                 <Box pos="relative">
-                  <Text
+                  {/* <Text
                     fontWeight="300"
                     fontSize={{ base: "12px", lg: "14px" }}
                     textTransform="uppercase"
                     mb="28px"
                   >
                     Home / young believers / {course.title}
-                  </Text>
+                  </Text> */}
                   <Text
                     fontSize={{ base: "18px", lg: "36px" }}
                     fontWeight="500"
@@ -92,23 +92,28 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                     justifyContent="center"
                     alignItems="center"
                     mt="34px"
-                    gap="55px"
+                    gap={{ base: "24px", md: "55px" }}
+                    flexWrap="wrap"
                   >
                     {course.instructors.map((instructor) => (
-                      <Flex key={instructor.name} alignItems="center">
+                      <Flex
+                        key={instructor.name}
+                        alignItems="center"
+                        flexDir="column"
+                        gap="8px"
+                      >
                         <Img
                           h="57px"
                           w="57px"
                           objectFit="cover"
                           borderRadius="50%"
-                          mr="23px"
                           border="8px solid rgba(253, 211, 132, 0.4)"
                           src={getThumbnail(instructor.name)}
                           alt={instructor.name}
                         />
                         <Text
-                          maxW="120px"
-                          textAlign="left"
+                          maxW="144px"
+                          textAlign="center"
                           fontSize={{ base: "14px", lg: "16px" }}
                         >
                           {instructor.name}
