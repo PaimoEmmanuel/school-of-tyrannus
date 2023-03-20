@@ -1,6 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/user-context";
 import { enrollCourse } from "../services/course";
 
 const useCourseEnrol = (
@@ -12,8 +13,12 @@ const useCourseEnrol = (
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const toast = useToast();
+  const { user } = useContext(UserContext);
 
   const onEnrol = () => {
+    if (!user.isLoggedIn) {
+      return router.push("/signin?redirect=" + router.asPath);
+    }
     if (!loadingEnrolled) {
       setError("");
       if (enrolledForCourse) {
@@ -29,14 +34,14 @@ const useCourseEnrol = (
               toast({
                 description: res.data.responseMessage,
                 status: "success",
-                duration: null,
+                duration: 5000,
                 isClosable: true,
               });
             } else {
               toast({
                 description: res.data.responseMessage,
                 status: "error",
-                duration: null,
+                duration: 5000,
                 isClosable: true,
               });
             }
@@ -49,7 +54,7 @@ const useCourseEnrol = (
           toast({
             description: "An error occurred, please try again.",
             status: "error",
-            duration: null,
+            duration: 5000,
             isClosable: true,
           });
         });

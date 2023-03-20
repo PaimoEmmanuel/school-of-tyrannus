@@ -25,9 +25,10 @@ const useEnrolledForCourse = () => {
           toast({
             description: "An error occurred, please try again.",
             status: "error",
-            duration: null,
+            duration: 5000,
             isClosable: true,
           });
+          setLoadingEnrolled(false);
         });
     }
   }, [query.course, toast, user.isLoggedIn]);

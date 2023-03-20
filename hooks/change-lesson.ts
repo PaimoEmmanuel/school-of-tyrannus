@@ -130,6 +130,7 @@ const useChangeLesson = (
           duration: 5000,
           isClosable: true,
         });
+        setLoadingContent(false);
       });
   };
 
