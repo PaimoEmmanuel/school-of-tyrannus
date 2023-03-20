@@ -94,7 +94,7 @@ const LessonPage: NextPage = () => {
               >
                 <Box pos="relative" minW="calc(100% - 456px)" w="100%">
                   <Text
-                    pos="absolute"
+                    pos="relative"
                     p={{ base: "16px 24px", lg: "25px 27px" }}
                     w="100%"
                     bg="rgba(113, 113, 113, 1)"
@@ -103,7 +103,7 @@ const LessonPage: NextPage = () => {
                     fontSize={{ base: "14px", lg: "20px" }}
                     fontWeight="700"
                     color="white"
-                    top="0"
+                    top={{ base: "14px", sm: "28px", lg: "38px" }}
                     left="0"
                   >
                     {

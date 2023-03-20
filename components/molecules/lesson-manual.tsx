@@ -1,8 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
 
-interface ILessonManualProps {}
+interface ILessonManualProps {
+  manual?: string;
+}
 
-const LessonManual: React.FunctionComponent<ILessonManualProps> = (props) => {
+const LessonManual: React.FunctionComponent<ILessonManualProps> = ({
+  manual,
+}) => {
   return (
     <Box
       minW="400px"
@@ -30,7 +34,7 @@ const LessonManual: React.FunctionComponent<ILessonManualProps> = (props) => {
           },
         }}
       >
-        <strong>Time Stamp - 0:00 - 0:30</strong>
+        {/* <strong>Time Stamp - 0:00 - 0:30</strong>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa
         pulvinar lacus posuere pretium ac, turpis molestie. Egestas ultricies
         sed sit ornare nunc, eu tempus. A molestie elementum, leo egestas ut
@@ -46,7 +50,8 @@ const LessonManual: React.FunctionComponent<ILessonManualProps> = (props) => {
         ultrices orci consequat aliquet vitae ut pellentesque. Nec dui nec vitae
         accumsan nibh pulvinar faucibus volutpat ut. Facilisis justo, sed lectus
         dui sed sem habitasse. Quisque blandit leo euismod sit libero vitae
-        neque eget. Ut accumsan, in eget neque tristique posuere amet neque.
+        neque eget. Ut accumsan, in eget neque tristique posuere amet neque. */}
+        {manual ? manual : "No manual available for this lesson."}
       </Text>
     </Box>
   );
