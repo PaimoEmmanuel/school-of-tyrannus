@@ -13,8 +13,9 @@ import PrivatePage from "./private-route";
 interface ILessonTab {
   resources: { title: string; link: string }[];
   overview: string;
+  manual?: string;
 }
-const LessonTab: React.FC<ILessonTab> = ({ resources, overview }) => {
+const LessonTab: React.FC<ILessonTab> = ({ resources, overview, manual }) => {
   return (
     <Tabs mx={{ base: "24px", lg: "34px" }}>
       <TabList
@@ -118,7 +119,7 @@ const LessonTab: React.FC<ILessonTab> = ({ resources, overview }) => {
               },
             }}
           >
-            <strong>Time Stamp - 0:00 - 0:30</strong>
+            {/* <strong>Time Stamp - 0:00 - 0:30</strong>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, massa
             pulvinar lacus posuere pretium ac, turpis molestie. Egestas
             ultricies sed sit ornare nunc, eu tempus. A molestie elementum, leo
@@ -136,7 +137,8 @@ const LessonTab: React.FC<ILessonTab> = ({ resources, overview }) => {
             pellentesque. Nec dui nec vitae accumsan nibh pulvinar faucibus
             volutpat ut. Facilisis justo, sed lectus dui sed sem habitasse.
             Quisque blandit leo euismod sit libero vitae neque eget. Ut
-            accumsan, in eget neque tristique posuere amet neque.
+            accumsan, in eget neque tristique posuere amet neque. */}
+            {manual ? manual : "No manual available for this lesson."}
           </Text>
         </TabPanel>
       </TabPanels>
