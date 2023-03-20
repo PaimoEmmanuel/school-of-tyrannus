@@ -3,9 +3,9 @@ const getThumbnail = (id: string) => {
     case "Pastor Emeka Egwuchukwu":
       return "/assets/images/video-poster.png";
     case "Pastor Tope Falaye":
-      return "/assets/images/pst-tope.png";
+      return "/assets/images/favicon.png";
     default:
-      return "/assets/images/pst-tope.png";
+      return "/assets/images/favicon.png";
   }
 };
 export default getThumbnail;
