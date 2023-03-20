@@ -36,7 +36,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
           {reviews.map((review, index) => (
             <Box minW={{ base: "100%", lg: "47%" }} key={review.name}>
               <Testimony
-                name={"Gbemi Adebayo " + (index + 1)}
+                name={"Gbemi Adebayo "}
                 image={review.image}
                 occupation="Accountant"
                 testimony="Since I started the course on Charity, a rush of grace 
