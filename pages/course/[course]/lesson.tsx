@@ -4,16 +4,15 @@ import NavigationBar from "../../../components/organisms/navigation-bar";
 import { Box, Flex, Skeleton, Spinner, Text, useToast } from "@chakra-ui/react";
 import LessonSideBar from "../../../components/organisms/lesson-sidebar";
 import LessonTab from "../../../components/templates/lesson-tab";
-// import { getAllCourses, getCourseDetails } from "../../../services/course";
 import {
   useChangeLesson,
-  useCourseEnrol,
   useFetchCourse,
   useMonitorContentStatus,
 } from "../../../hooks";
 import LessonControl from "../../../components/organisms/lesson-control";
 import LessonManual from "../../../components/molecules/lesson-manual";
 import TestModal from "../../../components/organisms/test-modal";
+import PrivatePage from "../../../components/templates/private-route";
 
 const LessonPage: NextPage = () => {
   const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
@@ -213,27 +212,4 @@ const LessonPage: NextPage = () => {
   );
 };
 
-export default LessonPage;
-
-interface ICourseProps {
-  params: { course: string };
-}
-
-// export const getStaticPaths = async () => {
-//   const res = await getAllCourses();
-//   const courses = await res.data;
-//   const paths = courses.map((course: { id: string }) => ({
-//     params: { course: String(course.id) },
-//   }));
-//   return { paths, fallback: false };
-// };
-
-// export const getStaticProps = async ({ params }: ICourseProps) => {
-//   const res = await getCourseDetails(params.course);
-//   const course = await res.data;
-//   return {
-//     props: {
-//       course,
-//     },
-//   };
-// };
+export default PrivatePage(LessonPage);

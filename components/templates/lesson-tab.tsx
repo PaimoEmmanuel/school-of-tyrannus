@@ -145,4 +145,4 @@ const LessonTab: React.FC<ILessonTab> = ({ resources, overview, manual }) => {
     </Tabs>
   );
 };
-export default PrivatePage(LessonTab);
+export default LessonTab;
