@@ -4,19 +4,11 @@ import { useMediaQuery } from "@chakra-ui/react";
 import Testimony from "../molecules/testimony";
 
 interface IReviewsProps {
+  reviews: { name: string; testimony: string }[];
   page?: string;
 }
 
-const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
-  const reviews = [
-    {
-      name: "Gbemi Adebayo",
-      occupation: "Lawyer",
-      image: "/assets/images/video-poster.png",
-      testimony:
-        "Since I started the course on Charity, a rush of grace has come with relating better with my brethren and my mum. I now see how much change has to occur in me first.",
-    },
-  ];
+const Reviews: React.FunctionComponent<IReviewsProps> = ({ page, reviews }) => {
   const [translate, setTranslate] = useState(0);
   const [isLargeScreen] = useMediaQuery("(min-width: 992px)");
   return (
@@ -35,15 +27,7 @@ const Reviews: React.FunctionComponent<IReviewsProps> = ({ page }) => {
         >
           {reviews.map((review, index) => (
             <Box minW={{ base: "100%", lg: "47%" }} key={review.name}>
-              <Testimony
-                name={"Gbemi Adebayo "}
-                image={review.image}
-                occupation="Accountant"
-                testimony="Since I started the course on Charity, a rush of grace 
-                has come with relating better with my brethren and
-                my mum. I now see how much change has to occur
-                in me first."
-              />
+              <Testimony name={review.name} testimony={review.testimony} />
             </Box>
           ))}
         </Flex>

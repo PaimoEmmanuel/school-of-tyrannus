@@ -106,7 +106,15 @@ const CourseTab: React.FC<ICourseTabProps> = ({
           <Instructors instructors={instructors} />
         </TabPanel>
         <TabPanel p="0" bgColor="text.pink">
-          <Reviews />
+          <Reviews
+            reviews={[
+              {
+                name: "Samuel Danilola",
+                testimony:
+                  "I registered for the course in 2018, and one thing that stuck with me was the emphasis on baptisms, that there is the baptism of the word, after being baptised in water and spirit. That opened my eyes to the importance of being immersed in the scriptures.",
+              },
+            ]}
+          />
         </TabPanel>
         <TabPanel p="0">
           <FAQs />

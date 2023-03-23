@@ -153,7 +153,7 @@ const LessonPage: NextPage = () => {
                       mt="36px"
                       pb="56px"
                       borderRadius="12px 12px 0px 0px"
-                      mb="120px"
+                      mb="70px"
                     >
                       <LessonTab
                         resources={
@@ -166,12 +166,23 @@ const LessonPage: NextPage = () => {
                             currentLesson[1]
                           ].overview
                         }
+                        manual={
+                          course.lessons[currentLesson[0]].contents[
+                            currentLesson[1]
+                          ].manual
+                        }
                       />
                     </Box>
                   </Skeleton>
                 </Box>
                 <Skeleton isLoaded={!loadingCourse}>
-                  <LessonManual />
+                  <LessonManual
+                    manual={
+                      course.lessons[currentLesson[0]].contents[
+                        currentLesson[1]
+                      ].manual
+                    }
+                  />
                 </Skeleton>
               </Flex>
 

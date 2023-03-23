@@ -56,6 +56,7 @@ export interface ICourseLessons {
       };
       resources: { title: string; link: string }[];
       overview: string;
+      manual: string;
     }[];
   }[];
 }

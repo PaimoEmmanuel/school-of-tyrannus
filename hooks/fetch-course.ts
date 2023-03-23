@@ -21,7 +21,8 @@ const defaultCourse: ICourseLessons = {
             quizStatus: "",
           },
           resources: [{ title: "", link: "" }],
-          overview: ""
+          overview: "",
+          manual: "",
         },
       ],
     },
@@ -37,6 +38,8 @@ const useFetchCourse = () => {
       return;
     }
     getCourseDetails(String(query.course)).then((res) => {
+      console.log(res.data);
+
       setCourse(res.data);
       setLoadingCourse(false);
     });

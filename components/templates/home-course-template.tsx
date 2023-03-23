@@ -88,14 +88,16 @@ const HomeCourseTemplate: React.FunctionComponent<IHomeCourseTemplateProps> = ({
       {getMedia(index).courseBg}
       <Text
         display="flex"
-        alignItems="center"
-        fontSize="26px"
-        lineHeight="39px"
+        flexDir={{ base: "column", sm: "row" }}
+        alignItems={{ sm: "center" }}
+        fontSize={{ base: "20px", sm: "26px" }}
+        lineHeight={{ sm: "39px" }}
         fontWeight="500"
         mb="30px"
         zIndex="10"
         pos="relative"
-        // gap="24px"
+        maxW="40rem"
+        gap="24px"
       >
         {getMedia(index).courseIcon({})}
         {title}

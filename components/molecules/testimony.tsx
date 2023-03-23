@@ -4,15 +4,12 @@ import { Box, Flex, Img, Text } from "@chakra-ui/react";
 interface ITestimonyProps {
   testimony: string;
   name: string;
-  occupation: string;
-  image: string;
 }
 
 const Testimony: React.FunctionComponent<ITestimonyProps> = ({
   testimony,
   name,
-  occupation,
-  image,
+
 }) => {
   return (
     <Box pos="relative" ml={{ base: "50px", lg: "90px" }}>
@@ -29,19 +26,9 @@ const Testimony: React.FunctionComponent<ITestimonyProps> = ({
       <Text maxW={"440px"} mb={"41px"}>
         {testimony}
       </Text>
-      <Flex alignItems="center">
-        <Img
-          w={"62px"}
-          h={"62px"}
-          objectFit="cover"
-          borderRadius="50%"
-          src={image}
-        />
-        <Box ml={"21px"}>
-          <Text fontSize={"18px"}>{name}</Text>
-          <Text color="#979797">{occupation}</Text>
-        </Box>
-      </Flex>
+      <Box>
+        <Text fontSize={"18px"}>{name}</Text>
+      </Box>
     </Box>
   );
 };

@@ -20,9 +20,9 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
         </Box>
         <Text
           textAlign="center"
-          fontSize={{base: "24px", lg:"26px"}}
+          fontSize={{ base: "24px", lg: "26px" }}
           fontWeight="500"
-          lineHeight={{lg:"39px"}}
+          lineHeight={{ lg: "39px" }}
           mb="33px"
         >
           Why you should enroll
@@ -44,8 +44,8 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
           mt={"108px"}
           mb="51px"
           fontWeight="500"
-          fontSize={{base: "24px", lg:"26px"}}
-          lineHeight={{lg:"39px"}}
+          fontSize={{ base: "24px", lg: "26px" }}
+          lineHeight={{ lg: "39px" }}
         >
           What people say
         </Text>
@@ -57,7 +57,16 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
           <Testimony />
           <Testimony />
         </Grid> */}
-        <Reviews page="home" />
+        <Reviews
+          reviews={[
+            {
+              name: "Samuel Danilola",
+              testimony:
+                "I registered for the course in 2018, and one thing that stuck with me was the emphasis on baptisms, that there is the baptism of the word, after being baptised in water and spirit. That opened my eyes to the importance of being immersed in the scriptures.",
+            },
+          ]}
+          page="home"
+        />
       </Box>
     </>
   );
