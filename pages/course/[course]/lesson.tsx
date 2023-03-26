@@ -92,25 +92,6 @@ const LessonPage: NextPage = () => {
                 gap={{ base: "0", md: "24px" }}
               >
                 <Box pos="relative" minW="calc(100% - 456px)" w="100%">
-                  <Text
-                    pos="relative"
-                    p={{ base: "16px 24px", lg: "25px 27px" }}
-                    w="100%"
-                    bg="rgba(113, 113, 113, 1)"
-                    borderRadius="12px 12px 0 0"
-                    zIndex="88"
-                    fontSize={{ base: "14px", lg: "20px" }}
-                    fontWeight="700"
-                    color="white"
-                    top={{ base: "14px", sm: "28px", lg: "38px" }}
-                    left="0"
-                  >
-                    {
-                      course.lessons[currentLesson[0]].contents[
-                        currentLesson[1]
-                      ].title
-                    }
-                  </Text>
                   {loadingContent ? (
                     <Flex
                       h="500px"
@@ -122,7 +103,7 @@ const LessonPage: NextPage = () => {
                     </Flex>
                   ) : (
                     <Skeleton isLoaded={!loadingCourse}>
-                      <Box pos="relative" padding="62.5% 0 0 0" role="group">
+                      <Box pos="relative" padding="56.5% 0 0 0" role="group">
                         <iframe
                           // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
                           src={`${
