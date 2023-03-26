@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { ICourseTabProps } from "../../types/course";
-import { REVIEWS } from "../../utils/constants";
+import { COURSE_REVIEWS } from "../../utils/constants";
 import CourseAboutTab from "../organisms/course-about-tab";
 import CourseContent from "../organisms/course-content";
 import FAQs from "../organisms/faqs";
@@ -107,7 +107,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
           <Instructors instructors={instructors} />
         </TabPanel>
         <TabPanel p="0" bgColor="text.pink">
-          <Reviews reviews={REVIEWS} />
+          <Reviews reviews={COURSE_REVIEWS} />
         </TabPanel>
         <TabPanel p="0">
           <FAQs />
