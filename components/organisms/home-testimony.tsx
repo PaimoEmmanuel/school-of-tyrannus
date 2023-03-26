@@ -1,11 +1,13 @@
 import { Box, Grid, Text } from "@chakra-ui/react";
 import * as React from "react";
+import { REVIEWS } from "../../utils/constants";
 import Testimony from "../molecules/testimony";
 import Reviews from "./reviews";
 
 interface IHomeTestimonyProps {}
 
 const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
+  
   return (
     <>
       <Box p="103px 1.5rem 1.5rem" pos={"relative"}>
@@ -57,16 +59,7 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
           <Testimony />
           <Testimony />
         </Grid> */}
-        <Reviews
-          reviews={[
-            {
-              name: "Samuel Danilola",
-              testimony:
-                "I registered for the course in 2018, and one thing that stuck with me was the emphasis on baptisms, that there is the baptism of the word, after being baptised in water and spirit. That opened my eyes to the importance of being immersed in the scriptures.",
-            },
-          ]}
-          page="home"
-        />
+        <Reviews reviews={REVIEWS} page="home" />
       </Box>
     </>
   );

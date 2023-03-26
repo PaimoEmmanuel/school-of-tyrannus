@@ -1,5 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { ICourseTabProps } from "../../types/course";
+import { REVIEWS } from "../../utils/constants";
 import CourseAboutTab from "../organisms/course-about-tab";
 import CourseContent from "../organisms/course-content";
 import FAQs from "../organisms/faqs";
@@ -106,15 +107,7 @@ const CourseTab: React.FC<ICourseTabProps> = ({
           <Instructors instructors={instructors} />
         </TabPanel>
         <TabPanel p="0" bgColor="text.pink">
-          <Reviews
-            reviews={[
-              {
-                name: "Samuel Danilola",
-                testimony:
-                  "I registered for the course in 2018, and one thing that stuck with me was the emphasis on baptisms, that there is the baptism of the word, after being baptised in water and spirit. That opened my eyes to the importance of being immersed in the scriptures.",
-              },
-            ]}
-          />
+          <Reviews reviews={REVIEWS} />
         </TabPanel>
         <TabPanel p="0">
           <FAQs />

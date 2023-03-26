@@ -38,8 +38,6 @@ const useFetchCourse = () => {
       return;
     }
     getCourseDetails(String(query.course)).then((res) => {
-      console.log(res.data);
-
       setCourse(res.data);
       setLoadingCourse(false);
     });

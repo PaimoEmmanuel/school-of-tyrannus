@@ -16,32 +16,25 @@ interface IFAQsProps {}
 const FAQs: React.FunctionComponent<IFAQsProps> = (props) => {
   const faqs = [
     {
-      title: "What is Tyrannus",
+      title: "Is this course free?",
+      content: "Yes this course is completely free.",
+    },
+    {
+      title: "What do I need to take this course?",
       content:
         "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
     },
     {
-      title: "What is Tyrannus",
-      content:
-        "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
+      title: "Are there graded exercies?",
+      content: "There are currently no graded exercises for this course.",
     },
     {
-      title: "What is Tyrannus",
+      title: "How do I ask questions if I have one?",
       content:
-        "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
+        "Please contact the Young Believers class course coordinator for more enquiries.",
     },
     {
-      title: "What is Tyrannus",
-      content:
-        "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
-    },
-    {
-      title: "What is Tyrannus",
-      content:
-        "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
-    },
-    {
-      title: "What is Tyrannus",
+      title: "What is the duration of the course?",
       content:
         "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
     },
