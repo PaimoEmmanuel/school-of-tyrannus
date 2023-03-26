@@ -17,26 +17,38 @@ const FAQs: React.FunctionComponent<IFAQsProps> = (props) => {
   const faqs = [
     {
       title: "Is this course free?",
-      content: "Yes this course is completely free.",
-    },
-    {
-      title: "What do I need to take this course?",
       content:
-        "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
+        "Young Believers' Course is FREE for all, but enrollees are admitted in batches.",
     },
     {
-      title: "Are there graded exercies?",
-      content: "There are currently no graded exercises for this course.",
+      title: "How do I enrol for the course?",
+      content:
+        "To register for the course, please click 'start course'. You will get an email on the status of your registration.",
+    },
+    {
+      title: "What do I need to take the course?",
+      content:
+        "To have a seamless experience while taking this course. You will need to have an internet connection, a Bible, writing material and a copy of the course manual (Laying a Strong Spiritual Foundation by Pastor Emeka Egwuchukwu)",
+    },
+    {
+      title: "Are there graded exercises",
+      content:
+        "Yes, there are graded exercises after each section of the course.",
     },
     {
       title: "How do I ask questions if I have one?",
       content:
-        "Please contact the Young Believers class course coordinator for more enquiries.",
+        "If you have any questions or need clarity on a concept, truth or doctrine taught during this course. Kindly contact Pastor Ademola Akogun at +234 803 085 8479 (via Whatsapp/Calls).",
     },
     {
       title: "What is the duration of the course?",
       content:
-        "Acts 19:9-10 But When Divers Were Hardened, And Believed Not, But Spake Evil Of That Way Before The Multitude, He Departed From Them, And Separated The Disciples, Disputing Daily In The School Of One Tyrannus. And This Continued By The Space Of Two Years; So That All They Which Dwelt In Asia Heard The Word Of The Lord Jesus, Both Jews And Greeks.",
+        "This course is self-paced, but you must complete the classes within 3 months after registration.",
+    },
+    {
+      title: "Is the course online?",
+      content:
+        "Yes, the course is entirely online, but a live class is scheduled for everyone once a month.",
     },
   ];
   return (
@@ -45,7 +57,6 @@ const FAQs: React.FunctionComponent<IFAQsProps> = (props) => {
         FAQs - Frequently asked questions
       </Text>
       <Box>
-        {" "}
         <Accordion defaultIndex={[0]} allowMultiple>
           {faqs.map((faq, index) => (
             <AccordionItem
