@@ -49,3 +49,9 @@ export const takeQuiz = (contentId: string) => {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
+
+export const completeCourse = (courseId: string) => {
+  return request.get(`LandingPage/CompleteACourse/${courseId}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });
+};

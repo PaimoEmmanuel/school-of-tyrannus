@@ -83,7 +83,15 @@ const useChangeLesson = (
       }
       setCurrentLesson(lesson);
       setLoadingContent(false);
-    });
+    }).catch((err) => {
+      toast({
+        description: "An error occurred, please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setLoadingContent(false);
+    });;
   };
 
   const goToNext = () => {

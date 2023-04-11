@@ -13,6 +13,7 @@ import LessonControl from "../../../components/organisms/lesson-control";
 import LessonManual from "../../../components/molecules/lesson-manual";
 import TestModal from "../../../components/organisms/test-modal";
 import PrivatePage from "../../../components/templates/private-route";
+import CourseCompletedModal from "../../../components/molecules/course-complete-modal";
 
 const LessonPage: NextPage = () => {
   const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
@@ -27,7 +28,12 @@ const LessonPage: NextPage = () => {
     currentLessonStatus,
   } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
 
-  const { testModalOpen, setTestmodalOpen } = useMonitorContentStatus(
+  const {
+    testModalOpen,
+    setTestmodalOpen,
+    openCourseCompleteModal,
+    setOpenCourseCompleteModal,
+  } = useMonitorContentStatus(
     loadingCourse,
     course,
     currentLesson,
@@ -200,6 +206,13 @@ const LessonPage: NextPage = () => {
           goToNext={goToNext}
         />
       )}
+      <CourseCompletedModal
+        isOpen={openCourseCompleteModal}
+        onClose={() => {
+          setOpenCourseCompleteModal(false);
+        }}
+        courseTitle={course.title}
+      />
     </>
   );
 };

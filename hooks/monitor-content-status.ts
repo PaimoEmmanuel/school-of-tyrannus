@@ -1,7 +1,11 @@
 import { useToast } from "@chakra-ui/react";
 import Player from "@vimeo/player";
 import { useEffect, useState } from "react";
-import { finishContent, startContent } from "../services/course";
+import {
+  completeCourse,
+  finishContent,
+  startContent,
+} from "../services/course";
 import { ICourseLessons } from "../types/course";
 
 interface course {
@@ -21,6 +25,7 @@ const useMonitorContentStatus = (
   goToNext: () => void
 ) => {
   const [testModalOpen, setTestmodalOpen] = useState(false);
+  const [openCourseCompleteModal, setOpenCourseCompleteModal] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
@@ -66,6 +71,25 @@ const useMonitorContentStatus = (
               goToNext();
             }
             player.off("ended", handleFinishContent);
+            // Call completeCourse endpoint if it is the last content of the last lesson
+            if (
+              course.lessons.length - 1 === currentLesson[0] &&
+              course.lessons[currentLesson[0]].contents.length ===
+                currentLesson[1]
+            ) {
+              completeCourse(course.id)
+                .then((res) => {
+                  setOpenCourseCompleteModal(true);
+                })
+                .catch((err) => {
+                  toast({
+                    description: "An error occurred, please try again.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                });
+            }
           })
           .catch((err) => {
             toast({
@@ -79,6 +103,7 @@ const useMonitorContentStatus = (
       player.on("ended", handleFinishContent);
     }
   }, [
+    course.id,
     course.lessons,
     currentLesson,
     goToNext,
@@ -86,6 +111,11 @@ const useMonitorContentStatus = (
     loadingCourse,
     toast,
   ]);
-  return { testModalOpen, setTestmodalOpen };
+  return {
+    testModalOpen,
+    setTestmodalOpen,
+    openCourseCompleteModal,
+    setOpenCourseCompleteModal,
+  };
 };
 export default useMonitorContentStatus;
