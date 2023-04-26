@@ -21,7 +21,7 @@ const Footer: React.FunctionComponent = () => {
             w="128px"
             mr="10.5px"
           />
-          <Text maxW="176px" mt="38px">
+          <Text maxW="228px" mt="38px">
             1-3 VIP Estate, Omonile-VIP Zone, Abule Ado, Lagos-Badagry Expressway, Lagos
           </Text>
           <Text mt={"30px"}>+234 (0) 909 054 2599</Text>
