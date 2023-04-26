@@ -22,7 +22,7 @@ const Footer: React.FunctionComponent = () => {
             mr="10.5px"
           />
           <Text maxW="176px" mt="38px">
-            559 Ikorodu Rd, Ikosi Ketu 105102, Lagos, Nigeria.
+            1-3 VIP Estate, Omonile-VIP Zone, Abule Ado, Lagos-Badagry Expressway, Lagos
           </Text>
           <Text mt={"30px"}>+234 (0) 909 054 2599</Text>
           <Text mt="30px">support@tyrannus.com</Text>
