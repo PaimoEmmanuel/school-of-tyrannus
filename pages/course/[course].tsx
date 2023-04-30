@@ -203,7 +203,7 @@ interface ICourseParams {
 
 export const getStaticProps = async ({ params }: ICourseParams) => {
   const res = await getCourse(params.course);
-  const course = await res.data;
+  const course = await res.data;  
   return {
     props: {
       course,

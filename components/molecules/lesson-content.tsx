@@ -91,7 +91,7 @@ const LessonContent: React.FC<ILessonContextProps> = ({
         <Text fontWeight="600" mb="32px">
           {lessonTitle}
         </Text>
-        <Text mb="27px">{lessonDesc}</Text>
+        <Box mb="27px" dangerouslySetInnerHTML={{ __html: lessonDesc }}></Box>
         <Text display="flex" css={{ svg: { marginRight: "16px" } }}>
           <svg
             width="22"
