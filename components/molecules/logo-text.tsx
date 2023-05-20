@@ -9,6 +9,7 @@ const LogoText: React.FunctionComponent<ILogoTextProps> = (props) => {
       <Img
         src="/assets/images/tyrannus-logo.svg"
         w="128px"
+        h="49px"
         mr="10.5px"
       />
       {/* <Text fontSize="18.67px" lineHeight="28px" fontWeight="500">

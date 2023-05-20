@@ -14,6 +14,9 @@ import LessonManual from "../../../components/molecules/lesson-manual";
 import TestModal from "../../../components/organisms/test-modal";
 import PrivatePage from "../../../components/templates/private-route";
 import CourseCompletedModal from "../../../components/molecules/course-complete-modal";
+import { useCallback, useEffect, useState } from "react";
+import Player from "@vimeo/player";
+import { saveTimeStamp } from "../../../services/course";
 
 const LessonPage: NextPage = () => {
   const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
@@ -40,9 +43,48 @@ const LessonPage: NextPage = () => {
     loadingContent,
     goToNext
   );
-
+  const [timeStamp, setTimeStamp] = useState(0);
   const toast = useToast();
+  let breaker = 0;
+  const updateTimestamp = useCallback(
+    (time: number) => {
+      breaker++;
+      if (breaker > 50) {
+        console.log(time);
 
+        saveTimeStamp(
+          Number(
+            course.lessons[currentLesson[0]].contents[currentLesson[1]].id
+          ),
+          time
+        )
+          .then((res) => {
+            // console.log(res.data);
+          })
+          .catch((err) => {});
+        breaker = 0;
+      }
+      return;
+    },
+    [breaker, course.lessons, currentLesson]
+  );
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  useEffect(() => {
+    if (!loadingCourse) {
+      const iframe = document.querySelector("iframe");
+      if (iframe) {
+        const player = new Player(iframe);
+        player.setCurrentTime(currentLessonStatus.timeStamp).then((sec) => {});
+        player.on("timeupdate", (data) => {
+          setTimeStamp(data.seconds);
+          // setTimeStamp(sec);
+        });
+      }
+    }
+  }, [currentLessonStatus.timeStamp, loadingCourse]);
+  useEffect(() => {
+    updateTimestamp(timeStamp);
+  }, [updateTimestamp, timeStamp]);
   return (
     <>
       <Head>
@@ -110,13 +152,88 @@ const LessonPage: NextPage = () => {
                   ) : (
                     <Skeleton isLoaded={!loadingCourse}>
                       <Box pos="relative" padding="56.5% 0 0 0" role="group">
+                        {currentLessonStatus.videoStatus === "Completed" ? (
+                          ""
+                        ) : (
+                          <Box
+                            as="button"
+                            h="4rem"
+                            w="4rem"
+                            borderRadius="50%"
+                            backgroundColor="#DAE0F4"
+                            opacity="0"
+                            pos="absolute"
+                            top="50%"
+                            left="50%"
+                            display="flex"
+                            transition="all .5s"
+                            justifyContent="center"
+                            alignItems="center"
+                            transform="translate(-50%, -50%)"
+                            _groupHover={{ opacity: "1" }}
+                            zIndex={999}
+                            onClick={() => {
+                              const iframe = document.querySelector("iframe");
+                              if (iframe) {
+                                const player = new Player(iframe);
+                                if (videoPlaying) {
+                                  player
+                                    .pause()
+                                    .then(() => {
+                                      setVideoPlaying(false);
+                                    })
+                                    .catch((err) => {});
+                                } else {
+                                  player
+                                    .play()
+                                    .then(() => {
+                                      setVideoPlaying(true);
+                                    })
+                                    .catch((err) => {});
+                                }
+                              }
+                            }}
+                          >
+                            {!videoPlaying ? (
+                              <svg
+                                width="20"
+                                height="26"
+                                viewBox="0 0 20 26"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0.785156 0.295654L19.5562 12.8097L0.785156 25.3237V0.295654Z"
+                                  fill="#333331"
+                                />
+                              </svg>
+                            ) : (
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                fill="#000000"
+                                viewBox="0 0 256 256"
+                              >
+                                <path
+                                  d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"
+                                  fill="#333331"
+                                ></path>
+                              </svg>
+                            )}
+                          </Box>
+                        )}
                         <iframe
                           // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
                           src={`${
                             course.lessons[currentLesson[0]].contents[
                               currentLesson[1]
                             ].videoRetrievalId
-                          }?controls=0`}
+                          }&autoplay=1&controls=${
+                            currentLessonStatus.videoStatus === "Completed"
+                              ? 1
+                              : 0
+                          }`}
                           frameBorder="0"
                           allow="autoplay; fullscreen; picture-in-picture"
                           allowFullScreen

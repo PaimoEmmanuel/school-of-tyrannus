@@ -38,6 +38,15 @@ export const startContent = (contentId: string) => {
   });
 };
 
+export const saveTimeStamp = (contentId: number, timeStamp: number) =>
+  request.post(
+    `LandingPage/UpdateUserContentTimeStamp/${contentId}?time=${timeStamp}`,
+    {},
+    {
+      headers: { Authorization: `Bearer ${getUser().token}` },
+    }
+  );
+
 export const finishContent = (contentId: string) => {
   return request.get(`LandingPage/FinishContent/${contentId}`, {
     headers: { Authorization: `Bearer ${getUser().token}` },

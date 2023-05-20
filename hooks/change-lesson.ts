@@ -17,6 +17,7 @@ const useChangeLesson = (
   const [currentLessonStatus, setCurrentLessonStatus] = useState({
     videoStatus: "",
     quizStatus: "",
+    timeStamp: 0,
   });
   const toast = useToast();
 
@@ -27,11 +28,12 @@ const useChangeLesson = (
     getContentTakenStatus(
       String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
     ).then((res) => {
-      // console.log("content taken status:", res.data);
+      console.log("content taken status:", res.data);
 
       setCurrentLessonStatus({
         videoStatus: res.data.contentStatus,
         quizStatus: res.data.quizStatus,
+        timeStamp: res.data.timeStamp,
       });
     });
     //   When it is the first lesson
@@ -70,28 +72,30 @@ const useChangeLesson = (
       Number(lessons[lesson[0]].contents[lesson[1]].id) === 1
         ? 1
         : Number(lessons[lesson[0]].contents[lesson[1]].id) - 1;
-    getContentTakenStatus(String(prevLessonId)).then((res) => {
-      if (
-        lessons[lesson[0]].contents[lesson[1]].hasQuiz &&
-        res.data.quizStatus !== "Completed"
-      ) {
-        setNextDisabled(true);
-        return setLoadingContent(false);
-      } else if (res.data.contentStatus !== "Completed") {
-        setNextDisabled(true);
-        return setLoadingContent(false);
-      }
-      setCurrentLesson(lesson);
-      setLoadingContent(false);
-    }).catch((err) => {
-      toast({
-        description: "An error occurred, please try again.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
+    getContentTakenStatus(String(prevLessonId))
+      .then((res) => {
+        if (
+          lessons[lesson[0]].contents[lesson[1]].hasQuiz &&
+          res.data.quizStatus !== "Completed"
+        ) {
+          setNextDisabled(true);
+          return setLoadingContent(false);
+        } else if (res.data.contentStatus !== "Completed") {
+          setNextDisabled(true);
+          return setLoadingContent(false);
+        }
+        setCurrentLesson(lesson);
+        setLoadingContent(false);
+      })
+      .catch((err) => {
+        toast({
+          description: "An error occurred, please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        setLoadingContent(false);
       });
-      setLoadingContent(false);
-    });;
   };
 
   const goToNext = () => {
