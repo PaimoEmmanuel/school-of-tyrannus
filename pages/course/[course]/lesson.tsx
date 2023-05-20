@@ -150,7 +150,14 @@ const LessonPage: NextPage = () => {
                       <Spinner thickness="7px" h="70px" w="70px" />
                     </Flex>
                   ) : (
-                    <Skeleton isLoaded={!loadingCourse}>
+                    <Skeleton
+                      isLoaded={
+                        !loadingCourse &&
+                        !!course.lessons[currentLesson[0]].contents[
+                          currentLesson[1]
+                        ].videoRetrievalId
+                      }
+                    >
                       <Box pos="relative" padding="56.5% 0 0 0" role="group">
                         {currentLessonStatus.videoStatus === "Completed" ? (
                           ""
