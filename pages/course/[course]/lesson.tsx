@@ -50,8 +50,6 @@ const LessonPage: NextPage = () => {
     (time: number) => {
       breaker++;
       if (breaker > 50) {
-        console.log(time);
-
         saveTimeStamp(
           Number(
             course.lessons[currentLesson[0]].contents[currentLesson[1]].id

@@ -28,8 +28,6 @@ const useChangeLesson = (
     getContentTakenStatus(
       String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
     ).then((res) => {
-      console.log("content taken status:", res.data);
-
       setCurrentLessonStatus({
         videoStatus: res.data.contentStatus,
         quizStatus: res.data.quizStatus,
