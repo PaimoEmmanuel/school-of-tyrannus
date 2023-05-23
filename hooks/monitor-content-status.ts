@@ -45,14 +45,7 @@ const useMonitorContentStatus = (
           .then((res) => {
             player.off("play");
           })
-          .catch((err) => {
-            toast({
-              description: "Error in starting content",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-            });
-          });
+          .catch((err) => {});
       });
       player.on("ended", () => {
         setTestmodalOpen(true);
