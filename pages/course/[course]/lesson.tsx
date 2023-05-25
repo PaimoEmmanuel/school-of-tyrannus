@@ -40,7 +40,6 @@ const LessonPage: NextPage = () => {
     loadingCourse,
     course,
     currentLesson,
-    currentLessonStatus,
     loadingContent,
     goToNext
   );

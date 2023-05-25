@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import * as React from "react";
+import { useState } from "react";
 import { takeQuiz } from "../../services/course";
 import TestModalCloseButton from "../molecules/test-modal-close-button";
 
@@ -32,6 +32,7 @@ const TestModal: React.FunctionComponent<ITestModalProps> = ({
   testLink,
   goToNext,
 }) => {
+  const [testLoading, settestLoading] = useState(false);
   return (
     <Modal
       blockScrollOnMount={false}
@@ -51,7 +52,7 @@ const TestModal: React.FunctionComponent<ITestModalProps> = ({
             {title}
           </Text>
           <Text color="#5F5F5F">
-            You’ve finished this lesson. Please, take the lesson test to move
+            You have finished this lesson. Please, take the lesson test to move
             the next lesson.
           </Text>
           <Button
@@ -71,14 +72,16 @@ const TestModal: React.FunctionComponent<ITestModalProps> = ({
               color: "text.orange",
             }}
             onClick={() => {
+              settestLoading(true);
               takeQuiz(id).then((res) => {
+                settestLoading(false);
                 window.open(testLink, "_blank");
                 goToNext();
                 onTestModalCLose();
               });
             }}
           >
-            TAKE TEST
+            {testLoading ? "Loading..." : " TAKE TEST"}
           </Button>
         </ModalBody>
 

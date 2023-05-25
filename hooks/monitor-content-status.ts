@@ -36,6 +36,7 @@ const useMonitorContentStatus = (
       return;
     }
     const iframe = document.querySelector("iframe");
+
     if (iframe) {
       const player = new Player(iframe);
       player.on("play", () => {
@@ -47,23 +48,34 @@ const useMonitorContentStatus = (
           })
           .catch((err) => {});
       });
-      player.on("ended", () => {
-        setTestmodalOpen(true);
-      });
       const handleFinishContent = () => {
+        if (
+          (course.lessons[currentLesson[0]].contents[currentLesson[1]]
+            .hasQuiz &&
+            course.lessons[currentLesson[0]].contents[currentLesson[1]]
+              .userStatus.quizStatus === "Completed") ||
+          (!course.lessons[currentLesson[0]].contents[currentLesson[1]]
+            .hasQuiz &&
+            course.lessons[currentLesson[0]].contents[currentLesson[1]]
+              .userStatus.contentStatus !== "Completed")
+        ) {
+          return goToNext();
+        }
+
         finishContent(
           course.lessons[currentLesson[0]].contents[currentLesson[1]].id
         )
           .then((res) => {
             if (
               course.lessons[currentLesson[0]].contents[currentLesson[1]]
-                .hasQuiz
+                .hasQuiz &&
+                course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus.quizStatus !== "Completed"
             ) {
               setTestmodalOpen(true);
             } else {
               goToNext();
             }
-            player.off("ended", handleFinishContent);
+            // player.off("ended", handleFinishContent);
             // Call completeCourse endpoint if it is the last content of the last lesson
             if (
               course.lessons.length - 1 === currentLesson[0] &&
@@ -93,16 +105,20 @@ const useMonitorContentStatus = (
             });
           });
       };
-      player.on("ended", handleFinishContent);
+      player.on("ended", () => {
+        handleFinishContent();
+
+        player.off("ended");
+      });
     }
   }, [
-    course.id,
-    course.lessons,
+    // course.id,
+    // course.lessons,
     currentLesson,
-    goToNext,
+    // goToNext,
     loadingContent,
     loadingCourse,
-    toast,
+    // toast,
   ]);
   return {
     testModalOpen,
