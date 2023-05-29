@@ -35,7 +35,7 @@ const useMonitorContentStatus = (
     if (loadingCourse) {
       return;
     }
-    const iframe = document.querySelector("iframe");
+    const iframe = document.querySelector("#video-iframe") as HTMLIFrameElement;
 
     if (iframe) {
       const player = new Player(iframe);
@@ -69,7 +69,8 @@ const useMonitorContentStatus = (
             if (
               course.lessons[currentLesson[0]].contents[currentLesson[1]]
                 .hasQuiz &&
-                course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus.quizStatus !== "Completed"
+              course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                .userStatus.quizStatus !== "Completed"
             ) {
               setTestmodalOpen(true);
             } else {
