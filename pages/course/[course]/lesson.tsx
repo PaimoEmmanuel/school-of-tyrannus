@@ -141,7 +141,9 @@ const LessonPage: NextPage = () => {
                 gap={{ base: "0", md: "24px" }}
               >
                 <Box pos="relative" minW="calc(100% - 456px)" w="100%">
-                  {loadingContent ? (
+                  {loadingContent &&
+                  course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                    .videoRetrievalId ? (
                     <Flex
                       h="500px"
                       w="100%"
