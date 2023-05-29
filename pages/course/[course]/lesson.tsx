@@ -83,6 +83,9 @@ const LessonPage: NextPage = () => {
   useEffect(() => {
     updateTimestamp(timeStamp);
   }, [updateTimestamp, timeStamp]);
+  useEffect(() => {
+    console.log(course.lessons[currentLesson[0]].contents[currentLesson[1]]);
+  }, [course.lessons, currentLesson, loadingContent]);
   return (
     <>
       <Head>
