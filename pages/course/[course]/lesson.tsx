@@ -69,10 +69,10 @@ const LessonPage: NextPage = () => {
   const [videoPlaying, setVideoPlaying] = useState(false);
   useEffect(() => {
     if (!loadingCourse) {
-      const iframe = document.querySelector("iframe");
+      const iframe = document.querySelector(
+        "#video-iframe"
+      ) as HTMLIFrameElement;
       if (iframe) {
-        console.log("iframe lesson.tsx", iframe);
-
         const player = new Player(iframe);
         player.setCurrentTime(currentLessonStatus.timeStamp).then((sec) => {});
         player.on("timeupdate", (data) => {
@@ -159,8 +159,8 @@ const LessonPage: NextPage = () => {
                       }
                     >
                       <Box pos="relative" padding="56.5% 0 0 0" role="group">
-                        Video Loaded
-                        {/* <iframe
+                        <iframe
+                          id="video-iframe"
                           // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
                           src={`${
                             course.lessons[currentLesson[0]].contents[
@@ -177,7 +177,7 @@ const LessonPage: NextPage = () => {
                             width: "100%",
                             height: "100%",
                           }}
-                        ></iframe> */}
+                        ></iframe>
                       </Box>
                     </Skeleton>
                   )}

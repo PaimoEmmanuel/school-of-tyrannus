@@ -35,11 +35,9 @@ const useMonitorContentStatus = (
     if (loadingCourse) {
       return;
     }
-    const iframe = document.querySelector("iframe");
+    const iframe = document.querySelector("#video-iframe") as HTMLIFrameElement;
 
     if (iframe) {
-      console.log("iframe monitor", iframe);
-
       const player = new Player(iframe);
       player.on("play", () => {
         startContent(
