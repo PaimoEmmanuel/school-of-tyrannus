@@ -64,8 +64,12 @@ const useChangeLesson = (
   }, [nextDisabled, toast]);
 
   const goToLesson = (lesson: [number, number]) => {
+    console.log("going to next lesson");
+
     setNextDisabled(false);
     setLoadingContent(true);
+    console.log("loading next lesson");
+
     const prevLessonId =
       Number(lessons[lesson[0]].contents[lesson[1]].id) === 1
         ? 1
@@ -82,6 +86,8 @@ const useChangeLesson = (
           setNextDisabled(true);
           return setLoadingContent(false);
         }
+        console.log("new lesson here");
+
         setCurrentLesson(lesson);
         setLoadingContent(false);
       })
