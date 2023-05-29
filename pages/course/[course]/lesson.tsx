@@ -157,7 +157,8 @@ const LessonPage: NextPage = () => {
                       }
                     >
                       <Box pos="relative" padding="56.5% 0 0 0" role="group">
-                        <iframe
+                        Video Loaded
+                        {/* <iframe
                           // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
                           src={`${
                             course.lessons[currentLesson[0]].contents[
@@ -174,7 +175,7 @@ const LessonPage: NextPage = () => {
                             width: "100%",
                             height: "100%",
                           }}
-                        ></iframe>
+                        ></iframe> */}
                       </Box>
                     </Skeleton>
                   )}
