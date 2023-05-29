@@ -71,6 +71,8 @@ const LessonPage: NextPage = () => {
     if (!loadingCourse) {
       const iframe = document.querySelector("iframe");
       if (iframe) {
+        console.log("iframe lesson.tsx", iframe);
+
         const player = new Player(iframe);
         player.setCurrentTime(currentLessonStatus.timeStamp).then((sec) => {});
         player.on("timeupdate", (data) => {

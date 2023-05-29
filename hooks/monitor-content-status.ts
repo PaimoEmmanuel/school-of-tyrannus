@@ -38,6 +38,8 @@ const useMonitorContentStatus = (
     const iframe = document.querySelector("iframe");
 
     if (iframe) {
+      console.log("iframe monitor", iframe);
+
       const player = new Player(iframe);
       player.on("play", () => {
         startContent(
@@ -69,7 +71,8 @@ const useMonitorContentStatus = (
             if (
               course.lessons[currentLesson[0]].contents[currentLesson[1]]
                 .hasQuiz &&
-                course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus.quizStatus !== "Completed"
+              course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                .userStatus.quizStatus !== "Completed"
             ) {
               setTestmodalOpen(true);
             } else {
