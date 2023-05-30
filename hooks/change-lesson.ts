@@ -103,7 +103,7 @@ const useChangeLesson = (
       })
       .catch((err) => {
         toast({
-          description: "An error occurred, please try again.",
+          description: "An error occurred, please refresh and try again.",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -130,11 +130,11 @@ const useChangeLesson = (
           return setLoadingContent(false);
         }
         if (currentLesson[0] < lessons.length - 1) {
+          setContentToCompleted(currentLesson);
           if (
             currentLesson[1] <
             lessons[currentLesson[0]].contents.length - 1
           ) {
-            setContentToCompleted(currentLesson);
             setCurrentLesson([currentLesson[0], currentLesson[1] + 1]);
             return setLoadingContent(false);
           }
@@ -142,7 +142,6 @@ const useChangeLesson = (
             currentLesson[1] ===
             lessons[currentLesson[0]].contents.length - 1
           ) {
-            setContentToCompleted(currentLesson);
             setCurrentLesson([currentLesson[0] + 1, 0]);
             return setLoadingContent(false);
           }
@@ -151,7 +150,7 @@ const useChangeLesson = (
       })
       .catch((err) => {
         toast({
-          description: "An error occurred, please try again.",
+          description: "An error occurred, please refresh and try again.",
           status: "error",
           duration: 5000,
           isClosable: true,

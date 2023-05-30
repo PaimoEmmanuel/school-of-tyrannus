@@ -49,7 +49,6 @@ const useMonitorContentStatus = (
     setLoadContent(true);
     completeCourse(course.id)
       .then((res) => {
-        console.log("course completed");
         setLoadContent(false);
         setOpenCourseCompleteModal(true);
       })

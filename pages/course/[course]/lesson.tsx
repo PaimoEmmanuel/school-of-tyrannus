@@ -17,6 +17,7 @@ import CourseCompletedModal from "../../../components/molecules/course-complete-
 import { useCallback, useEffect, useState } from "react";
 import Player from "@vimeo/player";
 import { saveTimeStamp } from "../../../services/course";
+import {  useRouter } from "next/router";
 
 const LessonPage: NextPage = () => {
   const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
@@ -31,7 +32,7 @@ const LessonPage: NextPage = () => {
     setLoadContent,
     currentLessonStatus,
   } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
-
+const router = useRouter()
   const {
     testModalOpen,
     setTestmodalOpen,
@@ -79,7 +80,9 @@ const LessonPage: NextPage = () => {
         player
           .setCurrentTime(currentLessonStatus.timeStamp)
           .then((sec) => {})
-          .catch((err) => {});
+          .catch((err) => {
+            player.setCurrentTime(0);
+          });
         player.on("timeupdate", (data) => {
           setTimeStamp(data.seconds);
           // setTimeStamp(sec);
@@ -267,7 +270,8 @@ const LessonPage: NextPage = () => {
       <CourseCompletedModal
         isOpen={openCourseCompleteModal}
         onClose={() => {
-          setOpenCourseCompleteModal(false);
+          router.push(`/course/${course.id}`)
+          // setOpenCourseCompleteModal(false);
         }}
         courseTitle={course.title}
       />

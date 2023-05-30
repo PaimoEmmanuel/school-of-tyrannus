@@ -22,6 +22,7 @@ const CourseCompletedModal: React.FunctionComponent<
   return (
     <Modal
       // preserveScrollBarGap
+      closeOnOverlayClick={false}
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
