@@ -22,15 +22,89 @@ const useMonitorContentStatus = (
   currentLesson: number[],
   // loading: boolean,
   loadingContent: boolean,
+  setLoadContent: (value: boolean) => void,
   goToNext: () => void
 ) => {
   const [testModalOpen, setTestmodalOpen] = useState(false);
   const [openCourseCompleteModal, setOpenCourseCompleteModal] = useState(false);
+  const [lastCourseContent, setLastCourseContent] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
+    if (
+      course.lessons.length - 1 === currentLesson[0] &&
+      course.lessons[currentLesson[0]].contents.length - 1 === currentLesson[1]
+    ) {
+      setLastCourseContent(true);
+    } else {
+      setLastCourseContent(false);
+    }
+  }, [course, currentLesson]);
+  useEffect(() => {
     setTestmodalOpen(false);
   }, [currentLesson]);
+
+  // Call completeCourse endpoint if it is the last content of the last lesson
+  const handleCourseCompleted = () => {
+    setLoadContent(true);
+    completeCourse(course.id)
+      .then((res) => {
+        console.log("course completed");
+        setLoadContent(false);
+        setOpenCourseCompleteModal(true);
+      })
+      .catch((err) => {
+        toast({
+          description: "An error occurred, please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
+
+  const handleFinishContent = () => {
+    if (
+      (course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
+        course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus
+          .quizStatus === "Completed") ||
+      (!course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
+        course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus
+          .contentStatus === "Completed")
+    ) {
+      if (lastCourseContent) {
+        return handleCourseCompleted();
+      }
+      return goToNext();
+    }
+    setLoadContent(true);
+    finishContent(
+      course.lessons[currentLesson[0]].contents[currentLesson[1]].id
+    )
+      .then((res) => {
+        setLoadContent(false);
+        if (
+          course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
+          course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus
+            .quizStatus !== "Completed"
+        ) {
+          setTestmodalOpen(true);
+        } else if (lastCourseContent) {
+          handleCourseCompleted();
+        } else {
+          goToNext();
+        }
+      })
+      .catch((err) => {
+        toast({
+          description: "Error in finishing content",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
+
   useEffect(() => {
     if (loadingCourse) {
       return;
@@ -48,64 +122,17 @@ const useMonitorContentStatus = (
           })
           .catch((err) => {});
       });
-      const handleFinishContent = () => {
-        if (
-          (course.lessons[currentLesson[0]].contents[currentLesson[1]]
-            .hasQuiz &&
-            course.lessons[currentLesson[0]].contents[currentLesson[1]]
-              .userStatus.quizStatus === "Completed") ||
-          (!course.lessons[currentLesson[0]].contents[currentLesson[1]]
-            .hasQuiz &&
-            course.lessons[currentLesson[0]].contents[currentLesson[1]]
-              .userStatus.contentStatus !== "Completed")
-        ) {
-          return goToNext();
-        }
-
-        finishContent(
-          course.lessons[currentLesson[0]].contents[currentLesson[1]].id
-        )
-          .then((res) => {
-            if (
-              course.lessons[currentLesson[0]].contents[currentLesson[1]]
-                .hasQuiz &&
-              course.lessons[currentLesson[0]].contents[currentLesson[1]]
-                .userStatus.quizStatus !== "Completed"
-            ) {
-              setTestmodalOpen(true);
-            } else {
-              goToNext();
-            }
-            // player.off("ended", handleFinishContent);
-            // Call completeCourse endpoint if it is the last content of the last lesson
-            if (
-              course.lessons.length - 1 === currentLesson[0] &&
-              course.lessons[currentLesson[0]].contents.length ===
-                currentLesson[1]
-            ) {
-              completeCourse(course.id)
-                .then((res) => {
-                  setOpenCourseCompleteModal(true);
-                })
-                .catch((err) => {
-                  toast({
-                    description: "An error occurred, please try again.",
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                  });
-                });
-            }
-          })
-          .catch((err) => {
-            toast({
-              description: "Error in finishing content",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-            });
-          });
-      };
+      player.getDuration().then(function (duration) {
+        player.on("timeupdate", (data) => {
+          if (data.seconds > duration * 0.8) {
+            finishContent(
+              course.lessons[currentLesson[0]].contents[currentLesson[1]].id
+            )
+              .then((res) => {})
+              .catch((err) => {});
+          }
+        });
+      });
       player.on("ended", () => {
         handleFinishContent();
 

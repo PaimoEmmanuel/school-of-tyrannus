@@ -159,7 +159,9 @@ const useChangeLesson = (
         setLoadingContent(false);
       });
   };
-
+  const setLoadContent = (value: boolean) => {
+    setLoadingContent(value);
+  };
   const goToPrev = () => {
     if (currentLesson[0] === 0 && currentLesson[1] === 0) {
       return;
@@ -183,6 +185,7 @@ const useChangeLesson = (
     isLastContent,
     goToLesson,
     loadingContent,
+    setLoadContent,
     currentLessonStatus,
   };
 };

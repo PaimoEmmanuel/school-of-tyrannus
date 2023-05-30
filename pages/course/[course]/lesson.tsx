@@ -28,6 +28,7 @@ const LessonPage: NextPage = () => {
     isLastContent,
     goToLesson,
     loadingContent,
+    setLoadContent,
     currentLessonStatus,
   } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
 
@@ -41,6 +42,7 @@ const LessonPage: NextPage = () => {
     course,
     currentLesson,
     loadingContent,
+    setLoadContent,
     goToNext
   );
   const [timeStamp, setTimeStamp] = useState(0);
@@ -74,7 +76,10 @@ const LessonPage: NextPage = () => {
       ) as HTMLIFrameElement;
       if (iframe) {
         const player = new Player(iframe);
-        player.setCurrentTime(currentLessonStatus.timeStamp).then((sec) => {});
+        player
+          .setCurrentTime(currentLessonStatus.timeStamp)
+          .then((sec) => {})
+          .catch((err) => {});
         player.on("timeupdate", (data) => {
           setTimeStamp(data.seconds);
           // setTimeStamp(sec);

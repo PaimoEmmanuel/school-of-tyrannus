@@ -96,6 +96,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                     onClick={() => {
                       goToLesson([parentIndex, index]);
                     }}
+                    css={{ svg: { minWidth: "17px" } }}
                   >
                     {index + 1 + ". " + content.title}
 

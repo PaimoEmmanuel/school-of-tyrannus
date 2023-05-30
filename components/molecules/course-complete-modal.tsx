@@ -76,7 +76,7 @@ const CourseCompletedModal: React.FunctionComponent<
             px={{ base: "1rem", sm: "4rem" }}
             mt="2rem"
           >
-            Congratulations! Your have successfully completed the{" "}
+            Congratulations! You have successfully completed the{" "}
             <Text as="span" fontWeight="700">
               {courseTitle}{" "}
             </Text>
