@@ -72,7 +72,7 @@ const useMonitorContentStatus = (
           .contentStatus === "Completed")
     ) {
       if (lastCourseContent) {
-        return handleCourseCompleted();
+        return setOpenCourseCompleteModal(true);
       }
       return goToNext();
     }

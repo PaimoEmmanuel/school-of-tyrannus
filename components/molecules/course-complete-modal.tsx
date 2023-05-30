@@ -92,7 +92,7 @@ const CourseCompletedModal: React.FunctionComponent<
             color="#A3A3A3"
             align="center"
           >
-            Your certificate of completion will be sent to your email.
+            Your certificate of completion has been sent to your email.
           </Text>
 
           <Flex direction="row" mt="30px">
