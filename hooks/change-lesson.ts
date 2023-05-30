@@ -66,10 +66,25 @@ const useChangeLesson = (
   const goToLesson = (lesson: [number, number]) => {
     setNextDisabled(false);
     setLoadingContent(true);
-    const prevLessonId =
-      Number(lessons[lesson[0]].contents[lesson[1]].id) === 1
-        ? 1
-        : Number(lessons[lesson[0]].contents[lesson[1]].id) - 1;
+    const getPreviousLesson = () => {
+      let prevLesson = [0, 0];
+      if (lesson[0] < 1 && lesson[1] < 1) {
+      } else if (lesson[0] < 1 && lesson[1] >= 1) {
+        prevLesson[1] = lesson[1] - 1;
+      } else if (lesson[0] >= 1 && lesson[1] < 1) {
+        prevLesson[0] = lesson[0] - 1;
+        prevLesson[1] = lessons[prevLesson[0]].contents.length - 1;
+      } else if (lesson[0] >= 1 && lesson[1] > 1) {
+        prevLesson[0] = lesson[0];
+        prevLesson[1] = lesson[1] - 1;
+      }
+      // console.log("prevLesson: ", prevLesson, lesson);
+      return prevLesson;
+    };
+    const prevLesson = getPreviousLesson();
+    const prevLessonId = Number(
+      lessons[prevLesson[0]].contents[prevLesson[1]].id
+    );
     getContentTakenStatus(String(prevLessonId))
       .then((res) => {
         if (

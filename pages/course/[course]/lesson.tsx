@@ -103,7 +103,10 @@ const LessonPage: NextPage = () => {
             >
               <LessonSideBar
                 onTakeTest={() => {
-                  if (currentLessonStatus.videoStatus === "Completed") {
+                  if (
+                    course.lessons[currentLesson[0]].contents[currentLesson[1]]
+                      .userStatus.contentStatus === "Completed"
+                  ) {
                     setTestmodalOpen(true);
                   } else {
                     toast({
