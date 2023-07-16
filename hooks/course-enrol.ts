@@ -6,7 +6,7 @@ import { enrollCourse } from "../services/course";
 
 const useCourseEnrol = (
   courseId: number,
-  enrolledForCourse: boolean,
+  enrolledForCourse: string,
   loadingEnrolled: boolean
 ) => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const useCourseEnrol = (
     }
     if (!loadingEnrolled) {
       setError("");
-      if (enrolledForCourse) {
+      if (enrolledForCourse === "Enrolled") {
         return router.push(`${courseId}/lesson`);
       }
       setLoading(true);

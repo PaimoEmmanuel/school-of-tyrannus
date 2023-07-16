@@ -158,10 +158,12 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
               >
                 {loading ? (
                   <Spinner />
-                ) : enrolled ? (
+                ) : enrolled === "Applied" ? (
+                  "START COURSE"
+                ) : enrolled === "Started" ? (
                   "CONTINUE COURSE"
                 ) : (
-                  "START COURSE"
+                 enrolled === "Completed" ? "COURSE COMPLETED" : "ENROL FOR COURSE"
                 )}
               </Button>
               {/* </Link> */}
@@ -203,7 +205,7 @@ interface ICourseParams {
 
 export const getStaticProps = async ({ params }: ICourseParams) => {
   const res = await getCourse(params.course);
-  const course = await res.data;  
+  const course = await res.data;
   return {
     props: {
       course,

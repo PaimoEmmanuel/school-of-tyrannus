@@ -5,7 +5,7 @@ import { UserContext } from "../context/user-context";
 import { useToast } from "@chakra-ui/react";
 
 const useEnrolledForCourse = () => {
-  const [enrolled, setEnrolled] = useState(false);
+  const [enrolled, setEnrolled] = useState("");
   const [loadingEnrolled, setLoadingEnrolled] = useState(true);
   const { user } = useContext(UserContext);
   const router = useRouter();
@@ -18,7 +18,7 @@ const useEnrolledForCourse = () => {
     if (query.course && query.course.length) {
       getCourseEnrollmentStatus(String(query.course))
         .then((res) => {
-          setEnrolled(res.data.enrolled);
+          setEnrolled(res.data.courseStatus);
           setLoadingEnrolled(false);
         })
         .catch((err) => {
