@@ -5,8 +5,9 @@ import { UserContext } from "../context/user-context";
 import { useToast } from "@chakra-ui/react";
 
 const useEnrolledForCourse = () => {
-  const [enrolled, setEnrolled] = useState("");
+  const [enrollmentStatus, setEnrollmentStatus] = useState("");
   const [loadingEnrolled, setLoadingEnrolled] = useState(true);
+  const [shouldGoToLesson, setShouldGoToLesson] = useState(false);
   const { user } = useContext(UserContext);
   const router = useRouter();
   const toast = useToast();
@@ -18,7 +19,20 @@ const useEnrolledForCourse = () => {
     if (query.course && query.course.length) {
       getCourseEnrollmentStatus(String(query.course))
         .then((res) => {
-          setEnrolled(res.data.courseStatus);
+          setEnrollmentStatus(res.data.courseStatus);
+          if (res.data.courseStatus === "Applied") {
+            setShouldGoToLesson(false);
+          } else if (res.data.courseStatus === "Started") {
+            setShouldGoToLesson(true);
+          } else if (res.data.courseStatus === "Completed") {
+            setShouldGoToLesson(true);
+          } else if (res.data.courseStatus === "Enrolled") {
+            if (res.data.inSession) {
+              setShouldGoToLesson(true);
+            } else {
+              setShouldGoToLesson(false);
+            }
+          }
           setLoadingEnrolled(false);
         })
         .catch((err) => {
@@ -32,7 +46,7 @@ const useEnrolledForCourse = () => {
         });
     }
   }, [query.course, toast, user.isLoggedIn]);
-  return { loadingEnrolled, enrolled };
+  return { loadingEnrolled, enrollmentStatus, shouldGoToLesson };
 };
 
 export default useEnrolledForCourse;

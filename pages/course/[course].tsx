@@ -27,10 +27,10 @@ interface ICourseDetailsPage extends ICourseDetails {
 const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
   const router = useRouter();
   const query = router.query;
-  const { loadingEnrolled, enrolled } = useEnrolledForCourse();
+  const { loadingEnrolled, enrollmentStatus, shouldGoToLesson } = useEnrolledForCourse();
   const { onEnrol, loading, error } = useCourseEnrol(
     Number(query.course),
-    enrolled,
+    shouldGoToLesson,
     loadingEnrolled
   );
 
@@ -158,12 +158,12 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
               >
                 {loading ? (
                   <Spinner />
-                ) : enrolled === "Applied" ? (
+                ) : enrollmentStatus === "Applied" ? (
                   "START COURSE"
-                ) : enrolled === "Started" ? (
+                ) : enrollmentStatus === "Started" ? (
                   "CONTINUE COURSE"
                 ) : (
-                 enrolled === "Completed" ? "COURSE COMPLETED" : "ENROL FOR COURSE"
+                  enrollmentStatus === "Completed" ? "COURSE COMPLETED" : "ENROL FOR COURSE"
                 )}
               </Button>
               {/* </Link> */}

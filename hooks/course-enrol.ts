@@ -6,7 +6,7 @@ import { enrollCourse } from "../services/course";
 
 const useCourseEnrol = (
   courseId: number,
-  enrolledForCourse: string,
+  shouldGoToLesson: boolean,
   loadingEnrolled: boolean
 ) => {
   const router = useRouter();
@@ -14,6 +14,7 @@ const useCourseEnrol = (
   const [error, setError] = useState("");
   const toast = useToast();
   const { user } = useContext(UserContext);
+  
 
   const onEnrol = () => {
     if (!user.isLoggedIn) {
@@ -21,7 +22,7 @@ const useCourseEnrol = (
     }
     if (!loadingEnrolled) {
       setError("");
-      if (enrolledForCourse === "Enrolled") {
+      if (shouldGoToLesson) {
         return router.push(`${courseId}/lesson`);
       }
       setLoading(true);
