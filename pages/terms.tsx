@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import NavigationBar from '../components/organisms/navigation-bar'
 import { Box, Flex, Text } from '@chakra-ui/react'
+import Footer from '../components/organisms/footer'
 
 const Terms: NextPage = () => {
 	return (
@@ -154,6 +155,7 @@ const Terms: NextPage = () => {
 						</Text>
 					</Flex>
 				</Box>
+				<Footer />
 			</Box>
 		</>
 	)

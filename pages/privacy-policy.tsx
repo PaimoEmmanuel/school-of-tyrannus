@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import NavigationBar from '../components/organisms/navigation-bar'
 import { Box, Flex, Text } from '@chakra-ui/react'
+import Footer from '../components/organisms/footer'
 
 const PrivacyPolicy: NextPage = () => {
 	return (
@@ -143,6 +144,7 @@ const PrivacyPolicy: NextPage = () => {
 						</Text>
 					</Flex>
 				</Box>
+				<Footer />
 			</Box>
 		</>
 	)
