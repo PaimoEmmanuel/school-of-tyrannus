@@ -21,10 +21,10 @@ const PrivacyPolicy: NextPage = () => {
 
 					<Flex direction='column' gap='20px' margin='20px 0'>
 						<Text lineHeight='160%' textAlign='justify'>
-							Thank you for using School of Tyrannus ("we" or "us"). This Privacy Policy explains how we collect, use,
-							disclose, and protect your personal information when you use our e-learning platform. We are committed to
-							safeguarding your privacy and ensuring the security of your personal information. By using our platform, you
-							consent to the practices described in this Privacy Policy.
+							Thank you for using School of Tyrannus (&quot;we&quot; or &quot;us&quot;). This Privacy Policy explains how we
+							collect, use, disclose, and protect your personal information when you use our e-learning platform. We are
+							committed to safeguarding your privacy and ensuring the security of your personal information. By using our
+							platform, you consent to the practices described in this Privacy Policy.
 						</Text>
 
 						<Text fontWeight='600'>Information We Collect</Text>
@@ -41,7 +41,7 @@ const PrivacyPolicy: NextPage = () => {
 
 						<Text lineHeight='160%' textAlign='justify'>
 							We may collect certain information about your usage of the School of Tyrannus platform, such as the courses you
-							access, the duration of your sessions, and your interactions with the platform's features. This information
+							access, the duration of your sessions, and your interactions with the platform&apos;s features. This information
 							helps us analyze user behaviour, improve our platform, and personalize your learning experience.
 						</Text>
 
@@ -107,7 +107,7 @@ const PrivacyPolicy: NextPage = () => {
 							longer needed, we will securely delete or anonymize it.
 						</Text>
 
-						<Text fontWeight='600'>Children's Privacy</Text>
+						<Text fontWeight='600'>Children&apos;s Privacy</Text>
 						<Text lineHeight='160%' textAlign='justify'>
 							School of Tyrannus is not directed to individuals under the age of 13. We do not knowingly collect personal
 							information from children. If you believe we have unintentionally collected personal information from a child

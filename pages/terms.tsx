@@ -21,9 +21,10 @@ const Terms: NextPage = () => {
 
 					<Flex direction='column' gap='20px' margin='20px 0'>
 						<Text lineHeight='160%' textAlign='justify'>
-							Thank you for using School of Tyrannus ("we" or "us"). These Terms & Conditions ("Terms") govern your use of our
-							e-learning platform. By accessing or using the School of Tyrannus platform, you agree to be bound by these
-							Terms. If you do not agree with any provision of these Terms, please refrain from using our platform.
+							Thank you for using School of Tyrannus (&quot;we&quot; or &quot;us&quot;). These Terms & Conditions
+							(&quot;Terms&quot;) govern your use of our e-learning platform. By accessing or using the School of Tyrannus
+							platform, you agree to be bound by these Terms. If you do not agree with any provision of these Terms, please
+							refrain from using our platform.
 						</Text>
 
 						<Text fontWeight='600'>Use of the Platform</Text>
@@ -51,8 +52,8 @@ const Terms: NextPage = () => {
 							a) Violate any applicable laws, regulations, or third-party rights;
 						</Text>
 						<Text lineHeight='160%' textAlign='justify'>
-							b) Engage in any activity that could disrupt, damage, or impair the platform's functionality or interfere with
-							other users' access or use of the platform;
+							b) Engage in any activity that could disrupt, damage, or impair the platform&apos;s functionality or interfere
+							with other users&apos; access or use of the platform;
 						</Text>
 						<Text lineHeight='160%' textAlign='justify'>
 							c) Upload, post, or transmit any content that is unlawful, harmful, defamatory, infringing, or otherwise
@@ -63,8 +64,8 @@ const Terms: NextPage = () => {
 							goods or services without our prior written consent;
 						</Text>
 						<Text lineHeight='160%' textAlign='justify'>
-							e) Attempt to gain unauthorized access to any portion of the platform, other users' accounts, or any systems or
-							networks connected to the platform;
+							e) Attempt to gain unauthorized access to any portion of the platform, other users&apos; accounts, or any
+							systems or networks connected to the platform;
 						</Text>
 						<Text lineHeight='160%' textAlign='justify'>
 							f) Collect or store personal information of other users without their consent; or
@@ -80,9 +81,9 @@ const Terms: NextPage = () => {
 						<Text>2.1 User-Generated Content</Text>
 						<Text lineHeight='160%' textAlign='justify'>
 							The School of Tyrannus platform may allow you to post, upload, or submit content, including comments, questions,
-							reviews, or other materials ("User-Generated Content"). By posting User-Generated Content on the platform, you
-							grant us a non-exclusive, worldwide, royalty-free license to use, copy, modify, adapt, publish, display,
-							distribute, and sublicense the content for any purpose related to the platform and our business.
+							reviews, or other materials (&quot;User-Generated Content&quot;). By posting User-Generated Content on the
+							platform, you grant us a non-exclusive, worldwide, royalty-free license to use, copy, modify, adapt, publish,
+							display, distribute, and sublicense the content for any purpose related to the platform and our business.
 						</Text>
 
 						<Text>2.2 Intellectual Property</Text>
@@ -107,7 +108,7 @@ const Terms: NextPage = () => {
 						<Text lineHeight='160%' textAlign='justify'>
 							You agree to indemnify and hold the School of Tyrannus and its affiliates, directors, officers, employees,
 							agents, and licensors harmless from and against any claims, demands, actions, liabilities, damages, costs, and
-							expenses, including reasonable attorneys' fees, arising out of or related to your use of the platform, your
+							expenses, including reasonable attorneys&apos; fees, arising out of or related to your use of the platform, your
 							violation of these Terms, or your infringement of any rights of any other person or entity.
 						</Text>
 
