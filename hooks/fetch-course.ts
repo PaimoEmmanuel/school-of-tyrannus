@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getCourseDetails } from "../services/course";
 import { ICourseLessons } from "../types/course";
+import useEnrolledForCourse from "./enrolled-course";
 
 const defaultCourse: ICourseLessons = {
   title: "",
@@ -33,15 +34,23 @@ const useFetchCourse = () => {
   const [loadingCourse, setLoadingCourse] = useState(true);
   const router = useRouter();
   const query = router.query;
+  const { loadingEnrolled, enrollmentStatus, shouldGoToLesson } =
+    useEnrolledForCourse();
   useEffect(() => {
-    if (!query.course) {
-      return;
+    if (!loadingEnrolled) {
+      if (!shouldGoToLesson) {
+        router.push(`/course/${query.course}`);
+        return;
+      }
+      if (!query.course) {
+        return;
+      }
+      getCourseDetails(String(query.course)).then((res) => {
+        setCourse(res.data);
+        setLoadingCourse(false);
+      });
     }
-    getCourseDetails(String(query.course)).then((res) => {
-      setCourse(res.data);
-      setLoadingCourse(false);
-    });
-  }, [query.course]);
+  }, [query, loadingEnrolled, shouldGoToLesson, router]);
 
   const setContentToCompleted = (lesson: [number, number]) => {
     const newCourseObject = { ...course };
