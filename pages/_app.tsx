@@ -9,12 +9,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <UserContextProvider>
-        <Script
-          id="whatsapp-widget"
-          dangerouslySetInnerHTML={{
-            __html: `!function(){var e,t,n,a;window.MyAliceWebChat||((t=document.createElement("div")).id="myAliceWebChat",(n=document.createElement("script")).type="text/javascript",n.async=!0,n.src="https://myalice-widget.netlify.app/index.js",(a=(e=document.body.getElementsByTagName("script"))[e.length-1]).parentNode.insertBefore(n,a),a.parentNode.insertBefore(t,a),n.addEventListener("load",(function(){MyAliceWebChat.init({selector:"myAliceWebChat",number:"2347010625108",message:"",color:"#25D366",channel:"wa",boxShadow:"none",text:"",theme:"light",position:"right",mb:"70px",mx:"20px",radius:"20px"})})))}();`,
-          }}
-        />
         {/* Hotjar Tracking Code for https://tyrannus.nlwc.church */}
         <Script
           id="hotjar"

@@ -17,6 +17,7 @@ import removeUser from "../../utils/remove-user";
 import { useRouter } from "next/router";
 import getUser from "../../utils/get-user";
 import MobileNav from "../molecules/mobile-nav";
+import WhatsAppWidget from "../molecules/whatsapp-widget";
 
 interface INavigationBarProps {}
 
@@ -125,6 +126,7 @@ const NavigationBar: React.FunctionComponent<INavigationBarProps> = (props) => {
           }}
         />
       </Flex>
+      <WhatsAppWidget />
     </>
   );
 };
