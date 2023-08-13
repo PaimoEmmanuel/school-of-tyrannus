@@ -1,5 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import Player from "@vimeo/player";
+import { timeStamp } from "console";
 import { useEffect, useState } from "react";
 import {
   completeCourse,
@@ -20,7 +21,6 @@ const useMonitorContentStatus = (
   loadingCourse: boolean,
   course: ICourseLessons,
   currentLesson: number[],
-  // loading: boolean,
   loadingContent: boolean,
   setLoadContent: (value: boolean) => void,
   goToNext: () => void

@@ -23,11 +23,26 @@ import getThumbnail from "../../utils/get-instructor-thumbnail";
 interface ICourseDetailsPage extends ICourseDetails {
   enrolled: boolean;
 }
+const getButtonText = (enrollmentStatus: string) => {
+  switch (enrollmentStatus) {
+    case "Applied":
+      return "START COURSE";
+    case "Enrolled":
+      return "START COURSE";
+    case "Started":
+      return "CONTINUE COURSE";
+    case "Completed":
+      return "COURSE COMPLETED";
+    default:
+      return "ENROL FOR COURSE";
+  }
+};
 
 const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
   const router = useRouter();
   const query = router.query;
-  const { loadingEnrolled, enrollmentStatus, shouldGoToLesson } = useEnrolledForCourse();
+  const { loadingEnrolled, enrollmentStatus, shouldGoToLesson } =
+    useEnrolledForCourse();
   const { onEnrol, loading, error } = useCourseEnrol(
     Number(query.course),
     shouldGoToLesson,
@@ -156,15 +171,7 @@ const CourseDetailsPage: NextPage<ICourseDetailsPage> = ({ course }) => {
                 }}
                 onClick={onEnrol}
               >
-                {loading ? (
-                  <Spinner />
-                ) : enrollmentStatus === "Applied" ? (
-                  "START COURSE"
-                ) : enrollmentStatus === "Started" ? (
-                  "CONTINUE COURSE"
-                ) : (
-                  enrollmentStatus === "Completed" ? "COURSE COMPLETED" : "ENROL FOR COURSE"
-                )}
+                {loading ? <Spinner /> : getButtonText(enrollmentStatus)}
               </Button>
               {/* </Link> */}
             </Box>

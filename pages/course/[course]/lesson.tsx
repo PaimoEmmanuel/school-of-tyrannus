@@ -15,9 +15,9 @@ import TestModal from "../../../components/organisms/test-modal";
 import PrivatePage from "../../../components/templates/private-route";
 import CourseCompletedModal from "../../../components/molecules/course-complete-modal";
 import { useCallback, useEffect, useState } from "react";
-import Player from "@vimeo/player";
+import Player, { TimeEvent } from "@vimeo/player";
 import { saveTimeStamp } from "../../../services/course";
-import {  useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const LessonPage: NextPage = () => {
   const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
@@ -32,7 +32,9 @@ const LessonPage: NextPage = () => {
     setLoadContent,
     currentLessonStatus,
   } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
-const router = useRouter()
+
+  const router = useRouter();
+
   const {
     testModalOpen,
     setTestmodalOpen,
@@ -42,6 +44,8 @@ const router = useRouter()
     loadingCourse,
     course,
     currentLesson,
+    // currentLessonStatus.videoStatus,
+    // currentLessonStatus.timeStamp,
     loadingContent,
     setLoadContent,
     goToNext
@@ -49,6 +53,7 @@ const router = useRouter()
   const [timeStamp, setTimeStamp] = useState(0);
   const toast = useToast();
   let breaker = 0;
+
   const updateTimestamp = useCallback(
     (time: number) => {
       breaker++;
@@ -69,7 +74,9 @@ const router = useRouter()
     },
     [breaker, course.lessons, currentLesson]
   );
-  const [videoPlaying, setVideoPlaying] = useState(false);
+
+  const [playing, setPlaying] = useState(false);
+  const [simulatedTime, setSimulatedTime] = useState(0);
   useEffect(() => {
     if (!loadingCourse) {
       const iframe = document.querySelector(
@@ -85,14 +92,44 @@ const router = useRouter()
           });
         player.on("timeupdate", (data) => {
           setTimeStamp(data.seconds);
-          // setTimeStamp(sec);
         });
+        player.on("play", function (e) {
+          setPlaying(true);
+        });
+
+        player.on("pause", function (e) {
+          setPlaying(false);
+        });
+        // player.on("seeked", (data) => {
+        //   console.log("simulatedTime:", simulatedTime);
+
+        //   player
+        //     .setCurrentTime(simulatedTime - 5)
+        //     .then(function (seconds) {})
+        //     .catch(function (error) {
+        //       switch (error.name) {
+        //         case "RangeError":
+        //           // The time is less than 0 or greater than the video's duration
+        //           break;
+        //         default:
+        //           // Some other error occurred
+        //           break;
+        //       }
+        //     });
+        // });
       }
     }
   }, [currentLessonStatus.timeStamp, loadingCourse]);
   useEffect(() => {
     updateTimestamp(timeStamp);
   }, [updateTimestamp, timeStamp]);
+  useEffect(() => {
+    window.setInterval(function () {
+      if (playing) {
+        setSimulatedTime(simulatedTime + 1);
+      }
+    }, 1000);
+  }, [playing]);
   return (
     <>
       <Head>
@@ -270,7 +307,7 @@ const router = useRouter()
       <CourseCompletedModal
         isOpen={openCourseCompleteModal}
         onClose={() => {
-          router.push(`/course/${course.id}`)
+          router.push(`/course/${course.id}`);
           // setOpenCourseCompleteModal(false);
         }}
         courseTitle={course.title}
