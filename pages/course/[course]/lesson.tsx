@@ -15,7 +15,7 @@ import TestModal from "../../../components/organisms/test-modal";
 import PrivatePage from "../../../components/templates/private-route";
 import CourseCompletedModal from "../../../components/molecules/course-complete-modal";
 import { useCallback, useEffect, useState } from "react";
-import Player, { TimeEvent } from "@vimeo/player";
+import Player from "@vimeo/player";
 import { saveTimeStamp } from "../../../services/course";
 import { useRouter } from "next/router";
 
@@ -74,11 +74,10 @@ const LessonPage: NextPage = () => {
     },
     [breaker, course.lessons, currentLesson]
   );
-
-  const [playing, setPlaying] = useState(false);
-  const [simulatedTime, setSimulatedTime] = useState(0);
   useEffect(() => {
-    if (!loadingCourse) {
+    console.log("ff", loadingContent);
+
+    if (!loadingCourse && !loadingContent) {
       const iframe = document.querySelector(
         "#video-iframe"
       ) as HTMLIFrameElement;
@@ -93,43 +92,37 @@ const LessonPage: NextPage = () => {
         player.on("timeupdate", (data) => {
           setTimeStamp(data.seconds);
         });
-        player.on("play", function (e) {
-          setPlaying(true);
-        });
+        var timeWatched = 0;
+        console.log(currentLessonStatus);
 
-        player.on("pause", function (e) {
-          setPlaying(false);
-        });
-        // player.on("seeked", (data) => {
-        //   console.log("simulatedTime:", simulatedTime);
+        if (currentLessonStatus.videoStatus !== "Completed") {
+          console.log("corrrect");
 
-        //   player
-        //     .setCurrentTime(simulatedTime - 5)
-        //     .then(function (seconds) {})
-        //     .catch(function (error) {
-        //       switch (error.name) {
-        //         case "RangeError":
-        //           // The time is less than 0 or greater than the video's duration
-        //           break;
-        //         default:
-        //           // Some other error occurred
-        //           break;
-        //       }
-        //     });
-        // });
+          player.on("timeupdate", function (data) {
+            if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
+              timeWatched = data.seconds;
+              /*This prevents seeking. The reason this is needed
+        is because when the user tries to seek, a time update is called which results in the
+        watchedTime becoming the same as the seeked time before it goes into the function 'seeked' (below) resulting
+        in both values being the same. We need to get the most recent time update before the seek.
+        (data.seconds - 1 < currentTime) basically if you seek, this will return false and the current time wont get updated
+        (data.seconds > currentTime) if they seek backwards then dont update current time so they can seek back to where they were before*/
+            }
+          });
+          let notFirstSeek = false;
+          player.on("seeked", function (data) {
+            if (notFirstSeek && timeWatched < data.seconds) {
+              player.setCurrentTime(timeWatched);
+            }
+            notFirstSeek = true;
+          });
+        }
       }
     }
-  }, [currentLessonStatus.timeStamp, loadingCourse]);
+  }, [currentLessonStatus, loadingCourse, loadingContent]);
   useEffect(() => {
     updateTimestamp(timeStamp);
   }, [updateTimestamp, timeStamp]);
-  useEffect(() => {
-    window.setInterval(function () {
-      if (playing) {
-        setSimulatedTime(simulatedTime + 1);
-      }
-    }, 1000);
-  }, [playing]);
   return (
     <>
       <Head>

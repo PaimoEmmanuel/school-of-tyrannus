@@ -12,7 +12,7 @@ const useChangeLesson = (
   const [currentLesson, setCurrentLesson] = useState<[number, number]>([0, 0]);
   const [isFirstContent, setIsFirstContent] = useState(true);
   const [isLastContent, setIsLastContent] = useState(false);
-  const [loadingContent, setLoadingContent] = useState(false);
+  const [loadingContent, setLoadingContent] = useState(true);
   const [nextDisabled, setNextDisabled] = useState(false);
   const [currentLessonStatus, setCurrentLessonStatus] = useState({
     videoStatus: "",
@@ -33,6 +33,7 @@ const useChangeLesson = (
         quizStatus: res.data.quizStatus,
         timeStamp: res.data.timeStamp,
       });
+      setLoadingContent(false);
     });
     //   When it is the first lesson
     if (currentLesson[0] === 0 && currentLesson[1] === 0) {

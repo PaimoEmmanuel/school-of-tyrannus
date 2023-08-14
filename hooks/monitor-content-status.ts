@@ -1,6 +1,5 @@
 import { useToast } from "@chakra-ui/react";
 import Player from "@vimeo/player";
-import { timeStamp } from "console";
 import { useEffect, useState } from "react";
 import {
   completeCourse,
