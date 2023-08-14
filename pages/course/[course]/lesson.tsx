@@ -75,14 +75,20 @@ const LessonPage: NextPage = () => {
     [breaker, course.lessons, currentLesson]
   );
   useEffect(() => {
-    console.log("ff", loadingContent);
-
     if (!loadingCourse && !loadingContent) {
       const iframe = document.querySelector(
         "#video-iframe"
       ) as HTMLIFrameElement;
       if (iframe) {
         const player = new Player(iframe);
+        player.on("bufferend", (data) => {
+          player
+            .play()
+            .then(() => {})
+            .catch((err) => {
+              console.log(err);
+            });
+        });
         player
           .setCurrentTime(currentLessonStatus.timeStamp)
           .then((sec) => {})
@@ -93,11 +99,7 @@ const LessonPage: NextPage = () => {
           setTimeStamp(data.seconds);
         });
         var timeWatched = 0;
-        console.log(currentLessonStatus);
-
         if (currentLessonStatus.videoStatus !== "Completed") {
-          console.log("corrrect");
-
           player.on("timeupdate", function (data) {
             if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
               timeWatched = data.seconds;
