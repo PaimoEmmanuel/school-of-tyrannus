@@ -75,7 +75,7 @@ const TestModal: React.FunctionComponent<ITestModalProps> = ({
               settestLoading(true);
               takeQuiz(id).then((res) => {
                 settestLoading(false);
-                window.open(testLink, "_blank");
+                window.open(testLink, "_blank", "popup=1");
                 goToNext();
                 onTestModalCLose();
               });
