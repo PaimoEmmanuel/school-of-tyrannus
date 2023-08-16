@@ -1,36 +1,12 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CourseContext } from "../context/course-context";
 import { getCourseDetails } from "../services/course";
 import { ICourseLessons } from "../types/course";
 import useEnrolledForCourse from "./enrolled-course";
 
-const defaultCourse: ICourseLessons = {
-  title: "",
-  id: "",
-  lessons: [
-    {
-      title: "",
-      contents: [
-        {
-          title: "",
-          hasQuiz: true,
-          quizUrl: "",
-          videoRetrievalId: "",
-          id: "",
-          userStatus: {
-            contentStatus: "",
-            quizStatus: "",
-          },
-          resources: [{ title: "", link: "" }],
-          overview: "",
-          manual: "",
-        },
-      ],
-    },
-  ],
-};
 const useFetchCourse = () => {
-  const [course, setCourse] = useState<ICourseLessons>(defaultCourse);
+  const { setCourseDetails } = useContext(CourseContext);
   const [loadingCourse, setLoadingCourse] = useState(true);
   const router = useRouter();
   const query = router.query;
@@ -46,29 +22,15 @@ const useFetchCourse = () => {
         return;
       }
       getCourseDetails(String(query.course)).then((res) => {
-        setCourse(res.data);
+        console.log("course lessons: ", res.data);
+
+        setCourseDetails(res.data);
         setLoadingCourse(false);
       });
     }
-  }, [query, loadingEnrolled, shouldGoToLesson, router]);
+  }, [query, loadingEnrolled, shouldGoToLesson, router, setCourseDetails]);
 
-  const setContentToCompleted = (lesson: [number, number]) => {
-    const newCourseObject = { ...course };
-    if (newCourseObject.lessons[lesson[0]].contents[lesson[1]].hasQuiz) {
-      newCourseObject.lessons[lesson[0]].contents[
-        lesson[1]
-      ].userStatus.quizStatus = "Completed";
-      newCourseObject.lessons[lesson[0]].contents[
-        lesson[1]
-      ].userStatus.contentStatus = "Completed";
-    } else {
-      newCourseObject.lessons[lesson[0]].contents[
-        lesson[1]
-      ].userStatus.contentStatus = "Completed";
-    }
-    setCourse({ ...newCourseObject });
-  };
-  return { course, loadingCourse, setContentToCompleted };
+  return { loadingCourse };
 };
 
 export default useFetchCourse;

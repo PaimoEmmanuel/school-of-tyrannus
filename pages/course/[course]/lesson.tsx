@@ -14,123 +14,37 @@ import LessonManual from "../../../components/molecules/lesson-manual";
 import TestModal from "../../../components/organisms/test-modal";
 import PrivatePage from "../../../components/templates/private-route";
 import CourseCompletedModal from "../../../components/molecules/course-complete-modal";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Player from "@vimeo/player";
 import { saveTimeStamp } from "../../../services/course";
 import { useRouter } from "next/router";
+import { CourseContext } from "../../../context/course-context";
 
 const LessonPage: NextPage = () => {
-  const { loadingCourse, course, setContentToCompleted } = useFetchCourse();
   const {
+    courseDetails,
     currentLesson,
-    goToPrev,
-    goToNext,
+    currentLessonIndex,
     isFirstContent,
     isLastContent,
-    goToLesson,
-    loadingContent,
-    setLoadContent,
-    currentLessonStatus,
-  } = useChangeLesson(loadingCourse, course.lessons, setContentToCompleted);
+  } = useContext(CourseContext);
 
-  const router = useRouter();
+  const { loadingCourse } = useFetchCourse();
+  const { goToPrev, goToNext, goToLesson } = useChangeLesson();
 
   const {
     testModalOpen,
     setTestmodalOpen,
     openCourseCompleteModal,
-    setOpenCourseCompleteModal,
-  } = useMonitorContentStatus(
-    loadingCourse,
-    course,
-    currentLesson,
-    // currentLessonStatus.videoStatus,
-    // currentLessonStatus.timeStamp,
-    loadingContent,
-    setLoadContent,
-    goToNext
-  );
-  const [timeStamp, setTimeStamp] = useState(0);
+    loadContent,
+    handleTakeQuiz,
+  } = useMonitorContentStatus(loadingCourse, goToNext);
   const toast = useToast();
-  let breaker = 0;
 
-  // const updateTimestamp = useCallback(
-  //   (time: number) => {
-  //     breaker++;
-  //     if (breaker > 50) {
-  //       saveTimeStamp(
-  //         Number(
-  //           course.lessons[currentLesson[0]].contents[currentLesson[1]].id
-  //         ),
-  //         time
-  //       )
-  //         .then((res) => {
-  //           // console.log(res.data);
-  //         })
-  //         .catch((err) => {});
-  //       breaker = 0;
-  //     }
-  //     return;
-  //   },
-  //   [breaker, course.lessons, currentLesson]
-  // );
-  // useEffect(() => {
-  //   if (!loadingCourse && !loadingContent) {
-  //     const iframe = document.querySelector(
-  //       "#video-iframe"
-  //     ) as HTMLIFrameElement;
-  //     if (iframe) {
-  //       const player = new Player(iframe);
-  //       player.on("bufferend", (data) => {
-  //         player
-  //           .play()
-  //           .then(() => {})
-  //           .catch((err) => {
-  //             console.log(err);
-  //           });
-  //       });
-  //       player
-  //         .setCurrentTime(currentLessonStatus.timeStamp)
-  //         .then((sec) => {})
-  //         .catch((err) => {
-  //           player.setCurrentTime(0);
-  //         });
-  //       player.on("timeupdate", (data) => {
-  //         setTimeStamp(data.seconds);
-  //       });
-  //       var timeWatched = 0;
-  //       if (currentLessonStatus.videoStatus !== "Completed") {
-  //         player.on("timeupdate", function (data) {
-  //           if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
-  //             timeWatched = data.seconds;
-  //             /*This prevents seeking. The reason this is needed
-  //       is because when the user tries to seek, a time update is called which results in the
-  //       watchedTime becoming the same as the seeked time before it goes into the function 'seeked' (below) resulting
-  //       in both values being the same. We need to get the most recent time update before the seek.
-  //       (data.seconds - 1 < currentTime) basically if you seek, this will return false and the current time wont get updated
-  //       (data.seconds > currentTime) if they seek backwards then dont update current time so they can seek back to where they were before*/
-  //           }
-  //         });
-  //         let notFirstSeek = false;
-  //         player.on("seeked", function (data) {
-  //           if (!notFirstSeek) {
-  //             timeWatched = data.seconds;
-  //           } else if (timeWatched < data.seconds) {
-  //             player.setCurrentTime(timeWatched);
-  //           }
-  //           notFirstSeek = true;
-  //         });
-  //       }
-  //     }
-  //   }
-  // }, [currentLessonStatus, loadingCourse, loadingContent]);
-  // useEffect(() => {
-  //   updateTimestamp(timeStamp);
-  // }, [updateTimestamp, timeStamp]);
   return (
     <>
       <Head>
-        <title>{course.title} - School of Tyrannus</title>
+        <title>{courseDetails.title} - School of Tyrannus</title>
       </Head>
       <Box pos="relative">
         <NavigationBar />
@@ -145,10 +59,7 @@ const LessonPage: NextPage = () => {
             >
               <LessonSideBar
                 onTakeTest={() => {
-                  if (
-                    course.lessons[currentLesson[0]].contents[currentLesson[1]]
-                      .userStatus.contentStatus === "Completed"
-                  ) {
+                  if (currentLesson.userStatus.contentStatus === "Completed") {
                     setTestmodalOpen(true);
                   } else {
                     toast({
@@ -159,8 +70,8 @@ const LessonPage: NextPage = () => {
                     });
                   }
                 }}
-                currentLesson={currentLesson}
-                lessons={course.lessons}
+                currentLessonIndex={currentLessonIndex}
+                lessons={courseDetails.lessons}
                 goToLesson={goToLesson}
               />
             </Skeleton>
@@ -171,7 +82,7 @@ const LessonPage: NextPage = () => {
                 fontSize="20px"
                 fontWeight="600"
               >
-                {course.title}
+                {courseDetails.title}
               </Text>
               <Flex
                 css={{
@@ -185,7 +96,7 @@ const LessonPage: NextPage = () => {
                 gap={{ base: "0", md: "24px" }}
               >
                 <Box pos="relative" minW="calc(100% - 456px)" w="100%">
-                  {loadingContent ? (
+                  {loadContent ? (
                     <Flex
                       h="500px"
                       w="100%"
@@ -197,21 +108,13 @@ const LessonPage: NextPage = () => {
                   ) : (
                     <Skeleton
                       isLoaded={
-                        !loadingCourse &&
-                        !!course.lessons[currentLesson[0]].contents[
-                          currentLesson[1]
-                        ].videoRetrievalId
+                        !loadingCourse && !!currentLesson.videoRetrievalId
                       }
                     >
                       <Box pos="relative" padding="56.5% 0 0 0" role="group">
                         <iframe
                           id="video-iframe"
-                          // srcDoc={course.lessons[0].contents[0].videoRetrievalId}
-                          src={`${
-                            course.lessons[currentLesson[0]].contents[
-                              currentLesson[1]
-                            ].videoRetrievalId
-                          }&autoplay=1&controls=1`}
+                          src={`${currentLesson.videoRetrievalId}&autoplay=1&controls=1`}
                           frameBorder="0"
                           allow="autoplay; fullscreen; picture-in-picture"
                           allowFullScreen
@@ -238,33 +141,15 @@ const LessonPage: NextPage = () => {
                       mb="70px"
                     >
                       <LessonTab
-                        resources={
-                          course.lessons[currentLesson[0]].contents[
-                            currentLesson[1]
-                          ].resources
-                        }
-                        overview={
-                          course.lessons[currentLesson[0]].contents[
-                            currentLesson[1]
-                          ].overview
-                        }
-                        manual={
-                          course.lessons[currentLesson[0]].contents[
-                            currentLesson[1]
-                          ].manual
-                        }
+                        resources={currentLesson.resources}
+                        overview={currentLesson.overview}
+                        manual={currentLesson.manual}
                       />
                     </Box>
                   </Skeleton>
                 </Box>
                 <Skeleton isLoaded={!loadingCourse}>
-                  <LessonManual
-                    manual={
-                      course.lessons[currentLesson[0]].contents[
-                        currentLesson[1]
-                      ].manual
-                    }
-                  />
+                  <LessonManual manual={currentLesson.manual} />
                 </Skeleton>
               </Flex>
 
@@ -274,40 +159,29 @@ const LessonPage: NextPage = () => {
                   goToPrev={goToPrev}
                   isFirstContent={isFirstContent}
                   isLastContent={isLastContent}
-                  title={
-                    course.lessons[currentLesson[0]].contents[currentLesson[1]]
-                      .title
-                  }
-                  index={currentLesson[1]}
+                  title={currentLesson.title}
+                  index={currentLessonIndex[1]}
                 />
               </Skeleton>
             </Box>
           </Flex>
         </Box>
       </Box>
-      {course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz && (
+      {currentLesson.hasQuiz && (
         <TestModal
-          testLink={
-            course.lessons[currentLesson[0]].contents[currentLesson[1]].quizUrl
-          }
-          id={course.lessons[currentLesson[0]].contents[currentLesson[1]].id}
-          title={
-            course.lessons[currentLesson[0]].contents[currentLesson[1]].title
-          }
-          onTestModalCLose={() => {
+          closeModal={() => {
             setTestmodalOpen(false);
           }}
           isOpen={testModalOpen}
-          goToNext={goToNext}
+          handleTakeQuiz={() => {
+            handleTakeQuiz();
+          }}
         />
       )}
       <CourseCompletedModal
         isOpen={openCourseCompleteModal}
-        onClose={() => {
-          router.push(`/course/${course.id}`);
-          // setOpenCourseCompleteModal(false);
-        }}
-        courseTitle={course.title}
+        courseId={courseDetails.id}
+        courseTitle={courseDetails.title}
       />
     </>
   );

@@ -10,46 +10,36 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { takeQuiz } from "../../services/course";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { CourseContext } from "../../context/course-context";
+import useLessonHelpers from "../../hooks/lesson-helpers";
+import { completeCourse, takeQuiz } from "../../services/course";
 import TestModalCloseButton from "../molecules/test-modal-close-button";
 
 interface ITestModalProps {
-  title: string;
-  id: string;
-  testLink: string;
   isOpen: boolean;
-  onTestModalCLose: () => void;
-  goToNext: () => void;
+  closeModal: () => void;
+  handleTakeQuiz: () => void;
 }
 
 const TestModal: React.FunctionComponent<ITestModalProps> = ({
   isOpen,
-  onTestModalCLose,
-  title,
-  id,
-  testLink,
-  goToNext,
+  closeModal,
+  handleTakeQuiz,
 }) => {
-  const [testLoading, settestLoading] = useState(false);
+  const { courseDetails, currentLessonIndex, currentLesson } =
+    useContext(CourseContext);
+
   return (
-    <Modal
-      blockScrollOnMount={false}
-      isOpen={isOpen}
-      onClose={onTestModalCLose}
-    >
+    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={closeModal}>
       <ModalOverlay background="rgba(0, 0, 0, 0.5)" />
-      <ModalContent
-        top="10%"
-        // transform="translateY(-50%)"
-        maxW="458px"
-        p="48px 60px"
-      >
+      <ModalContent top="10%" maxW="458px" p="48px 60px">
         <ModalBody p="0" pos="relative">
-          <TestModalCloseButton onModalCLose={onTestModalCLose} />
+          <TestModalCloseButton onModalCLose={closeModal} />
           <Text fontSize="24px" fontWeight="600" mb="1rem">
-            {title}
+            {currentLesson.title}
           </Text>
           <Text color="#5F5F5F">
             You have finished this lesson. Please, take the lesson test to move
@@ -72,22 +62,16 @@ const TestModal: React.FunctionComponent<ITestModalProps> = ({
               color: "text.orange",
             }}
             onClick={() => {
-              settestLoading(true);
-              window.open(testLink, "_blank", "popup=1");
-              takeQuiz(id).then((res) => {
-                settestLoading(false);
-                goToNext();
-                onTestModalCLose();
-              });
+              handleTakeQuiz();
             }}
           >
-            {testLoading ? "Loading..." : " TAKE TEST"}
+            TAKE TEST
           </Button>
         </ModalBody>
 
         <ModalFooter p="0">
           <Button
-            onClick={onTestModalCLose}
+            onClick={closeModal}
             w="100%"
             bgColor="transparent"
             border="2px solid #000000"

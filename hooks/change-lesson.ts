@@ -1,192 +1,91 @@
 import { useToast } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CourseContext } from "../context/course-context";
 import { getContentTakenStatus } from "../services/course";
 import { ICourseLessons } from "../types/course";
+import useLessonHelpers from "./lesson-helpers";
 
-const useChangeLesson = (
-  lessonsLoading: boolean,
-  lessons: ICourseLessons["lessons"],
-  setContentToCompleted: (lesson: [number, number]) => void
-) => {
-  // First value for changing lesson, second value for changing the content/video
-  const [currentLesson, setCurrentLesson] = useState<[number, number]>([0, 0]);
-  const [isFirstContent, setIsFirstContent] = useState(true);
-  const [isLastContent, setIsLastContent] = useState(false);
-  const [loadingContent, setLoadingContent] = useState(true);
-  const [nextDisabled, setNextDisabled] = useState(false);
-  const [currentLessonStatus, setCurrentLessonStatus] = useState({
-    videoStatus: "",
-    quizStatus: "",
-    timeStamp: 0,
-  });
+const useChangeLesson = () => {
+  const {
+    courseDetails,
+    currentLesson,
+    currentLessonIndex,
+    setCurrentLessonIndex,
+  } = useContext(CourseContext);
+  const { getPreviousLesson } = useLessonHelpers();
   const toast = useToast();
 
-  useEffect(() => {
-    if (lessonsLoading) {
-      return;
-    }
-    getContentTakenStatus(
-      String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
-    ).then((res) => {
-      setCurrentLessonStatus({
-        videoStatus: res.data.contentStatus,
-        quizStatus: res.data.quizStatus,
-        timeStamp: res.data.timeStamp,
-      });
-      setLoadingContent(false);
+  const triggerToast = () => {
+    toast({
+      title: "Can't proceed.",
+      description:
+        "Finish current lesson and take test to proceed to the next.",
+      status: "warning",
+      duration: 5000,
+      isClosable: true,
     });
-    //   When it is the first lesson
-    if (currentLesson[0] === 0 && currentLesson[1] === 0) {
-      setIsFirstContent(true);
-    } else {
-      setIsFirstContent(false);
-    }
-    // When it is the last lesson
+  };
+
+  const goToLesson = (lessonIndex: [number, number]) => {
     if (
-      currentLesson[0] === lessons.length - 1 &&
-      currentLesson[1] === lessons[lessons.length - 1].contents.length - 1
+      getPreviousLesson(lessonIndex).hasQuiz &&
+      getPreviousLesson(lessonIndex).userStatus.quizStatus !== "Completed"
     ) {
-      setIsLastContent(true);
+      triggerToast();
+    } else if (
+      getPreviousLesson(lessonIndex).userStatus.contentStatus !== "Completed"
+    ) {
+      triggerToast();
     } else {
-      setIsLastContent(false);
+      setCurrentLessonIndex(lessonIndex);
     }
-  }, [currentLesson, lessons, lessonsLoading]);
-
-  useEffect(() => {
-    if (nextDisabled) {
-      toast({
-        title: "Can't proceed.",
-        description: "Finish current lesson and take test to proceed to the next.",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  }, [nextDisabled, toast]);
-
-  const goToLesson = (lesson: [number, number]) => {
-    setNextDisabled(false);
-    setLoadingContent(true);
-    const getPreviousLesson = () => {
-      let prevLesson = [0, 0];
-      if (lesson[0] < 1 && lesson[1] < 1) {
-      } else if (lesson[0] < 1 && lesson[1] >= 1) {
-        prevLesson[1] = lesson[1] - 1;
-      } else if (lesson[0] >= 1 && lesson[1] < 1) {
-        prevLesson[0] = lesson[0] - 1;
-        prevLesson[1] = lessons[prevLesson[0]].contents.length - 1;
-      } else if (lesson[0] >= 1 && lesson[1] > 1) {
-        prevLesson[0] = lesson[0];
-        prevLesson[1] = lesson[1] - 1;
-      }
-      // console.log("prevLesson: ", prevLesson, lesson);
-      return prevLesson;
-    };
-    const prevLesson = getPreviousLesson();
-    const prevLessonId = Number(
-      lessons[prevLesson[0]].contents[prevLesson[1]].id
-    );
-    getContentTakenStatus(String(prevLessonId))
-      .then((res) => {
-        if (
-          lessons[lesson[0]].contents[lesson[1]].hasQuiz &&
-          res.data.quizStatus !== "Completed"
-        ) {
-          setNextDisabled(true);
-          setLoadingContent(false);
-        } else if (res.data.contentStatus !== "Completed") {
-          setNextDisabled(true);
-          setLoadingContent(false);
-        } else {
-          setCurrentLesson(lesson);
-          setLoadingContent(false);
-        }
-      })
-      .catch((err) => {
-        toast({
-          description: "An error occurred, please refresh and try again.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        setLoadingContent(false);
-      });
   };
 
   const goToNext = () => {
-    setNextDisabled(false);
-    setLoadingContent(true);
-    getContentTakenStatus(
-      String(lessons[currentLesson[0]].contents[currentLesson[1]].id)
-    )
-      .then((res) => {
-        if (
-          lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
-          res.data.quizStatus !== "Completed"
-        ) {
-          setNextDisabled(true);
-          return setLoadingContent(false);
-        } else if (res.data.contentStatus !== "Completed") {
-          setNextDisabled(true);
-          return setLoadingContent(false);
-        }
-        if (currentLesson[0] < lessons.length - 1) {
-          setContentToCompleted(currentLesson);
-          if (
-            currentLesson[1] <
-            lessons[currentLesson[0]].contents.length - 1
-          ) {
-            setCurrentLesson([currentLesson[0], currentLesson[1] + 1]);
-            return setLoadingContent(false);
-          }
-          if (
-            currentLesson[1] ===
-            lessons[currentLesson[0]].contents.length - 1
-          ) {
-            setCurrentLesson([currentLesson[0] + 1, 0]);
-            return setLoadingContent(false);
-          }
-        }
-        return;
-      })
-      .catch((err) => {
-        toast({
-          description: "An error occurred, please refresh and try again.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        setLoadingContent(false);
-      });
-  };
-  const setLoadContent = (value: boolean) => {
-    setLoadingContent(value);
-  };
-  const goToPrev = () => {
-    if (currentLesson[0] === 0 && currentLesson[1] === 0) {
+    if (
+      currentLesson.hasQuiz &&
+      currentLesson.userStatus.quizStatus !== "Completed"
+    ) {
+      return triggerToast();
+    } else if (currentLesson.userStatus.contentStatus !== "Completed") {
+      return triggerToast();
+    }
+    // Update current lesson to next lesson
+    if (currentLessonIndex[0] === courseDetails.lessons.length - 1) {
       return;
+    } else if (
+      currentLessonIndex[1] <
+      courseDetails.lessons[currentLessonIndex[0]].contents.length - 1
+    ) {
+      setCurrentLessonIndex([currentLessonIndex[0], currentLessonIndex[1] + 1]);
+    } else if (
+      currentLessonIndex[1] ===
+      courseDetails.lessons[currentLessonIndex[0]].contents.length - 1
+    ) {
+      return setCurrentLessonIndex([currentLessonIndex[0] + 1, 0]);
     }
-    if (currentLesson[1] > 0) {
-      return setCurrentLesson([currentLesson[0], currentLesson[1] - 1]);
-    }
-    if (currentLesson[1] === 0) {
-      return setCurrentLesson([
-        currentLesson[0] - 1,
-        lessons[currentLesson[0] - 1].contents.length - 1,
+  };
+
+  const goToPrev = () => {
+    if (currentLessonIndex[0] === 0 && currentLessonIndex[1] === 0) {
+      return;
+    } else if (currentLessonIndex[1] > 0) {
+      return setCurrentLessonIndex([
+        currentLessonIndex[0],
+        currentLessonIndex[1] - 1,
+      ]);
+    } else if (currentLessonIndex[1] === 0 && currentLessonIndex[0] > 0) {
+      return setCurrentLessonIndex([
+        currentLessonIndex[0] - 1,
+        courseDetails.lessons[currentLessonIndex[0] - 1].contents.length - 1,
       ]);
     }
   };
 
   return {
-    currentLesson,
     goToPrev,
     goToNext,
-    isFirstContent,
-    isLastContent,
     goToLesson,
-    loadingContent,
-    setLoadContent,
-    currentLessonStatus,
   };
 };
 

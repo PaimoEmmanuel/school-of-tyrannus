@@ -44,6 +44,7 @@ export interface ICourseLessons {
   id: string;
   lessons: {
     title: string;
+    id: number;
     contents: {
       title: string;
       hasQuiz: boolean;
@@ -53,6 +54,7 @@ export interface ICourseLessons {
       userStatus: {
         contentStatus: string;
         quizStatus: string;
+        timeStamp: number;
       };
       resources: { title: string; link: string }[];
       overview: string;

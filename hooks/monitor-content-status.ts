@@ -1,52 +1,49 @@
 import { useToast } from "@chakra-ui/react";
 import Player from "@vimeo/player";
-import { useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { CourseContext } from "../context/course-context";
 import {
   completeCourse,
-  finishContent,
+  finishVideoContent,
   startContent,
+  takeQuiz,
 } from "../services/course";
 import { ICourseLessons } from "../types/course";
+import useLessonHelpers from "./lesson-helpers";
 
-interface course {
-  title: string;
-  id: string;
-  lessons: {
-    title: string;
-    contents: { title: string; videoRetrievalId: string; id: string }[];
-  }[];
-}
 const useMonitorContentStatus = (
   loadingCourse: boolean,
-  course: ICourseLessons,
-  currentLesson: number[],
-  loadingContent: boolean,
-  setLoadContent: (value: boolean) => void,
   goToNext: () => void
 ) => {
+  const { courseDetails, currentLessonIndex, currentLesson } =
+    useContext(CourseContext);
+  const { setVideoToCompleted, setQuizToCompleted } = useLessonHelpers();
   const [testModalOpen, setTestmodalOpen] = useState(false);
   const [openCourseCompleteModal, setOpenCourseCompleteModal] = useState(false);
   const [lastCourseContent, setLastCourseContent] = useState(false);
+  const [loadContent, setLoadContent] = useState(false);
+  const [testLoading, setTestLoading] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
     if (
-      course.lessons.length - 1 === currentLesson[0] &&
-      course.lessons[currentLesson[0]].contents.length - 1 === currentLesson[1]
+      courseDetails.lessons.length - 1 === currentLessonIndex[0] &&
+      courseDetails.lessons[currentLessonIndex[0]].contents.length - 1 ===
+        currentLessonIndex[1]
     ) {
       setLastCourseContent(true);
     } else {
       setLastCourseContent(false);
     }
-  }, [course, currentLesson]);
+  }, [courseDetails, currentLessonIndex]);
   useEffect(() => {
     setTestmodalOpen(false);
-  }, [currentLesson]);
+  }, [currentLessonIndex]);
 
   // Call completeCourse endpoint if it is the last content of the last lesson
-  const handleCourseCompleted = () => {
+  const handleCourseCompleted = useCallback(() => {
     setLoadContent(true);
-    completeCourse(course.id)
+    completeCourse(courseDetails.id)
       .then((res) => {
         setLoadContent(false);
         setOpenCourseCompleteModal(true);
@@ -59,16 +56,14 @@ const useMonitorContentStatus = (
           isClosable: true,
         });
       });
-  };
+  }, [courseDetails.id, toast]);
 
-  const handleFinishContent = () => {
+  const handleFinishContent = useCallback(() => {
     if (
-      (course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
-        course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus
-          .quizStatus === "Completed") ||
-      (!course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
-        course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus
-          .contentStatus === "Completed")
+      (currentLesson.hasQuiz &&
+        currentLesson.userStatus.quizStatus === "Completed") ||
+      (!currentLesson.hasQuiz &&
+        currentLesson.userStatus.contentStatus === "Completed")
     ) {
       if (lastCourseContent) {
         return setOpenCourseCompleteModal(true);
@@ -76,16 +71,11 @@ const useMonitorContentStatus = (
       return goToNext();
     }
     setLoadContent(true);
-    finishContent(
-      course.lessons[currentLesson[0]].contents[currentLesson[1]].id
-    )
+    finishVideoContent(currentLesson.id)
       .then((res) => {
+        setVideoToCompleted(currentLessonIndex);
         setLoadContent(false);
-        if (
-          course.lessons[currentLesson[0]].contents[currentLesson[1]].hasQuiz &&
-          course.lessons[currentLesson[0]].contents[currentLesson[1]].userStatus
-            .quizStatus !== "Completed"
-        ) {
+        if (currentLesson.hasQuiz) {
           setTestmodalOpen(true);
         } else if (lastCourseContent) {
           handleCourseCompleted();
@@ -101,8 +91,28 @@ const useMonitorContentStatus = (
           isClosable: true,
         });
       });
-  };
+  }, [
+    currentLesson,
+    currentLessonIndex,
+    goToNext,
+    handleCourseCompleted,
+    lastCourseContent,
+    setVideoToCompleted,
+    toast,
+  ]);
 
+  const handleTakeQuiz = () => {
+    window.open(currentLesson.quizUrl, "_blank", "popup=1");
+    takeQuiz(currentLesson.id).then((res) => {
+      setTestLoading(false);
+      setQuizToCompleted(currentLessonIndex);
+      if (lastCourseContent) {
+        handleCourseCompleted();
+      } else {
+        goToNext();
+      }
+    });
+  };
   useEffect(() => {
     if (loadingCourse) {
       return;
@@ -112,9 +122,7 @@ const useMonitorContentStatus = (
     if (iframe) {
       const player = new Player(iframe);
       player.on("play", () => {
-        startContent(
-          course.lessons[currentLesson[0]].contents[currentLesson[1]].id
-        )
+        startContent(currentLesson.id)
           .then((res) => {
             player.off("play");
           })
@@ -123,11 +131,15 @@ const useMonitorContentStatus = (
       let breaker = 10;
       player.getDuration().then(function (duration) {
         player.on("timeupdate", (data) => {
+          /*
+           *Call finishVideoContent endpoint roughly every 2.5s when 80% of the content has been watched.
+           *This is to increase chances of a successful API call so user can proceed to  the next lesson.
+           */
           if (data.seconds > duration * 0.8 && breaker % 10 === 0) {
-            finishContent(
-              course.lessons[currentLesson[0]].contents[currentLesson[1]].id
-            )
-              .then((res) => {})
+            finishVideoContent(currentLesson.id)
+              .then((res) => {
+                setVideoToCompleted(currentLessonIndex);
+              })
               .catch((err) => {});
           }
           breaker++;
@@ -135,24 +147,23 @@ const useMonitorContentStatus = (
       });
       player.on("ended", () => {
         handleFinishContent();
-
         player.off("ended");
       });
     }
   }, [
-    // course.id,
-    // course.lessons,
-    currentLesson,
-    // goToNext,
-    loadingContent,
+    currentLesson.id,
+    currentLessonIndex,
+    handleFinishContent,
     loadingCourse,
-    // toast,
+    setVideoToCompleted,
   ]);
   return {
     testModalOpen,
     setTestmodalOpen,
     openCourseCompleteModal,
     setOpenCourseCompleteModal,
+    loadContent,
+    handleTakeQuiz,
   };
 };
 export default useMonitorContentStatus;

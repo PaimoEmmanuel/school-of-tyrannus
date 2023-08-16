@@ -47,7 +47,7 @@ export const saveTimeStamp = (contentId: number, timeStamp: number) =>
     }
   );
 
-export const finishContent = (contentId: string) => {
+export const finishVideoContent = (contentId: string) => {
   return request.get(`LandingPage/FinishContent/${contentId}`, {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
