@@ -120,15 +120,17 @@ const useMonitorContentStatus = (
           })
           .catch((err) => {});
       });
+      let breaker = 10;
       player.getDuration().then(function (duration) {
         player.on("timeupdate", (data) => {
-          if (data.seconds > duration * 0.8) {
+          if (data.seconds > duration * 0.8 && breaker % 10 === 0) {
             finishContent(
               course.lessons[currentLesson[0]].contents[currentLesson[1]].id
             )
               .then((res) => {})
               .catch((err) => {});
           }
+          breaker++;
         });
       });
       player.on("ended", () => {

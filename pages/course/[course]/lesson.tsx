@@ -54,77 +54,79 @@ const LessonPage: NextPage = () => {
   const toast = useToast();
   let breaker = 0;
 
-  const updateTimestamp = useCallback(
-    (time: number) => {
-      breaker++;
-      if (breaker > 50) {
-        saveTimeStamp(
-          Number(
-            course.lessons[currentLesson[0]].contents[currentLesson[1]].id
-          ),
-          time
-        )
-          .then((res) => {
-            // console.log(res.data);
-          })
-          .catch((err) => {});
-        breaker = 0;
-      }
-      return;
-    },
-    [breaker, course.lessons, currentLesson]
-  );
-  useEffect(() => {
-    if (!loadingCourse && !loadingContent) {
-      const iframe = document.querySelector(
-        "#video-iframe"
-      ) as HTMLIFrameElement;
-      if (iframe) {
-        const player = new Player(iframe);
-        player.on("bufferend", (data) => {
-          player
-            .play()
-            .then(() => {})
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-        player
-          .setCurrentTime(currentLessonStatus.timeStamp)
-          .then((sec) => {})
-          .catch((err) => {
-            player.setCurrentTime(0);
-          });
-        player.on("timeupdate", (data) => {
-          setTimeStamp(data.seconds);
-        });
-        var timeWatched = 0;
-        if (currentLessonStatus.videoStatus !== "Completed") {
-          player.on("timeupdate", function (data) {
-            if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
-              timeWatched = data.seconds;
-              /*This prevents seeking. The reason this is needed
-        is because when the user tries to seek, a time update is called which results in the
-        watchedTime becoming the same as the seeked time before it goes into the function 'seeked' (below) resulting
-        in both values being the same. We need to get the most recent time update before the seek.
-        (data.seconds - 1 < currentTime) basically if you seek, this will return false and the current time wont get updated
-        (data.seconds > currentTime) if they seek backwards then dont update current time so they can seek back to where they were before*/
-            }
-          });
-          let notFirstSeek = false;
-          player.on("seeked", function (data) {
-            if (notFirstSeek && timeWatched < data.seconds) {
-              player.setCurrentTime(timeWatched);
-            }
-            notFirstSeek = true;
-          });
-        }
-      }
-    }
-  }, [currentLessonStatus, loadingCourse, loadingContent]);
-  useEffect(() => {
-    updateTimestamp(timeStamp);
-  }, [updateTimestamp, timeStamp]);
+  // const updateTimestamp = useCallback(
+  //   (time: number) => {
+  //     breaker++;
+  //     if (breaker > 50) {
+  //       saveTimeStamp(
+  //         Number(
+  //           course.lessons[currentLesson[0]].contents[currentLesson[1]].id
+  //         ),
+  //         time
+  //       )
+  //         .then((res) => {
+  //           // console.log(res.data);
+  //         })
+  //         .catch((err) => {});
+  //       breaker = 0;
+  //     }
+  //     return;
+  //   },
+  //   [breaker, course.lessons, currentLesson]
+  // );
+  // useEffect(() => {
+  //   if (!loadingCourse && !loadingContent) {
+  //     const iframe = document.querySelector(
+  //       "#video-iframe"
+  //     ) as HTMLIFrameElement;
+  //     if (iframe) {
+  //       const player = new Player(iframe);
+  //       player.on("bufferend", (data) => {
+  //         player
+  //           .play()
+  //           .then(() => {})
+  //           .catch((err) => {
+  //             console.log(err);
+  //           });
+  //       });
+  //       player
+  //         .setCurrentTime(currentLessonStatus.timeStamp)
+  //         .then((sec) => {})
+  //         .catch((err) => {
+  //           player.setCurrentTime(0);
+  //         });
+  //       player.on("timeupdate", (data) => {
+  //         setTimeStamp(data.seconds);
+  //       });
+  //       var timeWatched = 0;
+  //       if (currentLessonStatus.videoStatus !== "Completed") {
+  //         player.on("timeupdate", function (data) {
+  //           if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
+  //             timeWatched = data.seconds;
+  //             /*This prevents seeking. The reason this is needed
+  //       is because when the user tries to seek, a time update is called which results in the
+  //       watchedTime becoming the same as the seeked time before it goes into the function 'seeked' (below) resulting
+  //       in both values being the same. We need to get the most recent time update before the seek.
+  //       (data.seconds - 1 < currentTime) basically if you seek, this will return false and the current time wont get updated
+  //       (data.seconds > currentTime) if they seek backwards then dont update current time so they can seek back to where they were before*/
+  //           }
+  //         });
+  //         let notFirstSeek = false;
+  //         player.on("seeked", function (data) {
+  //           if (!notFirstSeek) {
+  //             timeWatched = data.seconds;
+  //           } else if (timeWatched < data.seconds) {
+  //             player.setCurrentTime(timeWatched);
+  //           }
+  //           notFirstSeek = true;
+  //         });
+  //       }
+  //     }
+  //   }
+  // }, [currentLessonStatus, loadingCourse, loadingContent]);
+  // useEffect(() => {
+  //   updateTimestamp(timeStamp);
+  // }, [updateTimestamp, timeStamp]);
   return (
     <>
       <Head>

@@ -56,7 +56,7 @@ const useChangeLesson = (
     if (nextDisabled) {
       toast({
         title: "Can't proceed.",
-        description: "Finish current lesson to proceed to the next.",
+        description: "Finish current lesson and take test to proceed to the next.",
         status: "warning",
         duration: 5000,
         isClosable: true,
