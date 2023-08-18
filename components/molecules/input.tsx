@@ -1,7 +1,6 @@
 import {
   Box,
   Input as ChakraInput,
-  InputGroup,
   InputProps,
   Text,
 } from "@chakra-ui/react";

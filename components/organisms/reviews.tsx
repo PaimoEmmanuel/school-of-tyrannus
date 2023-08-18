@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Img } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { useMediaQuery } from "@chakra-ui/react";
 import Testimony from "../molecules/testimony";

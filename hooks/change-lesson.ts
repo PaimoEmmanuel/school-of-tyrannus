@@ -1,8 +1,6 @@
 import { useToast } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { CourseContext } from "../context/course-context";
-import { getContentTakenStatus } from "../services/course";
-import { ICourseLessons } from "../types/course";
 import useLessonHelpers from "./lesson-helpers";
 
 const useChangeLesson = () => {

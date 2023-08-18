@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import NavigationBar from "../../components/organisms/navigation-bar";
 import {
   Box,
   Button,
   Flex,
   Img,
-  Link as ChakraLink,
   Spinner,
   Text,
 } from "@chakra-ui/react";

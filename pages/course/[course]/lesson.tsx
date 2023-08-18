@@ -14,10 +14,7 @@ import LessonManual from "../../../components/molecules/lesson-manual";
 import TestModal from "../../../components/organisms/test-modal";
 import PrivatePage from "../../../components/templates/private-route";
 import CourseCompletedModal from "../../../components/molecules/course-complete-modal";
-import { useCallback, useContext, useEffect, useState } from "react";
-import Player from "@vimeo/player";
-import { saveTimeStamp } from "../../../services/course";
-import { useRouter } from "next/router";
+import { useContext } from "react";
 import { CourseContext } from "../../../context/course-context";
 
 const LessonPage: NextPage = () => {

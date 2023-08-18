@@ -3,7 +3,6 @@ import Head from "next/head";
 import HomeBanner from "../components/molecules/home-banner";
 import HomeTestimony from "../components/organisms/home-testimony";
 import NavigationBar from "../components/organisms/navigation-bar";
-import HomeCourseTemplate from "../components/templates/home-course-template";
 import NewsLetter from "../components/molecules/newsletter";
 import Footer from "../components/organisms/footer";
 import { getLandingPageCourses } from "../services/home-page";

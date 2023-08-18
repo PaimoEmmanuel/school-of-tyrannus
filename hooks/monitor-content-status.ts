@@ -9,7 +9,6 @@ import {
   startContent,
   takeQuiz,
 } from "../services/course";
-import { ICourseLessons } from "../types/course";
 import useLessonHelpers from "./lesson-helpers";
 
 const useMonitorContentStatus = (

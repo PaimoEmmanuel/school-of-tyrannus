@@ -1,7 +1,6 @@
-import { Box, Grid, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import * as React from "react";
 import { REVIEWS } from "../../utils/constants";
-import Testimony from "../molecules/testimony";
 import Reviews from "./reviews";
 
 interface IHomeTestimonyProps {}

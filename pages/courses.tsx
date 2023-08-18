@@ -1,12 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import HomeBanner from "../components/molecules/home-banner";
 import NavigationBar from "../components/organisms/navigation-bar";
 import HomeCourseTemplate from "../components/templates/home-course-template";
 import Footer from "../components/organisms/footer";
 import { getLandingPageCourses } from "../services/home-page";
 import { Box, Text, Link as ChakraLink } from "@chakra-ui/react";
-import Link from "next/link";
 
 interface ICoursesProps {
   courses: any[];

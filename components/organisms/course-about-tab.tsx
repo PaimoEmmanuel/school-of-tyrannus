@@ -1,15 +1,7 @@
 import { useState } from "react";
 import {
   Box,
-  Button,
   Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Text,
 } from "@chakra-ui/react";
 

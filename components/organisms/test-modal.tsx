@@ -1,21 +1,14 @@
 import {
-  Box,
   Text,
   Button,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
-  useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { CourseContext } from "../../context/course-context";
-import useLessonHelpers from "../../hooks/lesson-helpers";
-import { completeCourse, takeQuiz } from "../../services/course";
 import TestModalCloseButton from "../molecules/test-modal-close-button";
 
 interface ITestModalProps {
@@ -29,8 +22,7 @@ const TestModal: React.FunctionComponent<ITestModalProps> = ({
   closeModal,
   handleTakeQuiz,
 }) => {
-  const { courseDetails, currentLessonIndex, currentLesson } =
-    useContext(CourseContext);
+  const { currentLesson } = useContext(CourseContext);
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={closeModal}>

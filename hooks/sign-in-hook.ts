@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import jwt from "jwt-decode";
 import { signIn } from "../services/auth";
 import getUser from "../utils/get-user";
 import { useRouter } from "next/router";

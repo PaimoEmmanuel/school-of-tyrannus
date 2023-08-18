@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { CourseContext } from "../context/course-context";
 import { getCourseDetails } from "../services/course";
-import { ICourseLessons } from "../types/course";
 import useEnrolledForCourse from "./enrolled-course";
 
 const useFetchCourse = () => {
