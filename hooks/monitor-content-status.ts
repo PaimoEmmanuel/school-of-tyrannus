@@ -5,6 +5,7 @@ import { CourseContext } from "../context/course-context";
 import {
   completeCourse,
   finishVideoContent,
+  saveTimeStamp,
   startContent,
   takeQuiz,
 } from "../services/course";
@@ -126,6 +127,8 @@ const useMonitorContentStatus = (
         player.off("play");
         player.off("ended");
         player.off("timeupdate");
+        player.off("seeked");
+        player.setCurrentTime(currentLesson.userStatus.timeStamp);
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {
@@ -152,10 +155,39 @@ const useMonitorContentStatus = (
             })
             .catch((err) => {});
         });
+        let timeWatched = currentLesson.userStatus.timeStamp;
+        if (currentLesson.userStatus.contentStatus !== "Completed") {
+          // Save TimeStammp
+          let breaker = 0;
+          const updateTimeStamp = (time: number) => {
+            breaker++;
+            if (breaker > 50) {
+              saveTimeStamp(Number(currentLesson.id), time)
+                .then((res) => {
+                })
+                .catch((err) => {});
+              breaker = 0;
+            }
+          };
+          player.on("timeupdate", function (data) {
+            if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
+              timeWatched = data.seconds;
+              updateTimeStamp(data.seconds);
+            } else {
+            }
+          });
+          player.on("seeked", function (data) {
+            if (timeWatched < data.seconds) {
+              player.setCurrentTime(timeWatched);
+            }
+          });
+        }
       };
     }
   }, [
     currentLesson.id,
+    currentLesson.userStatus.contentStatus,
+    currentLesson.userStatus.timeStamp,
     currentLesson.videoRetrievalId,
     currentLessonIndex,
     handleFinishContent,
