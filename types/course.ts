@@ -39,26 +39,27 @@ export interface ICourseTabProps {
   }[];
 }
 
+export interface IContent {
+  title: string;
+  hasQuiz: boolean;
+  quizUrl: string;
+  videoRetrievalId: string;
+  id: string;
+  userStatus: {
+    contentStatus: string;
+    quizStatus: string;
+    timeStamp: number;
+  };
+  resources: { title: string; link: string }[];
+  overview: string;
+  manual: string;
+}
 export interface ICourseLessons {
   title: string;
   id: string;
   lessons: {
     title: string;
     id: number;
-    contents: {
-      title: string;
-      hasQuiz: boolean;
-      quizUrl: string;
-      videoRetrievalId: string;
-      id: string;
-      userStatus: {
-        contentStatus: string;
-        quizStatus: string;
-        timeStamp: number;
-      };
-      resources: { title: string; link: string }[];
-      overview: string;
-      manual: string;
-    }[];
+    contents: IContent[];
   }[];
 }

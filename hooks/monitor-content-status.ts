@@ -36,6 +36,7 @@ const useMonitorContentStatus = (
       setLastCourseContent(false);
     }
   }, [courseDetails, currentLessonIndex]);
+
   useEffect(() => {
     setTestmodalOpen(false);
   }, [currentLessonIndex]);
@@ -113,45 +114,49 @@ const useMonitorContentStatus = (
       }
     });
   };
+
   useEffect(() => {
     if (loadingCourse) {
       return;
     }
     const iframe = document.querySelector("#video-iframe") as HTMLIFrameElement;
-
     if (iframe) {
-      const player = new Player(iframe);
-      player.on("play", () => {
-        startContent(currentLesson.id)
-          .then((res) => {
-            player.off("play");
-          })
-          .catch((err) => {});
-      });
-      let breaker = 10;
-      player.getDuration().then(function (duration) {
-        player.on("timeupdate", (data) => {
-          /*
-           *Call finishVideoContent endpoint roughly every 2.5s when 80% of the content has been watched.
-           *This is to increase chances of a successful API call so user can proceed to  the next lesson.
-           */
-          if (data.seconds > duration * 0.8 && breaker % 10 === 0) {
-            finishVideoContent(currentLesson.id)
-              .then((res) => {
-                setVideoToCompleted(currentLessonIndex);
-              })
-              .catch((err) => {});
-          }
-          breaker++;
-        });
-      });
-      player.on("ended", () => {
-        handleFinishContent();
+      iframe.onload = () => {
+        const player = new Player(iframe);
+        player.off("play");
         player.off("ended");
-      });
+        player.off("timeupdate");
+        player.on("play", () => {
+          startContent(currentLesson.id)
+            .then((res) => {
+              let breaker = 10;
+              player.getDuration().then(function (duration) {
+                player.on("timeupdate", (data) => {
+                  /*
+                   *Call finishVideoContent endpoint roughly every 2.5s when 80% of the content has been watched.
+                   *This is to increase chances of a successful API call so user can proceed to  the next lesson.
+                   */
+                  if (data.seconds > duration * 0.8 && breaker % 10 === 0) {
+                    finishVideoContent(currentLesson.id)
+                      .then((res) => {
+                        setVideoToCompleted(currentLessonIndex);
+                      })
+                      .catch((err) => {});
+                  }
+                  breaker++;
+                });
+              });
+              player.on("ended", () => {
+                handleFinishContent();
+              });
+            })
+            .catch((err) => {});
+        });
+      };
     }
   }, [
     currentLesson.id,
+    currentLesson.videoRetrievalId,
     currentLessonIndex,
     handleFinishContent,
     loadingCourse,

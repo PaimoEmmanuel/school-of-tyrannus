@@ -111,7 +111,12 @@ const LessonPage: NextPage = () => {
                         !loadingCourse && !!currentLesson.videoRetrievalId
                       }
                     >
-                      <Box pos="relative" padding="56.5% 0 0 0" role="group">
+                      <Box
+                        id="content-video"
+                        pos="relative"
+                        padding="56.5% 0 0 0"
+                        role="group"
+                      >
                         <iframe
                           id="video-iframe"
                           src={`${currentLesson.videoRetrievalId}&autoplay=1&controls=1`}

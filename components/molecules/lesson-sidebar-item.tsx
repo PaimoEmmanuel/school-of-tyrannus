@@ -115,7 +115,8 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                           strokeLinejoin="round"
                         />
                       </svg>
-                    ) : content.userStatus.contentStatus === "Completed" ? (
+                    ) : !content.hasQuiz &&
+                      content.userStatus.contentStatus === "Completed" ? (
                       <svg
                         width="17"
                         height="17"

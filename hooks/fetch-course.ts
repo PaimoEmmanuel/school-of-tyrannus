@@ -22,8 +22,6 @@ const useFetchCourse = () => {
         return;
       }
       getCourseDetails(String(query.course)).then((res) => {
-        console.log("course lessons: ", res.data);
-
         setCourseDetails(res.data);
         setLoadingCourse(false);
       });
