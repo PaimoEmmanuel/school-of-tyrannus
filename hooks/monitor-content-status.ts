@@ -116,6 +116,16 @@ const useMonitorContentStatus = (
   };
 
   useEffect(() => {
+    let updateTimeStampBreaker = 0;
+    const updateTimeStamp = (time: number) => {
+      updateTimeStampBreaker++;
+      if (updateTimeStampBreaker > 50) {
+        saveTimeStamp(Number(currentLesson.id), time)
+          .then((res) => {})
+          .catch((err) => {});
+        updateTimeStampBreaker = 0;
+      }
+    };
     if (loadingCourse) {
       return;
     }
@@ -127,7 +137,10 @@ const useMonitorContentStatus = (
         player.off("ended");
         player.off("timeupdate");
         player.off("seeked");
-        player.setCurrentTime(currentLesson.userStatus.timeStamp);
+        player
+          .setCurrentTime(currentLesson.userStatus.timeStamp)
+          .then((data) => {})
+          .catch((err) => {});
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {
@@ -138,6 +151,10 @@ const useMonitorContentStatus = (
                    *Call finishVideoContent endpoint roughly every 2.5s when 80% of the content has been watched.
                    *This is to increase chances of a successful API call so user can proceed to  the next lesson.
                    */
+                  // Save TimeStammp
+                  if (currentLesson.userStatus.timeStamp < data.seconds) {
+                    updateTimeStamp(data.seconds);
+                  }
                   if (data.seconds > duration * 0.8 && breaker % 10 === 0) {
                     finishVideoContent(currentLesson.id)
                       .then((res) => {
@@ -156,28 +173,21 @@ const useMonitorContentStatus = (
         });
         let timeWatched = currentLesson.userStatus.timeStamp;
         if (currentLesson.userStatus.contentStatus !== "Completed") {
-          // Save TimeStammp
-          let breaker = 0;
-          const updateTimeStamp = (time: number) => {
-            breaker++;
-            if (breaker > 50) {
-              saveTimeStamp(Number(currentLesson.id), time)
-                .then((res) => {
-                })
-                .catch((err) => {});
-              breaker = 0;
-            }
-          };
           player.on("timeupdate", function (data) {
             if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
               timeWatched = data.seconds;
-              updateTimeStamp(data.seconds);
-            } else {
             }
           });
           player.on("seeked", function (data) {
             if (timeWatched < data.seconds) {
               player.setCurrentTime(timeWatched);
+              toast({
+                description:
+                  "Finish this lesson to seek (drag the slider) to anywhere in the video)",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+              });
             }
           });
         }
@@ -192,6 +202,7 @@ const useMonitorContentStatus = (
     handleFinishContent,
     loadingCourse,
     setVideoToCompleted,
+    toast,
   ]);
   return {
     testModalOpen,
