@@ -64,3 +64,8 @@ export const completeCourse = (courseId: string) => {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
+
+export const retrieveLastContent = (contentId: string) =>
+  request.get(`LandingPage/RetrieveLastContentWatchedForCourse/${contentId}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });

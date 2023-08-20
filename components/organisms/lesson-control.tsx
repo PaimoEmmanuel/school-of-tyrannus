@@ -1,5 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import * as React from "react";
+import { CourseContext } from "../../context/course-context";
 
 interface ILessonControlProps {
   goToNext: () => void;
@@ -18,6 +19,7 @@ const LessonControl: React.FunctionComponent<ILessonControlProps> = ({
   title,
   index,
 }) => {
+  const { currentLessonIndex } = React.useContext(CourseContext);
   return (
     <Flex
       pos="fixed"
@@ -59,7 +61,7 @@ const LessonControl: React.FunctionComponent<ILessonControlProps> = ({
       </Text>
       <Text>
         <Text as="span" display={{ base: "none", lg: "inline" }}>
-          Lesson {index + 1} -{" "}
+          Lesson {currentLessonIndex[0] + 1}.{currentLessonIndex[1] + 1} -{" "}
         </Text>
         <Text as="span" fontWeight="700">
           {title}

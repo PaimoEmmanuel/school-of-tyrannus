@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { CourseContext } from "../context/course-context";
-import { getCourseDetails } from "../services/course";
+import { getCourseDetails, retrieveLastContent } from "../services/course";
+import { ICourseDetails } from "../types/course";
 import useEnrolledForCourse from "./enrolled-course";
 
 const useFetchCourse = () => {
-  const { setCourseDetails } = useContext(CourseContext);
+  const { setCourseDetails, setCurrentLessonIndex } = useContext(CourseContext);
   const [loadingCourse, setLoadingCourse] = useState(true);
   const router = useRouter();
   const query = router.query;
@@ -21,8 +22,24 @@ const useFetchCourse = () => {
         return;
       }
       getCourseDetails(String(query.course)).then((res) => {
-        setCourseDetails(res.data);
-        setLoadingCourse(false);
+        const courseDetail = res.data;
+        retrieveLastContent(String(query.course))
+          .then((lastContentRes) => {
+            const lastWatchedId = lastContentRes.data.contentId;
+            courseDetail.lessons.forEach((lesson: any, lessonIndex: number) => {
+              const contentIndex = lesson.contents.findIndex(
+                (content: any) => content.id === lastWatchedId
+              );
+              if (contentIndex >= 0) {
+                setCourseDetails(courseDetail);
+                setCurrentLessonIndex([lessonIndex, contentIndex]);
+              }
+            });
+            setLoadingCourse(false);
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
       });
     }
   }, [query, loadingEnrolled, shouldGoToLesson, router, setCourseDetails]);
