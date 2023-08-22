@@ -3,6 +3,7 @@ import { getCourseEnrollmentStatus } from "../services/course";
 import { useRouter } from "next/router";
 import { UserContext } from "../context/user-context";
 import { useToast } from "@chakra-ui/react";
+import Bugsnag from "@bugsnag/js";
 
 const useEnrolledForCourse = () => {
   const [enrollmentStatus, setEnrollmentStatus] = useState("");
@@ -36,6 +37,7 @@ const useEnrolledForCourse = () => {
           setLoadingEnrolled(false);
         })
         .catch((err) => {
+          Bugsnag.notify(err)
           toast({
             description: "An error occurred, please try again.",
             status: "error",

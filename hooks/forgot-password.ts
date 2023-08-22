@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { requestPasswordReset } from "../services/auth";
+import Bugsnag from "@bugsnag/js";
 
 const useForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ const useForgotPassword = () => {
         setMailSent(true);
       })
       .catch((err) => {
+        Bugsnag.notify(err)
         setError(err.response.data);
         setSendingMail(false);
       });

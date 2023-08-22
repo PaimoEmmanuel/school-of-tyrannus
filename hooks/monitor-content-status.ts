@@ -10,6 +10,7 @@ import {
   takeQuiz,
 } from "../services/course";
 import useLessonHelpers from "./lesson-helpers";
+import Bugsnag from "@bugsnag/js";
 
 const useMonitorContentStatus = (
   loadingCourse: boolean,
@@ -51,6 +52,7 @@ const useMonitorContentStatus = (
         setOpenCourseCompleteModal(true);
       })
       .catch((err) => {
+        Bugsnag.notify(err);
         toast({
           description: "An error occurred, please try again.",
           status: "error",
@@ -86,6 +88,7 @@ const useMonitorContentStatus = (
         }
       })
       .catch((err) => {
+        Bugsnag.notify(err);
         toast({
           description: "Error in finishing content",
           status: "error",
@@ -124,7 +127,9 @@ const useMonitorContentStatus = (
         setContentTimeStamp(currentLessonIndex, time);
         saveTimeStamp(Number(currentLesson.id), time)
           .then((res) => {})
-          .catch((err) => {});
+          .catch((err) => {
+            Bugsnag.notify(err);
+          });
         updateTimeStampBreaker = 0;
       }
     };
@@ -142,7 +147,9 @@ const useMonitorContentStatus = (
         player
           .setCurrentTime(currentLesson.userStatus.timeStamp)
           .then((data) => {})
-          .catch((err) => {});
+          .catch((err) => {
+            Bugsnag.notify(err);
+          });
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {
@@ -162,7 +169,9 @@ const useMonitorContentStatus = (
                       .then((res) => {
                         setVideoToCompleted(currentLessonIndex);
                       })
-                      .catch((err) => {});
+                      .catch((err) => {
+                        Bugsnag.notify(err);
+                      });
                   }
                   breaker++;
                 });
@@ -171,7 +180,9 @@ const useMonitorContentStatus = (
                 handleFinishContent();
               });
             })
-            .catch((err) => {});
+            .catch((err) => {
+              Bugsnag.notify(err);
+            });
         });
         let timeWatched = currentLesson.userStatus.timeStamp;
         if (currentLesson.userStatus.contentStatus !== "Completed") {

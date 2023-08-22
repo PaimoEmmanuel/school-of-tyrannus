@@ -9,6 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { saveEmail } from "../../services/newsletter";
+import Bugsnag from "@bugsnag/js";
+
 
 const NewsLetter: React.FunctionComponent = () => {
   const [email, setEmail] = useState("");
@@ -92,6 +94,7 @@ const NewsLetter: React.FunctionComponent = () => {
                 })
                 .catch((err) => {
                   setSavingEmail(false);
+                  Bugsnag.notify(err)
                   toast({
                     description:
                       err?.response?.data ||

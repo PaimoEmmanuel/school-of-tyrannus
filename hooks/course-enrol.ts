@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { UserContext } from "../context/user-context";
 import { enrollCourse } from "../services/course";
+import Bugsnag from "@bugsnag/js";
 
 const useCourseEnrol = (
   courseId: number,
@@ -51,6 +52,7 @@ const useCourseEnrol = (
         })
         .catch((err) => {
           setLoading(false);
+          Bugsnag.notify(err)
           setError("An error occurred, please try again.");
           toast({
             description: "An error occurred, please try again.",

@@ -3,6 +3,7 @@ import { signIn } from "../services/auth";
 import getUser from "../utils/get-user";
 import { useRouter } from "next/router";
 import { UserContext } from "../context/user-context";
+import Bugsnag from "@bugsnag/js";
 
 const useSignIn = () => {
   const [email, setEmail] = useState("");
@@ -31,6 +32,7 @@ const useSignIn = () => {
         }
       })
       .catch((err) => {
+        Bugsnag.notify(err)
         if (err?.response?.status === 400) {
           setError(err.response.data);
         } else {

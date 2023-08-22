@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/user-context";
 import { resetPassword, validateEmailToken } from "../services/auth";
 import getUser from "../utils/get-user";
+import Bugsnag from "@bugsnag/js";
 
 const useResetPassword = () => {
   const router = useRouter();
@@ -36,6 +37,7 @@ const useResetPassword = () => {
         }));
       })
       .catch((err) => {
+        Bugsnag.notify(err)
         setTokenState((tokenState) => ({
           ...tokenState,
           verifying: false,
@@ -75,6 +77,7 @@ const useResetPassword = () => {
         }
       })
       .catch((err) => {
+        Bugsnag.notify(err)
         setResettingPassword(false);
         if (err?.response?.data) {
           setError(err.response.data);

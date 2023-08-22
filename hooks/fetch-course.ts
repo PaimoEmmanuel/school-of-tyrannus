@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { CourseContext } from "../context/course-context";
 import { getCourseDetails, retrieveLastContent } from "../services/course";
-import { ICourseDetails } from "../types/course";
+import Bugsnag from "@bugsnag/js";
 import useEnrolledForCourse from "./enrolled-course";
 
 const useFetchCourse = () => {
@@ -38,6 +38,7 @@ const useFetchCourse = () => {
             setLoadingCourse(false);
           })
           .catch((err) => {
+            Bugsnag.notify(err)
             console.log("err", err);
           });
       });

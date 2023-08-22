@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { signUp } from "../services/auth";
 import { UserContext } from "../context/user-context";
 import getUser from "../utils/get-user";
+import Bugsnag from "@bugsnag/js";
 
 const useSignUp = () => {
   const [emailAddress, setEmailAddress] = useState("");
@@ -71,6 +72,7 @@ const useSignUp = () => {
           }
         })
         .catch((err) => {
+          Bugsnag.notify(err)
           setIsSigningUp(false);
           if (err?.response?.status === 400) {
             setError(err.response.data);
