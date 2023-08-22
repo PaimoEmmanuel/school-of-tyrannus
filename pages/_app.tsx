@@ -4,16 +4,18 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../style-config/theme";
 import UserContextProvider from "../context/user-context";
 import Script from "next/script";
+import CourseContextProvider from "../context/course-context";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <UserContextProvider>
-        {/* Hotjar Tracking Code for https://tyrannus.nlwc.church */}
-        <Script
-          id="hotjar"
-          dangerouslySetInnerHTML={{
-            __html: `
+        <CourseContextProvider>
+          {/* Hotjar Tracking Code for https://tyrannus.nlwc.church */}
+          <Script
+            id="hotjar"
+            dangerouslySetInnerHTML={{
+              __html: `
     (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
         h._hjSettings={hjid:3509647,hjsv:6};
@@ -22,24 +24,25 @@ function MyApp({ Component, pageProps }: AppProps) {
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
-          }}
-        />
-        <Script
-          id="google-analytics-external"
-          src="https://www.googletagmanager.com/gtag/js?id=G-TFR2JP0B3N"
-          strategy="beforeInteractive"
-        />
-        <Script
-          id="google-analytics"
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
+            }}
+          />
+          <Script
+            id="google-analytics-external"
+            src="https://www.googletagmanager.com/gtag/js?id=G-TFR2JP0B3N"
+            strategy="beforeInteractive"
+          />
+          <Script
+            id="google-analytics"
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-TFR2JP0B3N');`,
-          }}
-        />
-        <Component {...pageProps} />
+            }}
+          />
+          <Component {...pageProps} />
+        </CourseContextProvider>
       </UserContextProvider>
     </ChakraProvider>
   );

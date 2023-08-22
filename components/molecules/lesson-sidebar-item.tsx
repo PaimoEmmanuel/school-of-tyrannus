@@ -3,26 +3,23 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon,
   Box,
-  Link as ChakraLink,
   Button,
   Text,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { ICourseLessons } from "../../types/course";
 
 interface ILessonSideBarItemProps {
-  contents: ICourseLessons["lessons"][0];
+  lesson: ICourseLessons["lessons"][0];
   parentIndex: number;
-  currentLesson: number[];
+  currentLessonIndex: [number, number];
   onTakeTest: () => void;
   goToLesson: (lesson: [number, number]) => void;
 }
 const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
-  contents,
+  lesson,
   parentIndex,
-  currentLesson,
+  currentLessonIndex,
   onTakeTest,
   goToLesson,
 }) => {
@@ -46,7 +43,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                 }}
               >
                 <Box flex="1" textAlign="left" fontWeight="600" fontSize="14px">
-                  {contents.title}
+                  {lesson.title}
                 </Box>
 
                 <svg
@@ -67,7 +64,7 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
               </AccordionButton>
             </h2>
             <AccordionPanel p={0}>
-              {contents.contents.map((content, index) => (
+              {lesson.contents.map((content, index) => (
                 <Box
                   w="100%"
                   key={content.title}
@@ -88,8 +85,8 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                     gap="12px"
                     mb="12px"
                     fontWeight={
-                      parentIndex === currentLesson[0] &&
-                      index === currentLesson[1]
+                      parentIndex === currentLessonIndex[0] &&
+                      index === currentLessonIndex[1]
                         ? "700"
                         : "400"
                     }
@@ -118,7 +115,8 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                           strokeLinejoin="round"
                         />
                       </svg>
-                    ) : content.userStatus.contentStatus === "Completed" ? (
+                    ) : !content.hasQuiz &&
+                      content.userStatus.contentStatus === "Completed" ? (
                       <svg
                         width="17"
                         height="17"
@@ -155,8 +153,8 @@ const LessonSideBarItem: React.FC<ILessonSideBarItemProps> = ({
                     )}
                   </Text>
                   {content.hasQuiz &&
-                  parentIndex === currentLesson[0] &&
-                  index === currentLesson[1] ? (
+                  parentIndex === currentLessonIndex[0] &&
+                  index === currentLessonIndex[1] ? (
                     <Button
                       bgColor="text.orange"
                       fontSize="12px"

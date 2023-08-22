@@ -11,7 +11,6 @@ import {
 import Link from "next/link";
 import { useContext, useState } from "react";
 import LogoText from "../molecules/logo-text";
-import NavSearch from "../molecules/nav-search";
 import { UserContext } from "../../context/user-context";
 import removeUser from "../../utils/remove-user";
 import { useRouter } from "next/router";

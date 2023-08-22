@@ -8,7 +8,6 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import PrivatePage from "./private-route";
 
 interface ILessonTab {
   resources: { title: string; link: string }[];

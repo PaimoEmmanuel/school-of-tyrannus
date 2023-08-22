@@ -1,15 +1,12 @@
 import {
   Box,
   Text,
-  Flex,
-  Img,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 interface IFAQsProps {}
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img } from "@chakra-ui/react";
 
 interface ILogoTextProps {}
 

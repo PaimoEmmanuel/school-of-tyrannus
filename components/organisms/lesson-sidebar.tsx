@@ -12,13 +12,13 @@ import LessonSideBarItem from "../molecules/lesson-sidebar-item";
 
 interface ILessonSideBar {
   lessons: ICourseLessons["lessons"];
-  currentLesson: number[];
+  currentLessonIndex: [number, number];
   onTakeTest: () => void;
   goToLesson: (lesson: [number, number]) => void;
 }
 const LessonSideBar: React.FC<ILessonSideBar> = ({
   lessons,
-  currentLesson,
+  currentLessonIndex,
   onTakeTest,
   goToLesson,
 }) => {
@@ -159,8 +159,8 @@ const LessonSideBar: React.FC<ILessonSideBar> = ({
             key={index}
             onTakeTest={onTakeTest}
             parentIndex={index}
-            contents={lesson}
-            currentLesson={currentLesson}
+            lesson={lesson}
+            currentLessonIndex={currentLessonIndex}
             goToLesson={goToLesson}
           />
         ))}

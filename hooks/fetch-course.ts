@@ -1,36 +1,12 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { getCourseDetails } from "../services/course";
-import { ICourseLessons } from "../types/course";
+import { useContext, useEffect, useState } from "react";
+import { CourseContext } from "../context/course-context";
+import { getCourseDetails, retrieveLastContent } from "../services/course";
+import { ICourseDetails } from "../types/course";
 import useEnrolledForCourse from "./enrolled-course";
 
-const defaultCourse: ICourseLessons = {
-  title: "",
-  id: "",
-  lessons: [
-    {
-      title: "",
-      contents: [
-        {
-          title: "",
-          hasQuiz: true,
-          quizUrl: "",
-          videoRetrievalId: "",
-          id: "",
-          userStatus: {
-            contentStatus: "",
-            quizStatus: "",
-          },
-          resources: [{ title: "", link: "" }],
-          overview: "",
-          manual: "",
-        },
-      ],
-    },
-  ],
-};
 const useFetchCourse = () => {
-  const [course, setCourse] = useState<ICourseLessons>(defaultCourse);
+  const { setCourseDetails, setCurrentLessonIndex } = useContext(CourseContext);
   const [loadingCourse, setLoadingCourse] = useState(true);
   const router = useRouter();
   const query = router.query;
@@ -46,29 +22,29 @@ const useFetchCourse = () => {
         return;
       }
       getCourseDetails(String(query.course)).then((res) => {
-        setCourse(res.data);
-        setLoadingCourse(false);
+        const courseDetail = res.data;
+        retrieveLastContent(String(query.course))
+          .then((lastContentRes) => {
+            const lastWatchedId = lastContentRes.data.contentId;
+            courseDetail.lessons.forEach((lesson: any, lessonIndex: number) => {
+              const contentIndex = lesson.contents.findIndex(
+                (content: any) => content.id === lastWatchedId
+              );
+              if (contentIndex >= 0) {
+                setCourseDetails(courseDetail);
+                setCurrentLessonIndex([lessonIndex, contentIndex]);
+              }
+            });
+            setLoadingCourse(false);
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
       });
     }
-  }, [query, loadingEnrolled, shouldGoToLesson, router]);
+  }, [query, loadingEnrolled, shouldGoToLesson, router, setCourseDetails]);
 
-  const setContentToCompleted = (lesson: [number, number]) => {
-    const newCourseObject = { ...course };
-    if (newCourseObject.lessons[lesson[0]].contents[lesson[1]].hasQuiz) {
-      newCourseObject.lessons[lesson[0]].contents[
-        lesson[1]
-      ].userStatus.quizStatus = "Completed";
-      newCourseObject.lessons[lesson[0]].contents[
-        lesson[1]
-      ].userStatus.contentStatus = "Completed";
-    } else {
-      newCourseObject.lessons[lesson[0]].contents[
-        lesson[1]
-      ].userStatus.contentStatus = "Completed";
-    }
-    setCourse({ ...newCourseObject });
-  };
-  return { course, loadingCourse, setContentToCompleted };
+  return { loadingCourse };
 };
 
 export default useFetchCourse;

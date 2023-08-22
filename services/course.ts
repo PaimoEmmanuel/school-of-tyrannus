@@ -47,7 +47,7 @@ export const saveTimeStamp = (contentId: number, timeStamp: number) =>
     }
   );
 
-export const finishContent = (contentId: string) => {
+export const finishVideoContent = (contentId: string) => {
   return request.get(`LandingPage/FinishContent/${contentId}`, {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
@@ -64,3 +64,8 @@ export const completeCourse = (courseId: string) => {
     headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
+
+export const retrieveLastContent = (contentId: string) =>
+  request.get(`LandingPage/RetrieveLastContentWatchedForCourse/${contentId}`, {
+    headers: { Authorization: `Bearer ${getUser().token}` },
+  });

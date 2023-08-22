@@ -12,20 +12,20 @@ import * as React from "react";
 
 interface ICourseCompletedModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  courseId: string;
   courseTitle: string;
 }
 
 const CourseCompletedModal: React.FunctionComponent<
   ICourseCompletedModalProps
-> = ({ isOpen, onClose, courseTitle }) => {
+> = ({ isOpen, courseId, courseTitle }) => {
   return (
     <Modal
       // preserveScrollBarGap
       closeOnOverlayClick={false}
       blockScrollOnMount={false}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => {}}
       isCentered
       motionPreset="slideInBottom"
       size="xl"
@@ -97,6 +97,7 @@ const CourseCompletedModal: React.FunctionComponent<
 
           <Flex direction="row" mt="30px">
             <ChakraButton
+              as="a"
               display="flex"
               gap="20px"
               justifyContent="center"
@@ -113,7 +114,7 @@ const CourseCompletedModal: React.FunctionComponent<
               _focus={{ outline: "none" }}
               _hover={{}}
               type="submit"
-              onClick={onClose}
+              href={`/course/${courseId}`}
             >
               Close
             </ChakraButton>
