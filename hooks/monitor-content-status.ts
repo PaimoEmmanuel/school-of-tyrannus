@@ -17,7 +17,8 @@ const useMonitorContentStatus = (
 ) => {
   const { courseDetails, currentLessonIndex, currentLesson } =
     useContext(CourseContext);
-  const { setVideoToCompleted, setQuizToCompleted } = useLessonHelpers();
+  const { setVideoToCompleted, setQuizToCompleted, setContentTimeStamp } =
+    useLessonHelpers();
   const [testModalOpen, setTestmodalOpen] = useState(false);
   const [openCourseCompleteModal, setOpenCourseCompleteModal] = useState(false);
   const [lastCourseContent, setLastCourseContent] = useState(false);
@@ -120,6 +121,7 @@ const useMonitorContentStatus = (
     const updateTimeStamp = (time: number) => {
       updateTimeStampBreaker++;
       if (updateTimeStampBreaker > 50) {
+        setContentTimeStamp(currentLessonIndex, time);
         saveTimeStamp(Number(currentLesson.id), time)
           .then((res) => {})
           .catch((err) => {});
@@ -201,6 +203,7 @@ const useMonitorContentStatus = (
     currentLessonIndex,
     handleFinishContent,
     loadingCourse,
+    setContentTimeStamp,
     setVideoToCompleted,
     toast,
   ]);

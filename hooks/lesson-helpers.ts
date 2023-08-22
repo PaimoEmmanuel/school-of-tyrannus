@@ -28,7 +28,17 @@ const useLessonHelpers = () => {
     setCourseDetails({ ...newCourseObject });
   };
 
-  
+  const setContentTimeStamp = (
+    lessonIndex: [number, number],
+    timeStamp: number
+  ) => {
+    const newCourseObject = { ...courseDetails };
+    newCourseObject.lessons[lessonIndex[0]].contents[
+      lessonIndex[1]
+    ].userStatus.timeStamp = timeStamp;
+    setCourseDetails({ ...newCourseObject });
+  };
+
   const getPreviousLessonIndex = (lessonIndex: [number, number]) => {
     let prevLesson = [0, 0];
     if (lessonIndex[0] < 1 && lessonIndex[1] < 1) {
@@ -53,6 +63,7 @@ const useLessonHelpers = () => {
     setQuizToCompleted,
     getPreviousLessonIndex,
     getPreviousLesson,
+    setContentTimeStamp,
   };
 };
 
