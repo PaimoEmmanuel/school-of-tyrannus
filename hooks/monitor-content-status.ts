@@ -144,12 +144,24 @@ const useMonitorContentStatus = (
         player.off("ended");
         player.off("timeupdate");
         player.off("seeked");
-        player
-          .setCurrentTime(currentLesson.userStatus.timeStamp)
-          .then((data) => {})
-          .catch((err) => {
-            Bugsnag.notify(err);
-          });
+        player.getDuration().then(function (duration) {
+          if (duration > currentLesson.userStatus.timeStamp) {
+            player
+              .setCurrentTime(currentLesson.userStatus.timeStamp)
+              .then((data) => {})
+              .catch((err) => {
+                Bugsnag.notify(err);
+              });
+          } else {
+            player
+              .setCurrentTime(duration - 20)
+              .then((data) => {})
+              .catch((err) => {
+                Bugsnag.notify(err);
+              });
+          }
+        });
+
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {

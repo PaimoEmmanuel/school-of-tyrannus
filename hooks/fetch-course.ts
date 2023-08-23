@@ -10,8 +10,7 @@ const useFetchCourse = () => {
   const [loadingCourse, setLoadingCourse] = useState(true);
   const router = useRouter();
   const query = router.query;
-  const { loadingEnrolled, enrollmentStatus, shouldGoToLesson } =
-    useEnrolledForCourse();
+  const { loadingEnrolled, shouldGoToLesson } = useEnrolledForCourse();
   useEffect(() => {
     if (!loadingEnrolled) {
       if (!shouldGoToLesson) {
@@ -21,29 +20,42 @@ const useFetchCourse = () => {
       if (!query.course) {
         return;
       }
-      getCourseDetails(String(query.course)).then((res) => {
-        const courseDetail = res.data;
-        retrieveLastContent(String(query.course))
-          .then((lastContentRes) => {
-            const lastWatchedId = lastContentRes.data.contentId;
-            courseDetail.lessons.forEach((lesson: any, lessonIndex: number) => {
-              const contentIndex = lesson.contents.findIndex(
-                (content: any) => content.id === lastWatchedId
+      getCourseDetails(String(query.course))
+        .then((res) => {
+          const courseDetail = res.data;
+          retrieveLastContent(String(query.course))
+            .then((lastContentRes) => {
+              const lastWatchedId = lastContentRes.data.contentId;
+              courseDetail.lessons.forEach(
+                (lesson: any, lessonIndex: number) => {
+                  const contentIndex = lesson.contents.findIndex(
+                    (content: any) => content.id === lastWatchedId
+                  );
+                  if (contentIndex >= 0) {
+                    setCourseDetails(courseDetail);
+                    setCurrentLessonIndex([lessonIndex, contentIndex]);
+                  }
+                }
               );
-              if (contentIndex >= 0) {
-                setCourseDetails(courseDetail);
-                setCurrentLessonIndex([lessonIndex, contentIndex]);
-              }
+              setLoadingCourse(false);
+            })
+            .catch((err) => {
+              Bugsnag.notify(err);
+              console.log("err", err);
             });
-            setLoadingCourse(false);
-          })
-          .catch((err) => {
-            Bugsnag.notify(err)
-            console.log("err", err);
-          });
-      });
+        })
+        .catch((err) => {
+          Bugsnag.notify(err);
+        });
     }
-  }, [query, loadingEnrolled, shouldGoToLesson, router, setCourseDetails]);
+  }, [
+    query,
+    loadingEnrolled,
+    shouldGoToLesson,
+    router,
+    setCourseDetails,
+    setCurrentLessonIndex,
+  ]);
 
   return { loadingCourse };
 };
