@@ -23,20 +23,24 @@ const useFetchCourse = () => {
       getCourseDetails(String(query.course))
         .then((res) => {
           const courseDetail = res.data;
+          setCourseDetails(courseDetail);
           retrieveLastContent(String(query.course))
             .then((lastContentRes) => {
-              const lastWatchedId = lastContentRes.data.contentId;
-              courseDetail.lessons.forEach(
-                (lesson: any, lessonIndex: number) => {
-                  const contentIndex = lesson.contents.findIndex(
-                    (content: any) => content.id === lastWatchedId
-                  );
-                  if (contentIndex >= 0) {
-                    setCourseDetails(courseDetail);
-                    setCurrentLessonIndex([lessonIndex, contentIndex]);
+              if (lastContentRes.data && lastContentRes.data.contentId) {
+                const lastWatchedId = lastContentRes.data.contentId;
+                courseDetail.lessons.forEach(
+                  (lesson: any, lessonIndex: number) => {
+                    const contentIndex = lesson.contents.findIndex(
+                      (content: any) => content.id === lastWatchedId
+                    );
+                    if (contentIndex >= 0) {
+                      setCurrentLessonIndex([lessonIndex, contentIndex]);
+                    }
                   }
-                }
-              );
+                );
+              } else {
+                setCurrentLessonIndex([0, 0]);
+              }
               setLoadingCourse(false);
             })
             .catch((err) => {
