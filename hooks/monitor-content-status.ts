@@ -51,6 +51,7 @@ const useMonitorContentStatus = (
       })
       .catch((err) => {
         Bugsnag.notify(err);
+        setLoadContent(false);
       });
   }, [loadingCourse, currentLessonIndex, currentLesson.id]);
 
