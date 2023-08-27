@@ -75,6 +75,7 @@ const useMonitorContentStatus = (
       return goToNext();
     }
     setLoadContent(true);
+    console.log("video completed 2");
     finishVideoContent(currentLesson.id)
       .then((res) => {
         setVideoToCompleted(currentLessonIndex);
@@ -165,7 +166,8 @@ const useMonitorContentStatus = (
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {
-              let breaker = 10;
+              console.log("lesson started");
+              let breaker = 0;
               player.getDuration().then(function (duration) {
                 player.on("timeupdate", (data) => {
                   /*
@@ -176,16 +178,19 @@ const useMonitorContentStatus = (
                   if (currentLesson.userStatus.timeStamp < data.seconds) {
                     updateTimeStamp(data.seconds);
                   }
-                  if (data.seconds > duration * 0.8 && breaker % 10 === 0) {
+                  if (data.seconds > duration * 0.8 && breaker === 20) {
+                    breaker = 0;
                     finishVideoContent(currentLesson.id)
                       .then((res) => {
+                        console.log("video completed", breaker);
                         setVideoToCompleted(currentLessonIndex);
                       })
                       .catch((err) => {
                         Bugsnag.notify(err);
                       });
+                  } else {
+                    breaker++;
                   }
-                  breaker++;
                 });
               });
               player.on("ended", () => {
