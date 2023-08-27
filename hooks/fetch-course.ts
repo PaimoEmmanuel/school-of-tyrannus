@@ -22,12 +22,10 @@ const useFetchCourse = () => {
       }
       getCourseDetails(String(query.course))
         .then((res) => {
-          console.log(res.data);
           const courseDetail = res.data;
           setCourseDetails(courseDetail);
           retrieveLastContent(String(query.course))
             .then((lastContentRes) => {
-              console.log(lastContentRes);
               if (lastContentRes.data && lastContentRes.data.contentId) {
                 const lastWatchedId = lastContentRes.data.contentId;
                 courseDetail.lessons.forEach(
@@ -47,7 +45,6 @@ const useFetchCourse = () => {
             })
             .catch((err) => {
               Bugsnag.notify(err);
-              console.log("err", err);
             });
         })
         .catch((err) => {

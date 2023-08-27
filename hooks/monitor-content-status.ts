@@ -75,7 +75,6 @@ const useMonitorContentStatus = (
       return goToNext();
     }
     setLoadContent(true);
-    console.log("video completed 2");
     finishVideoContent(currentLesson.id)
       .then((res) => {
         setVideoToCompleted(currentLessonIndex);
@@ -166,7 +165,6 @@ const useMonitorContentStatus = (
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {
-              console.log("lesson started");
               let breaker = 0;
               player.getDuration().then(function (duration) {
                 player.on("timeupdate", (data) => {
@@ -182,7 +180,6 @@ const useMonitorContentStatus = (
                     breaker = 0;
                     finishVideoContent(currentLesson.id)
                       .then((res) => {
-                        console.log("video completed", breaker);
                         setVideoToCompleted(currentLessonIndex);
                       })
                       .catch((err) => {
@@ -202,17 +199,13 @@ const useMonitorContentStatus = (
             });
         });
         let timeWatched = currentLesson.userStatus.timeStamp;
-        console.log(timeWatched);
-
-        if (currentLesson.userStatus.contentStatus === "Completed") {
+        if (currentLesson.userStatus.contentStatus !== "Completed") {
           player.on("timeupdate", function (data) {
             if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
               timeWatched = data.seconds;
             }
           });
           player.on("seeked", function (data) {
-            console.log("here --> ", timeWatched, data);
-
             if (timeWatched < data.seconds) {
               // -5 to give a padding of 5secs
               player.setCurrentTime(timeWatched - 5);
