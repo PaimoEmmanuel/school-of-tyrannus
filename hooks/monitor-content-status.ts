@@ -5,6 +5,7 @@ import { CourseContext } from "../context/course-context";
 import {
   completeCourse,
   finishVideoContent,
+  getContentTakenStatus,
   saveTimeStamp,
   startContent,
   takeQuiz,
@@ -40,8 +41,18 @@ const useMonitorContentStatus = (
   }, [courseDetails, currentLessonIndex]);
 
   useEffect(() => {
+    if (loadingCourse) return;
     setTestmodalOpen(false);
-  }, [currentLessonIndex]);
+    setLoadContent(true);
+    getContentTakenStatus(currentLesson.id)
+      .then((res) => {
+        // console.log(res);
+        setLoadContent(false);
+      })
+      .catch((err) => {
+        Bugsnag.notify(err);
+      });
+  }, [loadingCourse, currentLessonIndex, currentLesson.id]);
 
   // Call completeCourse endpoint if it is the last content of the last lesson
   const handleCourseCompleted = useCallback(() => {
