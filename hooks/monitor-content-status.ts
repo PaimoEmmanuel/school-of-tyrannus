@@ -202,15 +202,20 @@ const useMonitorContentStatus = (
             });
         });
         let timeWatched = currentLesson.userStatus.timeStamp;
-        if (currentLesson.userStatus.contentStatus !== "Completed") {
+        console.log(timeWatched);
+
+        if (currentLesson.userStatus.contentStatus === "Completed") {
           player.on("timeupdate", function (data) {
             if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
               timeWatched = data.seconds;
             }
           });
           player.on("seeked", function (data) {
+            console.log("here --> ", timeWatched, data);
+
             if (timeWatched < data.seconds) {
-              player.setCurrentTime(timeWatched);
+              // -5 to give a padding of 5secs
+              player.setCurrentTime(timeWatched - 5);
               toast({
                 description:
                   "Finish this lesson to seek (drag the slider) to anywhere in the video)",
