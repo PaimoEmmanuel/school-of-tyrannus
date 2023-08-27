@@ -116,7 +116,7 @@ const LessonPage: NextPage = () => {
                       >
                         <iframe
                           id="video-iframe"
-                          src={`${currentLesson.videoRetrievalId}&autoplay=1&controls=1`}
+                          src={`${currentLesson.videoRetrievalId}&autoplay=0&controls=1`}
                           frameBorder="0"
                           allow="autoplay; fullscreen; picture-in-picture"
                           allowFullScreen
