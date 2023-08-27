@@ -161,7 +161,12 @@ const useMonitorContentStatus = (
               });
           }
         });
-
+        player
+          .play()
+          .then((res) => {})
+          .catch((err) => {
+            Bugsnag.notify(err);
+          });
         player.on("play", () => {
           startContent(currentLesson.id)
             .then((res) => {
