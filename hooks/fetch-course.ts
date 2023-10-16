@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { CourseContext } from "../context/course-context";
-import { getCourseDetails, retrieveLastContent } from "../services/course";
+import { getCourseDetails, retrieveLastContentWatched } from "../services/course";
 import Bugsnag from "@bugsnag/js";
 import useEnrolledForCourse from "./enrolled-course";
 
@@ -24,7 +24,7 @@ const useFetchCourse = () => {
         .then((res) => {
           const courseDetail = res.data;
           setCourseDetails(courseDetail);
-          retrieveLastContent(String(query.course))
+          retrieveLastContentWatched(String(query.course))
             .then((lastContentRes) => {
               if (lastContentRes.data && lastContentRes.data.contentId) {
                 const lastWatchedId = lastContentRes.data.contentId;
@@ -45,6 +45,9 @@ const useFetchCourse = () => {
             })
             .catch((err) => {
               Bugsnag.notify(err);
+              // Set current lesson to first lesson if retrieveLastContentWatched endpoint fails
+              setCurrentLessonIndex([0, 0]);
+              setLoadingCourse(false);
             });
         })
         .catch((err) => {
