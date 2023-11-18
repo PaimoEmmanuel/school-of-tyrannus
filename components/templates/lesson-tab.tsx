@@ -147,7 +147,7 @@ const LessonTab: React.FC<ILessonTab> = ({ resources, overview, manual }) => {
         >
           <Text
             fontSize="14px"
-            css={{
+            sx={{
               li: { marginLeft: "24px", marginBottom: "1rem" },
               p: { marginBottom: "16px" },
               strong: {
