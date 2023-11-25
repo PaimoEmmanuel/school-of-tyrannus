@@ -25,7 +25,7 @@ const LessonManual: React.FunctionComponent<ILessonManualProps> = ({
       </Text>
       <Text
         fontSize="14px"
-        css={{
+        sx={{
           p: { marginBottom: "16px" },
           strong: {
             fontSize: "14px",
