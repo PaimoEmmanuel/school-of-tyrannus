@@ -1,11 +1,13 @@
 # School of Tyrannus
 
 ## Getting Started
+
 Create a .env.loval file and add this in it:
 
 ```bash
-NEXT_PUBLIC_API_BASE_URL=http://67.205.128.129/tyrannus_webapi/api
+NEXT_PUBLIC_API_BASE_URL=https://apps.nlwc.church/tyrannus/api
 ```
+
 ## Note
 
 First, install the dependencies:
