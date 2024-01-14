@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 interface ICourseAboutTabProps {
   title: string;
@@ -55,7 +51,6 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
         pb="50px"
         pos="relative"
       >
-        
         <Box
           pos="relative"
           zIndex="1"
@@ -72,9 +67,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
               transform: "translate(-50%, -50%)",
             },
           }}
-        >
-
-        </Box>
+        ></Box>
         <Box pos="relative">
           <Text fontWeight="600" mt="30px" mb="10px">
             This course includes:
@@ -111,7 +104,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
             {totalDuration} hours on-demand video
           </Text>
 
-          <Text
+          {/* <Text
             display="flex"
             mb="10px"
             alignItems="center"
@@ -162,7 +155,7 @@ const CourseAboutTab: React.FC<ICourseAboutTabProps> = ({
               />
             </svg>
             Subtitle in Polish
-          </Text>
+          </Text> */}
 
           <Text
             display="flex"

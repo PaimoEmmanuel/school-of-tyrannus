@@ -6,10 +6,9 @@ import Reviews from "./reviews";
 interface IHomeTestimonyProps {}
 
 const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
-  
   return (
     <>
-      <Box p="103px 1.5rem 1.5rem" pos={"relative"}>
+      {/* <Box p="103px 1.5rem 1.5rem" pos={"relative"}>
         <Box pos="absolute" top={"0"} left="0" zIndex="-1" w="100%">
           <svg
             viewBox="0 0 1440 1072"
@@ -38,7 +37,7 @@ const HomeTestimony: React.FunctionComponent<IHomeTestimonyProps> = (props) => {
             poster="/assets/images/video-poster.png"
           />
         </Box>
-      </Box>
+      </Box> */}
       <Box>
         <Text
           textAlign="center"
