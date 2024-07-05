@@ -17,6 +17,12 @@ const CourseTab: React.FC<ICourseTabProps> = ({
   totalDuration,
   totalResources,
 }) => {
+  console.log("title", title);
+  const tabs =
+    title === "Young Believers' Class 101"
+      ? ["About", "Course content", "Instructors", "Reviews", "FAQ"]
+      : ["About", "Course content", "Instructors"];
+
   return (
     <Tabs>
       <TabList
@@ -30,61 +36,20 @@ const CourseTab: React.FC<ICourseTabProps> = ({
           },
         }}
       >
-        <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "600",
-          }}
-          whiteSpace="nowrap"
-          _focus={{ outline: "none" }}
-        >
-          About
-        </Tab>
-        <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "600",
-          }}
-          whiteSpace="nowrap"
-          _focus={{ outline: "none" }}
-        >
-          Course content
-        </Tab>
-        <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "600",
-          }}
-          whiteSpace="nowrap"
-          _focus={{ outline: "none" }}
-        >
-          Instructors
-        </Tab>
-        <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "600",
-          }}
-          whiteSpace="nowrap"
-          _focus={{ outline: "none" }}
-        >
-          Reviews
-        </Tab>
-        <Tab
-          _selected={{
-            borderBottom: "3px solid #0B0966",
-            color: "text.deepBlue",
-            fontWeight: "600",
-          }}
-          whiteSpace="nowrap"
-          _focus={{ outline: "none" }}
-        >
-          FAQ
-        </Tab>
+        {tabs.map((tab) => (
+          <Tab
+            key={tab}
+            _selected={{
+              borderBottom: "3px solid #0B0966",
+              color: "text.deepBlue",
+              fontWeight: "600",
+            }}
+            whiteSpace="nowrap"
+            _focus={{ outline: "none" }}
+          >
+            {tab}
+          </Tab>
+        ))}
       </TabList>
 
       <TabPanels>
