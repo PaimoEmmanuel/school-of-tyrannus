@@ -17,7 +17,6 @@ const CourseTab: React.FC<ICourseTabProps> = ({
   totalDuration,
   totalResources,
 }) => {
-  console.log("title", title);
   const tabs =
     title === "Young Believers' Class 101"
       ? ["About", "Course content", "Instructors", "Reviews", "FAQ"]
