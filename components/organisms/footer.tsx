@@ -189,7 +189,7 @@ const Footer: React.FunctionComponent = () => {
         </Box>
       </Grid>
       <Flex textAlign="center" py="40px" justify="center" gap="10px">
-        ©2022 . Tyrannus . All rights reserved.{" "}
+        ©2024 . Tyrannus . All rights reserved.{" "}
         <Text textDecoration="underline">
           <Link href="/privacy-policy">Privacy Policy</Link>
         </Text>
