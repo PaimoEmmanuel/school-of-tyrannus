@@ -10,7 +10,7 @@ export const getCourse = (id: string) => {
 };
 export const getCourseDetails = (id: string) => {
   return request.get(`/LandingPage/RetrieveCourseByIdExplicitly/${id}`, {
-    headers: { Authorization: `Bearer ${getUser().token}` },
+    // headers: { Authorization: `Bearer ${getUser().token}` },
   });
 };
 
